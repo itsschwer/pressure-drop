@@ -25,10 +25,16 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+  <PropertyGroup>
+    <ProductDir>$(SolutionDir)Thunderstore/</ProductDir>
+    <PluginDir>$(ProductDir)plugins/$(SolutionName)/</PluginDir>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginDir)" />
+    <Copy SourceFiles="$(SolutionDir)README.md;$(SolutionDir)CHANGELOG.md;" DestinationFolder="$(ProductDir)" ContinueOnError="true" />
+
+    <ZipDirectory SourceDirectory="$(ProductDir)" DestinationFile="$(SolutionDir)$(SolutionName).zip" Overwrite="true" />
+  </Target>
 
 </Project>
