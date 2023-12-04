@@ -19,21 +19,35 @@ namespace PressYourPlate
         public const string PluginVersion = "0.0.0";
 
         // The Awake() method is run at the very start when the game is initialized.
-        private void Awake()
+        private void Awake() => Log.Init(Logger);
+
+        private void OnEnable()
         {
-            // Init our logging class so that we can properly log for debugging
-            Log.Init(Logger);
+            On.RoR2.PressurePlateController.SetSwitch += PermaPressPressurePlate;
+
+#if DEBUG
+            ChatCommandUtility.Subscribe();
+            ChatCommands.Enable();
+#endif
         }
 
-        private void OnEnable() => On.RoR2.PressurePlateController.SetSwitch += PermaPressPressurePlate;
-        private void OnDisable() => On.RoR2.PressurePlateController.SetSwitch -= PermaPressPressurePlate;
+        private void OnDisable()
+        {
+            On.RoR2.PressurePlateController.SetSwitch -= PermaPressPressurePlate;
 
+#if DEBUG
+            ChatCommandUtility.Unsubscribe();
+            ChatCommands.Disable();
+#endif
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("", "Publicizer001")]
         private static void PermaPressPressurePlate(On.RoR2.PressurePlateController.orig_SetSwitch orig, PressurePlateController self, bool switchIsDown)
         {
-            // Only allow pressure plate to be pressed -- never release
+            // Only call original function when pressure plate is being pressed -- pressure plate will never release
             if (switchIsDown) {
                 if (switchIsDown != self.switchDown) {
-                    string message = (Random.value <= 0.2) ? "Press your plate!" : "A pressure plate was pressed...";
+                    string message = (Random.value <= 0.2) ? "Press your plate!" : "A pressure plate is pressed..";
                     Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cUserSetting>" + message + "</style>" });
                 }
 
@@ -42,26 +56,5 @@ namespace PressYourPlate
 
             // Would ideally replace with a configurable timer for how long a pressure plate remains depressed
         }
-
-#if DEBUG
-        // The Update() method is run on every frame of the game.
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.F2)) ForceAqueduct();
-            else PickupMaker.Poll();
-        }
-
-        private void ForceAqueduct()
-        {
-            if (!Run.instance) return;
-
-            var scene = SceneCatalog.FindSceneDef("goolake");
-            // Run.instance.AdvanceStage(scene);
-            Run.instance.GenerateStageRNG();
-            UnityEngine.Networking.NetworkManager.singleton.ServerChangeScene(scene.cachedName);
-
-            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cWorldEvent>F2> Sending you to the Origin of Tar <sprite name=\"Skull\" tint=1></style>" });
-        }
-#endif
     }
 }
