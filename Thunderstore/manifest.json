@@ -1,0 +1,11 @@
+﻿{
+	"author": "itsschwer",
+	"name": "PressYourPlate",
+	"version_number": "0.0.0",
+	"website_url": "",
+	"description": "",
+	"dependencies": [
+		"bbepis-BepInExPack-5.4.2113",
+		"RiskofThunder-HookGenPatcher-1.2.3"
+	]
+}
