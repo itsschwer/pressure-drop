@@ -1,6 +1,6 @@
-[Tt]hunderstore/*
-![Tt]hunderstore/manifest.json
-![Tt]hunderstore/icon.png
+[Tt]hunderstore/[Pp]lugins/**/*.dll
+[Tt]hunderstore/README.md
+[Tt]hunderstore/CHANGELOG.md
 
 *.zip
 
