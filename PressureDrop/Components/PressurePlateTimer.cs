@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PressureDrop
 {
-    internal class TimedPressurePlate : MonoBehaviour
+    internal class PressurePlateTimer : MonoBehaviour
     {
         private static Dictionary<PressurePlateController, float> timers = new(2);
 

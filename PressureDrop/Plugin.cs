@@ -22,11 +22,12 @@ namespace PressureDrop
         {
             Log.Init(Logger);
             Config = new Config(base.Config);
+            Config._pressurePlateTimer.SettingChanged += SetPressurePlateTimer;
         }
 
         private void OnEnable()
         {
-            if (Config.PressurePlateTimer != 0) this.gameObject.AddComponent<TimedPressurePlate>();
+            SetPressurePlateTimer();
 #if DEBUG
             ChatCommander.Subscribe();
             DebugCheats.Enable();
@@ -38,6 +39,15 @@ namespace PressureDrop
 #if DEBUG
             ChatCommander.Unsubscribe();
             DebugCheats.Disable();
+#endif
+        }
+
+        private void SetPressurePlateTimer(object sender = null, System.EventArgs e = null)
+        {
+            if (Config.PressurePlateTimer != 0) this.gameObject.AddComponent<PressurePlateTimer>();
+            else Destroy(this.gameObject.GetComponent<PressurePlateTimer>());
+#if DEBUG
+            Log.Info($"{Config._pressurePlateTimer.Definition.Key} updated to {Config.PressurePlateTimer}");
 #endif
         }
     }
