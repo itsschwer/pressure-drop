@@ -20,6 +20,8 @@ namespace PressureDrop
         public const string Version = "0.0.0";
         public const string Slug = "pressure-drop";
 
+        private bool ready = false;
+
         internal static new Config Config { get; private set; }
 
         private void Awake()
@@ -61,6 +63,12 @@ namespace PressureDrop
 
         private void UpdateState(Scene scene, LoadSceneMode mode)
         {
+            // Disabling game object game is loading appears to interfere with other mods
+            // (BetterUI tab doesn't appear on intial main menu; custom skins aren't added)
+            // CHECK: are all plugins attached to the same game object??
+            if (!ready) ready = (scene.name == "title");
+            if (!ready) return;
+
             if (NetworkServer.active) {
                 this.gameObject.SetActive(true);
                 Log.Message($"{Plugin.Slug}> active.");
