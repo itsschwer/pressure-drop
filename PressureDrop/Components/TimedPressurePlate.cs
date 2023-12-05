@@ -31,8 +31,7 @@ namespace PressureDrop
         [System.Diagnostics.CodeAnalysis.SuppressMessage("", "Publicizer001")]
         private static void PressurePlateController_SetSwitch(On.RoR2.PressurePlateController.orig_SetSwitch orig, PressurePlateController self, bool switchIsDown)
         {
-            // todo: make configurable -- <0 = perma, 0 = off, >0 = timed
-            const float time = 30f;
+            float time = Plugin.Config.PressurePlateTimer;
 
             if (switchIsDown) {
                 if (switchIsDown != self.switchDown) {

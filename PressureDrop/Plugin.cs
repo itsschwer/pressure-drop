@@ -16,12 +16,17 @@ namespace PressureDrop
         public const string Name = "PressureDrop";
         public const string Version = "0.0.0";
 
-        private void Awake() => Log.Init(Logger);
+        internal static new Config Config { get; private set; }
+
+        private void Awake()
+        {
+            Log.Init(Logger);
+            Config = new Config(base.Config);
+        }
 
         private void OnEnable()
         {
-            // todo: check config before adding
-            this.gameObject.AddComponent<TimedPressurePlate>();
+            if (Config.PressurePlateTimer != 0) this.gameObject.AddComponent<TimedPressurePlate>();
 #if DEBUG
             ChatCommander.Subscribe();
             DebugCheats.Enable();
