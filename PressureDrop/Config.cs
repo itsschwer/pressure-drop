@@ -5,7 +5,7 @@ namespace PressureDrop
     internal class Config
     {
         /// <summary>
-        /// Only public to expose the SettingChanged event. Use the accessor instead where possible.
+        /// Only marked public to expose the SettingChanged event. Use the accessor instead where possible.
         /// </summary>
         public readonly ConfigEntry<float> _pressurePlateTimer;
         /// <summary>

@@ -1,4 +1,5 @@
 using BepInEx;
+using RoR2;
 
 namespace PressureDrop
 {
@@ -15,6 +16,7 @@ namespace PressureDrop
         public const string Author = "itsschwer";
         public const string Name = "PressureDrop";
         public const string Version = "0.0.0";
+        public const string Slug = "pressure-drop";
 
         internal static new Config Config { get; private set; }
 
@@ -22,24 +24,33 @@ namespace PressureDrop
         {
             Log.Init(Logger);
             Config = new Config(base.Config);
-            Config._pressurePlateTimer.SettingChanged += SetPressurePlateTimer;
         }
 
         private void OnEnable()
         {
+            ChatCommander.Subscribe();
+            ChatCommander.OnChatCommand += ParseReload;
+
             SetPressurePlateTimer();
 #if DEBUG
-            ChatCommander.Subscribe();
             DebugCheats.Enable();
 #endif
         }
 
         private void OnDisable()
         {
-#if DEBUG
             ChatCommander.Unsubscribe();
+            ChatCommander.OnChatCommand -= ParseReload;
+#if DEBUG
             DebugCheats.Disable();
 #endif
+        }
+
+        private void ParseReload(NetworkUser user, string[] args)
+        {
+            if (args.Length != 1 && args[0].ToLowerInvariant() != "reload") return;
+            base.Config.Reload();
+            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"Reloaded configuration for <style=cSub>{Plugin.Slug}</style>" });
         }
 
         private void SetPressurePlateTimer(object sender = null, System.EventArgs e = null)
