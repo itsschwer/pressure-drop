@@ -36,7 +36,7 @@
 
     <!-- Is there a way to automate updating manifest name and version number based on plugin consts? -->
 
-    <ZipDirectory SourceDirectory="$(ProductDir)" DestinationFile="$(SolutionDir)$(SolutionName).zip" Overwrite="true" />
+    <ZipDirectory SourceDirectory="$(ProductDir)" DestinationFile="$(SolutionDir)$(SolutionName)--$(Configuration).zip" Overwrite="true" />
   </Target>
 
 </Project>
