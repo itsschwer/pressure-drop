@@ -86,10 +86,10 @@ namespace PressureDrop
                         break;
                 }
 
-                ItemIndex item = ItemCatalog.FindItemIndex(itemName);
+                ItemDef item = ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex(itemName));
                 user.master.inventory.GiveItem(item, amount);
 
-                Output($"Gave {user.userName} <style=cIsDamage>{itemName}</style> <style=cStack>x{amount}</style>");
+                Output($"Gave {user.userName} <style=cIsDamage>{Language.GetString(item.nameToken)}</style> <style=cStack>x{amount}</style>");
             }
             else Output(invalid);
         }
