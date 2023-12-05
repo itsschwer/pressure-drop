@@ -1,11 +1,12 @@
-﻿using RoR2;
+﻿#if DEBUG
+using RoR2;
 
 namespace PressYourPlate
 {
-    public static class ChatCommands
+    public static class DebugCheats
     {
-        public static void  Enable() => ChatCommandUtility.OnChatCommand += ParseCommand;
-        public static void Disable() => ChatCommandUtility.OnChatCommand -= ParseCommand;
+        public static void  Enable() => ChatCommander.OnChatCommand += ParseCommand;
+        public static void Disable() => ChatCommander.OnChatCommand -= ParseCommand;
 
         private static void ParseCommand(NetworkUser user, string[] args)
         {
@@ -26,8 +27,8 @@ namespace PressYourPlate
                 case "help":
                     Output("Commands provided by <style=cSub>press-your-plate</style>:");
                     Output("  <style=cSub>/aq</style>: changes the stage to Abandoned Aqueduct");
-                    Output("  <style=cSub>/give</style>: gives the user helpful items for testing this mod");
-                    Output("  <style=cSub>/g</style>: alias for <style=cSub>/give</style>");
+                    Output("  <style=cSub>/give</style>: gives the user helpful items for testing pressure plate changes");
+                    Output("      Aliases: <style=cSub>/g</style>");
                     break;
             }
         }
@@ -48,7 +49,7 @@ namespace PressYourPlate
             Run.instance.GenerateStageRNG();
             UnityEngine.Networking.NetworkManager.singleton.ServerChangeScene(scene.cachedName);
 
-            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cWorldEvent>> Sending you to the Origin of Tar <sprite name=\"Skull\" tint=1></style>" });
+            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cWorldEvent>Sending you to the Origin of Tar <sprite name=\"Skull\" tint=1></style>" });
         }
 
         private static void GiveCommand(NetworkUser user, string[] args)
@@ -99,3 +100,4 @@ namespace PressYourPlate
         }
     }
 }
+#endif

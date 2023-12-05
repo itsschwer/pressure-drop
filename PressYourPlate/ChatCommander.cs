@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace PressYourPlate
 {
-    public static class ChatCommandUtility
+    public static class ChatCommander
     {
         private const string commandPrefix = "/";
 
@@ -31,7 +31,6 @@ namespace PressYourPlate
 
         private static (NetworkUser user, string text)? Construct(string chatLogMessage)
         {
-            Log.Debug(chatLogMessage);
             const string pattern = @"<color=#e5eefc><noparse>(.+?)<\/noparse>: <noparse>(.+?)<\/noparse><\/color>";
             Match match = Regex.Match(chatLogMessage, pattern, RegexOptions.Compiled);
 

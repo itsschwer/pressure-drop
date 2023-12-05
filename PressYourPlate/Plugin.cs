@@ -23,16 +23,16 @@ namespace PressYourPlate
             // todo: check config before adding
             this.gameObject.AddComponent<TimedPressurePlate>();
 #if DEBUG
-            ChatCommandUtility.Subscribe();
-            ChatCommands.Enable();
+            ChatCommander.Subscribe();
+            DebugCheats.Enable();
 #endif
         }
 
         private void OnDisable()
         {
 #if DEBUG
-            ChatCommandUtility.Unsubscribe();
-            ChatCommands.Disable();
+            ChatCommander.Unsubscribe();
+            DebugCheats.Disable();
 #endif
         }
     }
