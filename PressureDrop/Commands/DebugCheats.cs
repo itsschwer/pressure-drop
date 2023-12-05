@@ -60,8 +60,10 @@ namespace PressureDrop
             const int expectedArgs = 2;
             if (args.Length == expectedArgs) {
                 if (args[1].ToLowerInvariant() == "e") {
-                    user.master.inventory.GiveEquipmentString("Scanner");
-                    Output($"Gave {user.userName} <style=cIsDamage>Radar Scanner</style>");
+                    const string equipmentName = "Scanner";
+                    user.master.inventory.GiveEquipmentString(equipmentName);
+                    EquipmentDef equipment = EquipmentCatalog.GetEquipmentDef(EquipmentCatalog.FindEquipmentIndex(equipmentName));
+                    Output($"Gave {user.userName} <style=cIsDamage>{Language.GetString(equipment.nameToken)}</style>");
                     return;
                 }
 
