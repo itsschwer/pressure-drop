@@ -1,7 +1,7 @@
 ﻿#if DEBUG
 using RoR2;
 
-namespace PressYourPlate
+namespace PressureDrop
 {
     public static class DebugCheats
     {
@@ -25,7 +25,7 @@ namespace PressYourPlate
                 case "?":
                 case "h":
                 case "help":
-                    Output("Commands provided by <style=cSub>press-your-plate</style>:");
+                    Output("Commands provided by <style=cSub>pressure-drop</style>:");
                     Output("  <style=cSub>/aq</style>: changes the stage to Abandoned Aqueduct");
                     Output("  <style=cSub>/give</style>: gives the user helpful items for testing pressure plate changes");
                     Output("      Aliases: <style=cSub>/g</style>");

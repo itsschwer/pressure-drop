@@ -1,6 +1,6 @@
 using BepInEx;
 
-namespace PressYourPlate
+namespace PressureDrop
 {
     // This attribute is required, and lists metadata for your plugin.
     [BepInPlugin(GUID, Name, Version)]
@@ -13,7 +13,7 @@ namespace PressYourPlate
         // which is human readable (as it is used in places like the config).
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
-        public const string Name = "PressYourPlate";
+        public const string Name = "PressureDrop";
         public const string Version = "0.0.0";
 
         private void Awake() => Log.Init(Logger);

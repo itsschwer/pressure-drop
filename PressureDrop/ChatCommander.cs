@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace PressYourPlate
+namespace PressureDrop
 {
     public static class ChatCommander
     {
