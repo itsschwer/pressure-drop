@@ -7,7 +7,7 @@ namespace PressureDrop
 {
     public static class ChatCommander
     {
-        private const string commandPrefix = "/";
+        public const string commandPrefix = "/";
 
         public static event Action<NetworkUser, string[]> OnChatCommand;
 

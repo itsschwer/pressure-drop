@@ -22,6 +22,9 @@ namespace PressureDrop
                 case "give":
                     GiveCommand(user, args);
                     break;
+                case "ne":
+                    DisableEnemySpawns(args);
+                    break;
                 case "?":
                 case "h":
                 case "help":
@@ -29,6 +32,7 @@ namespace PressureDrop
                     Output( "  <style=cSub>/aq</style>: changes the stage to Abandoned Aqueduct");
                     Output( "  <style=cSub>/give</style>: gives the user helpful items for testing pressure plate changes");
                     Output( "      Aliases: <style=cSub>/g</style>");
+                    Output( "  <style=cSub>/ne</style>: disables further enemy spawns");
                     break;
             }
         }
@@ -92,6 +96,22 @@ namespace PressureDrop
                 Output($"Gave {user.userName} <style=cIsDamage>{itemName}</style> <style=cStack>x{amount}</style>");
             }
             else Output(invalid);
+        }
+
+        private static void DisableEnemySpawns(string[] args)
+        {
+            if (args.Length > 1)
+            {
+                Output($"<style=cDeath>Failed:</style> <style=cSub>{ChatCommander.commandPrefix}{args[0]}</style> expects zero arguments.");
+                return;
+            }
+
+            bool wasDisabled = CombatDirector.cvDirectorCombatDisable.GetString() != "0";
+
+            CombatDirector.cvDirectorCombatDisable.SetBool(!wasDisabled);
+
+            if (wasDisabled) Output("Enemy spawns enabled.");
+            else Output("Enemy spawns disabled.");
         }
 
         private static void Output(string message)
