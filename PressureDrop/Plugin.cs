@@ -3,14 +3,14 @@ using RoR2;
 
 namespace PressureDrop
 {
-    // This attribute is required, and lists metadata for your plugin.
+    // This attribute is required, and lists metadata for this plugin.
     [BepInPlugin(GUID, Name, Version)]
 
-    // This is the main declaration of our plugin class.
+    // This is the main declaration of this plugin class.
     // BepInEx searches for all classes inheriting from BaseUnityPlugin to initialize on startup.
     public class Plugin : BaseUnityPlugin
     {
-        // The Plugin GUID should be a unique ID for this plugin,
+        // The GUID should be a unique ID for this plugin,
         // which is human readable (as it is used in places like the config).
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
@@ -48,7 +48,9 @@ namespace PressureDrop
 
         private void ParseReload(NetworkUser user, string[] args)
         {
-            if (args.Length != 1 && args[0].ToLowerInvariant() != "reload") return;
+            if (args.Length != 1 || args[0].ToLowerInvariant() != "reload") return; // Only accept command with no additional args
+            if (user != LocalUserManager.GetFirstLocalUser().currentNetworkUser) return; // Only allow host to reload
+
             base.Config.Reload();
             Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"Reloaded configuration for <style=cSub>{Plugin.Slug}</style>" });
         }
