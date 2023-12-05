@@ -1,7 +1,5 @@
 using BepInEx;
 using RoR2;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 
 namespace PressureDrop
 {
@@ -20,19 +18,18 @@ namespace PressureDrop
         public const string Version = "0.0.0";
         public const string Slug = "pressure-drop";
 
-        private bool ready = false;
-
         internal static new Config Config { get; private set; }
+
+        // MonoBehaviour components
+        private PressurePlateTimer pressure;
 
         private void Awake()
         {
             Log.Init(Logger);
             Config = new Config(base.Config);
 
-            // Subscribe to Unity's Scene Manager to update state (check if is host)
-            SceneManager.sceneLoaded += UpdateState;
-            // I think the only missing case is changing hosts in the lobby scene?
-            //   - only tangible effect should be inconsistent availability of '/reload'?
+            // Use stage start as event to check if plugin should be active or not
+            Stage.onStageStartGlobal += Stage_onStageStartGlobal;
         }
 
         private void OnEnable()
@@ -42,9 +39,9 @@ namespace PressureDrop
 #if DEBUG
             DebugCheats.Enable();
 #endif
-            Config._pressurePlateTimer.SettingChanged += SetPressurePlateTimer;
+            Config._pressurePlateTimer.SettingChanged += ConfigurePressurePlateTimerComponent;
 
-            SetPressurePlateTimer();
+            ConfigurePressurePlateTimerComponent();
 
             Log.Message($"{Plugin.Slug}> enabled.");
         }
@@ -56,27 +53,23 @@ namespace PressureDrop
 #if DEBUG
             DebugCheats.Disable();
 #endif
-            Config._pressurePlateTimer.SettingChanged -= SetPressurePlateTimer;
+            Config._pressurePlateTimer.SettingChanged -= ConfigurePressurePlateTimerComponent;
 
             Log.Message($"{Plugin.Slug}> disabled.");
         }
 
-        private void UpdateState(Scene scene, LoadSceneMode mode)
-        {
-            // Disabling game object game is loading appears to interfere with other mods
-            // (BetterUI tab doesn't appear on intial main menu; custom skins aren't added)
-            // CHECK: are all plugins attached to the same game object??
-            if (!ready) ready = (scene.name == "title");
-            if (!ready) return;
+        private void Stage_onStageStartGlobal(Stage stage) => SetActive(UnityEngine.Networking.NetworkServer.active);
 
-            if (NetworkServer.active) {
-                this.gameObject.SetActive(true);
-                Log.Message($"{Plugin.Slug}> active.");
-            }
-            else {
-                this.gameObject.SetActive(false);
-                Log.Message($"{Plugin.Slug}> inactive.");
-            }
+        /// <summary>
+        /// All plugins are attached to the same
+        /// <see href="https://github.com/BepInEx/BepInEx/blob/0d06996b52c0215a8327b8c69a747f425bbb0023/BepInEx/Bootstrap/Chainloader.cs#L88">GameObject</see>,
+        /// so manually manage components instead of calling
+        /// <c>this.gameObject.SetActive(value)</c>.
+        /// </summary>
+        private void SetActive(bool value) {
+            this.enabled = value;
+            if (this.pressure) this.pressure.enabled = value;
+            Log.Message($"{Plugin.Slug}> {(value ? "active" : "inactive")}.");
         }
 
         private void ParseReload(NetworkUser user, string[] args)
@@ -88,13 +81,12 @@ namespace PressureDrop
             Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"Reloaded configuration for <style=cSub>{Plugin.Slug}</style>" });
         }
 
-        private void SetPressurePlateTimer(object sender = null, System.EventArgs e = null)
+        private void ConfigurePressurePlateTimerComponent(object sender = null, System.EventArgs e = null)
         {
-            PressurePlateTimer self = this.gameObject.GetComponent<PressurePlateTimer>();
             if (Config.PressurePlateTimer != 0) {
-                if (!self) this.gameObject.AddComponent<PressurePlateTimer>();
+                if (!pressure) pressure = this.gameObject.AddComponent<PressurePlateTimer>();
             }
-            else Destroy(self);
+            else Destroy(pressure);
 #if DEBUG
             if (sender != null) Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>ptt> {Config._pressurePlateTimer.Definition.Key} updated to {Config.PressurePlateTimer}</style>" });
 #endif
