@@ -30,6 +30,7 @@ namespace PressureDrop
 
             // Use stage start as event to check if plugin should be active or not
             Stage.onStageStartGlobal += Stage_onStageStartGlobal;
+            SetActive(UnityEngine.Networking.NetworkServer.active);
         }
 
         private void OnEnable()
