@@ -1,5 +1,7 @@
 using BepInEx;
 using RoR2;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 namespace PressureDrop
 {
@@ -23,20 +25,26 @@ namespace PressureDrop
         private void Awake()
         {
             Log.Init(Logger);
-
             Config = new Config(base.Config);
-            Config._pressurePlateTimer.SettingChanged += SetPressurePlateTimer;
+
+            // Subscribe to Unity's Scene Manager to update state (check if is host)
+            SceneManager.sceneLoaded += UpdateState;
+            // I think the only missing case is changing hosts in the lobby scene?
+            //   - only tangible effect should be inconsistent availability of '/reload'?
         }
 
         private void OnEnable()
         {
             ChatCommander.Subscribe();
             ChatCommander.OnChatCommand += ParseReload;
-
-            SetPressurePlateTimer();
 #if DEBUG
             DebugCheats.Enable();
 #endif
+            Config._pressurePlateTimer.SettingChanged += SetPressurePlateTimer;
+
+            SetPressurePlateTimer();
+
+            Log.Message($"{Plugin.Slug}> enabled.");
         }
 
         private void OnDisable()
@@ -46,6 +54,21 @@ namespace PressureDrop
 #if DEBUG
             DebugCheats.Disable();
 #endif
+            Config._pressurePlateTimer.SettingChanged -= SetPressurePlateTimer;
+
+            Log.Message($"{Plugin.Slug}> disabled.");
+        }
+
+        private void UpdateState(Scene scene, LoadSceneMode mode)
+        {
+            if (NetworkServer.active) {
+                this.gameObject.SetActive(true);
+                Log.Message($"{Plugin.Slug}> active.");
+            }
+            else {
+                this.gameObject.SetActive(false);
+                Log.Message($"{Plugin.Slug}> inactive.");
+            }
         }
 
         private void ParseReload(NetworkUser user, string[] args)
@@ -65,7 +88,7 @@ namespace PressureDrop
             }
             else Destroy(self);
 #if DEBUG
-            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>ptt> {Config._pressurePlateTimer.Definition.Key} updated to {Config.PressurePlateTimer}</style>" });
+            if (sender != null) Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>ptt> {Config._pressurePlateTimer.Definition.Key} updated to {Config.PressurePlateTimer}</style>" });
 #endif
         }
     }
