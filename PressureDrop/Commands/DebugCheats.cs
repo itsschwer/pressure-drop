@@ -29,10 +29,10 @@ namespace PressureDrop
                 case "h":
                 case "help":
                     Output($"Commands provided by <style=cSub>{Plugin.Slug}</style>:");
-                    Output( "  <style=cSub>/aq</style>: changes the stage to Abandoned Aqueduct");
-                    Output( "  <style=cSub>/give</style>: gives the user helpful items for testing pressure plate changes");
-                    Output( "      Aliases: <style=cSub>/g</style>");
-                    Output( "  <style=cSub>/ne</style>: disables further enemy spawns");
+                    Output($"  <style=cSub>{ChatCommander.commandPrefix}aq</style>: changes the stage to Abandoned Aqueduct.");
+                    Output($"  <style=cSub>{ChatCommander.commandPrefix}give</style>: gives the user helpful items for testing pressure plate changes.");
+                    Output($"      Aliases: <style=cSub>{ChatCommander.commandPrefix}g</style>");
+                    Output($"  <style=cSub>{ChatCommander.commandPrefix}ne</style>: disables further enemy spawns.");
                     break;
             }
         }
@@ -40,11 +40,8 @@ namespace PressureDrop
         [System.Diagnostics.CodeAnalysis.SuppressMessage("", "Publicizer001")]
         private static void ForceAqueduct(string[] args)
         {
-            if (!Run.instance) return;
-
-            if (args.Length > 1)
-            {
-                Output($"<style=cDeath>Failed:</style> <style=cSub>{args[0]}</style> expects zero arguments");
+            if (args.Length > 1) {
+                Output($"<style=cDeath>Failed:</style> <style=cSub>{ChatCommander.commandPrefix}{args[0]}</style> expects zero arguments.");
                 return;
             }
 
@@ -58,11 +55,10 @@ namespace PressureDrop
 
         private static void GiveCommand(NetworkUser user, string[] args)
         {
-            string invalid = $"<style=cDeath>Failed:</style> <style=cSub>{args[0]}</style> expects one argument from the following options [<style=cSub>t</style>, <style=cSub>s</style>, <style=cSub>g</style>, <style=cSub>e</style>]";
+            string invalid = $"<style=cDeath>Failed:</style> <style=cSub>{ChatCommander.commandPrefix}{args[0]}</style> expects one argument from the following options [<style=cSub>t</style>, <style=cSub>s</style>, <style=cSub>g</style>, <style=cSub>e</style>]";
 
             const int expectedArgs = 2;
-            if (args.Length == expectedArgs)
-            {
+            if (args.Length == expectedArgs) {
                 if (args[1].ToLowerInvariant() == "e") {
                     user.master.inventory.GiveEquipmentString("Scanner");
                     Output($"Gave {user.userName} <style=cIsDamage>Radar Scanner</style>");
@@ -100,8 +96,7 @@ namespace PressureDrop
 
         private static void DisableEnemySpawns(string[] args)
         {
-            if (args.Length > 1)
-            {
+            if (args.Length > 1) {
                 Output($"<style=cDeath>Failed:</style> <style=cSub>{ChatCommander.commandPrefix}{args[0]}</style> expects zero arguments.");
                 return;
             }
