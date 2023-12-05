@@ -7,7 +7,7 @@ namespace PressureDrop
 {
     internal class PressurePlateTimer : MonoBehaviour
     {
-        private static Dictionary<PressurePlateController, float> timers = new(2);
+        private static readonly Dictionary<PressurePlateController, float> timers = new(2);
 
         private void  OnEnable() => On.RoR2.PressurePlateController.SetSwitch += PressurePlateController_SetSwitch;
         private void OnDisable() => On.RoR2.PressurePlateController.SetSwitch -= PressurePlateController_SetSwitch;
@@ -22,7 +22,7 @@ namespace PressureDrop
                     // Pressure plates may no longer exist if unloaded (e.g. stage transition)
                     string identifier = $"[no longer exists.]";
                     if (key) identifier = $"{key.name} @ {key.transform.position}";
-                    Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>tpp> {identifier} inactive ({timers.Count} active)</style>" });
+                    Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>ppt> {identifier} inactive ({timers.Count} active)</style>" });
 #endif
                 }
             }
@@ -44,7 +44,7 @@ namespace PressureDrop
 #if DEBUG
                 string identifier = $"[no longer exists?]";
                 if (self) identifier = $"{self.name} @ {self.transform.position}";
-                Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>tpp> {identifier} active {time}s ({timers.Count} active)</style>" });
+                Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>ppt> {identifier} active {time}s ({timers.Count} active)</style>" });
 #endif
             }
             else if (time > 0 && !timers.ContainsKey(self)) {

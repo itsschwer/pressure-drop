@@ -59,10 +59,13 @@ namespace PressureDrop
 
         private void SetPressurePlateTimer(object sender = null, System.EventArgs e = null)
         {
-            if (Config.PressurePlateTimer != 0) this.gameObject.AddComponent<PressurePlateTimer>();
-            else Destroy(this.gameObject.GetComponent<PressurePlateTimer>());
+            PressurePlateTimer self = this.gameObject.GetComponent<PressurePlateTimer>();
+            if (Config.PressurePlateTimer != 0) {
+                if (!self) this.gameObject.AddComponent<PressurePlateTimer>();
+            }
+            else Destroy(self);
 #if DEBUG
-            Log.Info($"{Config._pressurePlateTimer.Definition.Key} updated to {Config.PressurePlateTimer}");
+            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>ptt> {Config._pressurePlateTimer.Definition.Key} updated to {Config.PressurePlateTimer}</style>" });
 #endif
         }
     }

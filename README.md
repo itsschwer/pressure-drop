@@ -19,4 +19,4 @@ I wanted to make activating the pressure plates more accessible *(no more waitin
 
 ## issues
 
-I don't know how this mod behaves when installed by both host and client.
+I don't know how this mod behaves when installed by both host and client (or just non-host).
