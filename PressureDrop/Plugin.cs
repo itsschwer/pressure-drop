@@ -23,7 +23,9 @@ namespace PressureDrop
         private void Awake()
         {
             Log.Init(Logger);
+
             Config = new Config(base.Config);
+            Config._pressurePlateTimer.SettingChanged += SetPressurePlateTimer;
         }
 
         private void OnEnable()
