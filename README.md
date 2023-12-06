@@ -36,11 +36,4 @@ I don't know how this mod behaves when installed by both host and client (or jus
         - can drop when dead
         - can drop at tp
     - can recycle drop
-        - red: false
-        - yellow: false
-        - lunar: false
-        - white: true
-        - green: true
-        - void (all): false
-        - equipment: true
-        - lunar equipment: false
+    - can drop (tiers)
