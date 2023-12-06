@@ -31,11 +31,11 @@ namespace PressureDrop
                 case "?":
                 case "h":
                 case "help":
-                    Output($"Commands provided by <style=cSub>{Plugin.Slug}</style>:");
-                    Output($"  <style=cSub>{ChatCommander.commandPrefix}aq</style>: changes the stage to Abandoned Aqueduct.");
-                    Output($"  <style=cSub>{ChatCommander.commandPrefix}g</style>: gives the user helpful items for testing pressure plate changes.");
-                    Output($"  <style=cSub>{ChatCommander.commandPrefix}p</style>: drops an assortment of items for testing recyclability config.");
-                    Output($"  <style=cSub>{ChatCommander.commandPrefix}ne</style>: disables further enemy spawns.");
+                    ChatCommander.Output($"Commands provided by <style=cSub>{Plugin.Slug}</style>:");
+                    ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}aq</style>: changes the stage to Abandoned Aqueduct.");
+                    ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}g</style>: gives the user helpful items for testing pressure plate changes.");
+                    ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}p</style>: drops an assortment of items for testing recyclability config.");
+                    ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}ne</style>: disables further enemy spawns.");
                     break;
             }
         }
@@ -44,7 +44,7 @@ namespace PressureDrop
         private static void ForceAqueduct(string[] args)
         {
             if (args.Length > 1) {
-                OutputFail(args[0], "expects zero arguments.");
+                ChatCommander.OutputFail(args[0], "expects zero arguments.");
                 return;
             }
 
@@ -67,14 +67,14 @@ namespace PressureDrop
 
                 switch (args[1].ToLowerInvariant()) {
                     default:
-                        OutputFail(args[0], invalid);
+                        ChatCommander.OutputFail(args[0], invalid);
                         return;
                     case "e":
                         {
                             const string equipmentName = "Scanner";
                             user.master.inventory.GiveEquipmentString(equipmentName);
                             EquipmentDef equipment = EquipmentCatalog.GetEquipmentDef(EquipmentCatalog.FindEquipmentIndex(equipmentName));
-                            Output($"Gave {user.userName} <style=cIsDamage>{Language.GetString(equipment.nameToken)}</style>");
+                            ChatCommander.Output($"Gave {user.userName} <style=cIsDamage>{Language.GetString(equipment.nameToken)}</style>");
                             return;
                         } 
                     case "t":
@@ -96,9 +96,9 @@ namespace PressureDrop
                 ItemDef item = ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex(itemName));
                 user.master.inventory.GiveItem(item, amount);
 
-                Output($"Gave {user.userName} <style=cIsDamage>{Language.GetString(item.nameToken)}</style> <style=cStack>x{amount}</style>");
+                ChatCommander.Output($"Gave {user.userName} <style=cIsDamage>{Language.GetString(item.nameToken)}</style> <style=cStack>x{amount}</style>");
             }
-            else OutputFail(args[0], invalid);
+            else ChatCommander.OutputFail(args[0], invalid);
         }
 
         private static void PickupCommand(NetworkUser user, string[] args)
@@ -111,7 +111,7 @@ namespace PressureDrop
 
                 switch (args[1].ToLowerInvariant()) {
                     default:
-                        OutputFail(args[0], invalid);
+                        ChatCommander.OutputFail(args[0], invalid);
                         return;
                     case "i":
                         Commands.Drop.DropStyleChest(target, [
@@ -148,13 +148,13 @@ namespace PressureDrop
                         break;
                 }
             }
-            else OutputFail(args[0], invalid);
+            else ChatCommander.OutputFail(args[0], invalid);
         }
 
         private static void DisableEnemySpawns(string[] args)
         {
             if (args.Length > 1) {
-                OutputFail(args[0], "expects zero arguments.");
+                ChatCommander.OutputFail(args[0], "expects zero arguments.");
                 return;
             }
 
@@ -162,18 +162,8 @@ namespace PressureDrop
 
             CombatDirector.cvDirectorCombatDisable.SetBool(!wasDisabled);
 
-            if (wasDisabled) Output("Enemy spawns enabled.");
-            else Output("Enemy spawns disabled.");
-        }
-
-        private static void Output(string message)
-        {
-            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>{message}</style>" });
-        }
-
-        private static void OutputFail(string cmd, string message)
-        {
-            Output($"<style=cDeath>Failed:</style> <style=cSub>{ChatCommander.commandPrefix}{cmd}</style> {message}");
+            if (wasDisabled) ChatCommander.Output("Enemy spawns enabled.");
+            else ChatCommander.Output("Enemy spawns disabled.");
         }
     }
 }

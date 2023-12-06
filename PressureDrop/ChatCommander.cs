@@ -44,5 +44,24 @@ namespace PressureDrop
 
             return null;
         }
+
+        /// <summary>
+        /// Wrapper for sending a chat message styled as an output of a command.
+        /// </summary>
+        /// <param name="message"></param>
+        public static void Output(string message)
+        {
+            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>{message}</style>" });
+        }
+
+        /// <summary>
+        /// Wrapper for sending a chat message styled as a response to a failed command.
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <param name="message"></param>
+        public static void OutputFail(string cmd, string message)
+        {
+            Output($"<style=cDeath>Failed:</style> <style=cSub>{ChatCommander.commandPrefix}{cmd}</style> {message}");
+        }
     }
 }

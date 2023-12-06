@@ -15,6 +15,10 @@ namespace PressureDrop.Commands
             switch (args[0].ToLowerInvariant()) {
                 default:
                     break;
+                case "d":
+                case "drop":
+                    DropCommand(user, args);
+                    break;
                 case "s":
                 case "steal":
                     StealCommand(user, args);
@@ -22,8 +26,15 @@ namespace PressureDrop.Commands
             }
         }
 
+        private static void DropCommand(NetworkUser user, string[] args)
+        {
+            // todo
+        }
+
         private static void StealCommand(NetworkUser user, string[] args)
-        {}
+        {
+            // todo
+        }
 
         public static void DropStyleChest(Transform target, PickupIndex dropPickup, int dropCount)
         {
@@ -43,7 +54,7 @@ namespace PressureDrop.Commands
                     vector = quaternion * vector;
                 }
             }
-            Output($"dropping @ {target.position}");
+            ChatCommander.Output($"dropping @ {target.position}");
         }
 
         public static void DropStyleChest(Transform target, PickupIndex[] drops)
@@ -66,12 +77,7 @@ namespace PressureDrop.Commands
                     vector = quaternion * vector;
                 }
             }
-            Output($"dropping @ {target.position}");
-        }
-
-        private static void Output(string message)
-        {
-            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>{message}</style>" });
+            ChatCommander.Output($"dropping @ {target.position}");
         }
     }
 }
