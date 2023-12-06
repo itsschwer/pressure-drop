@@ -54,7 +54,6 @@ namespace PressureDrop.Commands
                     vector = quaternion * vector;
                 }
             }
-            ChatCommander.Output($"dropping @ {target.position}");
         }
 
         public static void DropStyleChest(Transform target, PickupIndex[] drops)
@@ -77,7 +76,6 @@ namespace PressureDrop.Commands
                     vector = quaternion * vector;
                 }
             }
-            ChatCommander.Output($"dropping @ {target.position}");
         }
     }
 }

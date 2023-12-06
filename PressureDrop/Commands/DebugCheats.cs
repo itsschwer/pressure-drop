@@ -33,8 +33,8 @@ namespace PressureDrop
                 case "help":
                     ChatCommander.Output($"Commands provided by <style=cSub>{Plugin.Slug}</style>:");
                     ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}aq</style>: changes the stage to Abandoned Aqueduct.");
-                    ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}g</style>: gives the user helpful items for testing pressure plate changes.");
-                    ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}p</style>: drops an assortment of items for testing recyclability config.");
+                    ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}g</style>: gives the user items for testing pressure plate changes.");
+                    ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}p</style>: drops items for testing recyclability config.");
                     ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}ne</style>: disables further enemy spawns.");
                     break;
             }
@@ -103,7 +103,7 @@ namespace PressureDrop
 
         private static void PickupCommand(NetworkUser user, string[] args)
         {
-            string invalid = "expects one argument from the following options [<style=cSub>i</style>, <style=cSub>e</style>, <style=cSub>p</style>, <style=cSub>s</style>, <style=cSub>v</style>]";
+            string invalid = "expects one argument from the following options [<style=cSub>i</style>, <style=cSub>e</style>, <style=cSub>s</style>, <style=cSub>v</style>]";
 
             const int expectedArgs = 2;
             if (args.Length == expectedArgs) {
@@ -122,6 +122,7 @@ namespace PressureDrop
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("AutoCastEquipment")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("Pearl"))
                         ]);
+                        ChatCommander.Output($"Dropped item pickups @ {user.userName}.");
                         break;
                     case "e":
                         Commands.Drop.DropStyleChest(target, [
@@ -129,6 +130,7 @@ namespace PressureDrop
                             PickupCatalog.FindPickupIndex(EquipmentCatalog.FindEquipmentIndex("Tonic")),
                             PickupCatalog.FindPickupIndex(EquipmentCatalog.FindEquipmentIndex("EliteFireEquipment"))
                         ]);
+                        ChatCommander.Output($"Dropped equipment pickups @ {user.userName}.");
                         break;
                     case "s":
                         Commands.Drop.DropStyleChest(target, [
@@ -137,6 +139,7 @@ namespace PressureDrop
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapRed")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapYellow"))
                         ]);
+                        ChatCommander.Output($"Dropped scrap pickups @ {user.userName}.");
                         break;
                     case "v":
                         Commands.Drop.DropStyleChest(target, [
@@ -145,6 +148,7 @@ namespace PressureDrop
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ExtraLifeVoid")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("VoidMegaCrabItem"))
                         ]);
+                        ChatCommander.Output($"Dropped void pickups @ {user.userName}.");
                         break;
                 }
             }
