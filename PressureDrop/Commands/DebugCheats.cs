@@ -60,9 +60,8 @@ namespace PressureDrop
 
             const int expectedArgs = 2;
             if (args.Length >= expectedArgs) {
-                string e = args[1].ToLowerInvariant();
-                string equipmentName = (e == "e") ? "Scanner" : (e == "e2") ? "Recycle" : (e == "e3") ? "Tonic" : (e == "e4") ? "EliteFireEquipment" : "";
-                if (!equipmentName.IsNullOrWhiteSpace()) {
+                if (args[1].ToLowerInvariant() == "e") {
+                    const string equipmentName = "Scanner";
                     user.master.inventory.GiveEquipmentString(equipmentName);
                     EquipmentDef equipment = EquipmentCatalog.GetEquipmentDef(EquipmentCatalog.FindEquipmentIndex(equipmentName));
                     Output($"Gave {user.userName} <style=cIsDamage>{Language.GetString(equipment.nameToken)}</style>");
@@ -70,7 +69,7 @@ namespace PressureDrop
                 }
 
                 string itemName;
-                int amount = 1;
+                int amount;
 
                 switch (args[1].ToLowerInvariant()) {
                     default:
@@ -90,8 +89,7 @@ namespace PressureDrop
                         break;
                 }
 
-                int count;
-                if (args.Length > expectedArgs && int.TryParse(args[2], out count)) amount = count;
+                if (args.Length > expectedArgs && int.TryParse(args[2], out int count)) amount = count;
 
                 ItemDef item = ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex(itemName));
                 user.master.inventory.GiveItem(item, amount);
