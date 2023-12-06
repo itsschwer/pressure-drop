@@ -28,9 +28,10 @@ namespace PressureDrop
             Log.Init(Logger);
             Config = new Config(base.Config);
 
-            // Use stage start as event to check if plugin should be active or not
-            Stage.onStageStartGlobal += Stage_onStageStartGlobal;
-            SetActive(UnityEngine.Networking.NetworkServer.active);
+            // Use run start/end events to run check for if plugin should be active
+            Run.onRunStartGlobal += SetPluginActiveState;
+            Run.onRunDestroyGlobal += SetPluginActiveState;
+            SetPluginActiveState();
         }
 
         private void OnEnable()
@@ -59,7 +60,7 @@ namespace PressureDrop
             Log.Message($"{Plugin.Slug}> disabled.");
         }
 
-        private void Stage_onStageStartGlobal(Stage stage) => SetActive(UnityEngine.Networking.NetworkServer.active);
+        private void SetPluginActiveState(Run run = null) => SetActive(UnityEngine.Networking.NetworkServer.active);
 
         /// <summary>
         /// All plugins are attached to the same
