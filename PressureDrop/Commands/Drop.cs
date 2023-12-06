@@ -23,81 +23,37 @@ namespace PressureDrop.Commands
         }
 
         private static void StealCommand(NetworkUser user, string[] args)
-        {
-            const int expectedArgs = 2;
-            if (args.Length < expectedArgs) {
-                Output("not enough args");
-                return;
-            }
+        {}
 
-            Transform target = user.masterController.master.GetBodyObject().transform;
-
-            switch (args[1].ToLowerInvariant()) {
-                default:
-                    DropStyleChest(target, [
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("SprintBonus")),
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("EquipmentMagazine")),
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ExtraLife")),
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("SprintWisp")),
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("AutoCastEquipment")),
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("Pearl"))
-                    ]);
-                    break;
-                case "e":
-                    DropStyleChest(target, [
-                        PickupCatalog.FindPickupIndex(EquipmentCatalog.FindEquipmentIndex("Recycle")),
-                        PickupCatalog.FindPickupIndex(EquipmentCatalog.FindEquipmentIndex("Tonic")),
-                        PickupCatalog.FindPickupIndex(EquipmentCatalog.FindEquipmentIndex("EliteFireEquipment"))
-                    ]);
-                    break;
-                case "s":
-                    DropStyleChest(target, [
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapWhite")),
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapGreen")),
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapRed")),
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapYellow"))
-                    ]);
-                    break;
-                case "v":
-                    DropStyleChest(target, [
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("BearVoid")),
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("MissileVoid")),
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ExtraLifeVoid")),
-                        PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("VoidMegaCrabItem"))
-                    ]);
-                    break;
-            }
-        }
-
-        private static void DropStyleChest(Transform transform, PickupIndex dropPickup, int dropCount)
+        public static void DropStyleChest(Transform target, PickupIndex dropPickup, int dropCount)
         {
             float upStrength = 20f;
             float forwardStrength = 2f;
 
             if (dropPickup != PickupIndex.none && dropCount >= 1) {
                 float angle = 360f / (float)dropCount;
-                Vector3 vector = Vector3.up * upStrength + transform.forward * forwardStrength;
+                Vector3 vector = Vector3.up * upStrength + target.forward * forwardStrength;
                 Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
 
                 for (int i = 0; i < dropCount; i++) {
                     GenericPickupController.CreatePickupInfo info = default;
                     info.rotation = PressureDrop.Drop.identifier;
                     info.pickupIndex = dropPickup;
-                    PickupDropletController.CreatePickupDroplet(info, transform.position + Vector3.up * 1.5f, vector);
+                    PickupDropletController.CreatePickupDroplet(info, target.position + Vector3.up * 1.5f, vector);
                     vector = quaternion * vector;
                 }
             }
-            Output($"dropping @ {transform.position}");
+            Output($"dropping @ {target.position}");
         }
 
-        private static void DropStyleChest(Transform transform, PickupIndex[] drops)
+        public static void DropStyleChest(Transform target, PickupIndex[] drops)
         {
             float upStrength = 20f;
             float forwardStrength = 2f;
 
             if (drops.Length >= 1) {
                 float angle = 360f / (float)drops.Length;
-                Vector3 vector = Vector3.up * upStrength + transform.forward * forwardStrength;
+                Vector3 vector = Vector3.up * upStrength + target.forward * forwardStrength;
                 Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
 
                 for (int i = 0; i < drops.Length; i++) {
@@ -106,11 +62,11 @@ namespace PressureDrop.Commands
                     GenericPickupController.CreatePickupInfo info = default;
                     info.rotation = PressureDrop.Drop.identifier;
                     info.pickupIndex = drops[i];
-                    PickupDropletController.CreatePickupDroplet(info, transform.position + Vector3.up * 1.5f, vector);
+                    PickupDropletController.CreatePickupDroplet(info, target.position + Vector3.up * 1.5f, vector);
                     vector = quaternion * vector;
                 }
             }
-            Output($"dropping @ {transform.position}");
+            Output($"dropping @ {target.position}");
         }
 
         private static void Output(string message)
