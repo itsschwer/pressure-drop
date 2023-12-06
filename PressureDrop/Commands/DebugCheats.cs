@@ -59,10 +59,9 @@ namespace PressureDrop
             string invalid = $"<style=cDeath>Failed:</style> <style=cSub>{ChatCommander.commandPrefix}{args[0]}</style> expects one argument from the following options [<style=cSub>t</style>, <style=cSub>s</style>, <style=cSub>g</style>, <style=cSub>e</style>]";
 
             const int expectedArgs = 2;
-            if (args.Length == expectedArgs) {
+            if (args.Length >= expectedArgs) {
                 string e = args[1].ToLowerInvariant();
-                string equipmentName = (e == "e") ? "Scanner" : (e == "e2") ? "Recycle" : "";
-
+                string equipmentName = (e == "e") ? "Scanner" : (e == "e2") ? "Recycle" : (e == "e3") ? "Tonic" : (e == "e4") ? "EliteFireEquipment" : "";
                 if (!equipmentName.IsNullOrWhiteSpace()) {
                     user.master.inventory.GiveEquipmentString(equipmentName);
                     EquipmentDef equipment = EquipmentCatalog.GetEquipmentDef(EquipmentCatalog.FindEquipmentIndex(equipmentName));
@@ -70,8 +69,8 @@ namespace PressureDrop
                     return;
                 }
 
-                string itemName = "";
-                int amount = 0;
+                string itemName;
+                int amount = 1;
 
                 switch (args[1].ToLowerInvariant()) {
                     default:
@@ -90,6 +89,9 @@ namespace PressureDrop
                         amount = 7;
                         break;
                 }
+
+                int count;
+                if (args.Length > expectedArgs && int.TryParse(args[2], out count)) amount = count;
 
                 ItemDef item = ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex(itemName));
                 user.master.inventory.GiveItem(item, amount);

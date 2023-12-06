@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using BepInEx;
+using RoR2;
 using UnityEngine;
 
 namespace PressureDrop.Commands
@@ -30,22 +31,57 @@ namespace PressureDrop.Commands
                 return;
             }
 
+            string e = args[1].ToLowerInvariant();
+            string equipmentName = (e == "e") ? "Scanner" : (e == "e2") ? "Recycle" : (e == "e3") ? "Tonic" : (e == "e4") ? "EliteFireEquipment" : "";
+            if (!equipmentName.IsNullOrWhiteSpace()) {
+                PickupIndex eq = PickupCatalog.FindPickupIndex(EquipmentCatalog.FindEquipmentIndex(equipmentName));
+                DropStyleChest(user.masterController.master.GetBodyObject().transform, eq, 1);
+                return;
+            }
+
+            string itemName;
             int count = 1;
             if (args.Length > expectedArgs && !int.TryParse(args[2], out count)) count = 1;
 
             switch (args[1].ToLowerInvariant()) {
                 default:
-                    PickupIndex drop;
                     Output("args[1] invalid");
-                    break;
+                    return;
                 case "g":
-                    drop = PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("AutoCastEquipment"));
-                    DropStyleChest(user.masterController.master.GetBodyObject().transform, drop, count);
+                    itemName = "AutoCastEquipment";
                     break;
                 case "d":
-                    drop = PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("SprintWisp"));
-                    DropStyleChest(user.masterController.master.GetBodyObject().transform, drop, count);
+                    itemName = "SprintWisp";
                     break;
+                case "f":
+                    itemName = "EquipmentMagazine";
+                    break;
+                case "r":
+                    itemName = "ExtraLife";
+                    break;
+                case "p":
+                    itemName = "Pearl";
+                    break;
+                case "s":
+                    itemName = "SprintBonus";
+                    break;
+                case "s1":
+                    itemName = "ScrapWhite";
+                    break;
+                case "s2":
+                    itemName = "ScrapGreen";
+                    break;
+                case "s3":
+                    itemName = "ScrapRed";
+                    break;
+                case "s4":
+                    itemName = "ScrapYellow";
+                    break;
+            }
+
+            if (!itemName.IsNullOrWhiteSpace()) {
+                PickupIndex drop = PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex(itemName));
+                DropStyleChest(user.master.GetBodyObject().transform, drop, count);
             }
         }
 
