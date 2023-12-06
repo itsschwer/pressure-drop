@@ -33,6 +33,7 @@ namespace PressureDrop
         public bool DropRecyclableEquipment => _dropRecyclableEquipment.Value;
         public bool DropRecyclableEquipmentLunar => _dropRecyclableEquipmentLunar.Value;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("", "IDE0290")] // Use primary constructor
         public Config(ConfigFile config)
         {
             // Prefix with underscore to sort at top in config editor
