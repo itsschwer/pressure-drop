@@ -45,6 +45,8 @@ namespace PressureDrop
 
             ConfigurePressurePlateTimerComponent();
 
+            ConfigureDrop(true);
+
             Log.Message($"{Plugin.Slug}> enabled.");
         }
 
@@ -56,6 +58,8 @@ namespace PressureDrop
             DebugCheats.Disable();
 #endif
             Config._pressurePlateTimer.SettingChanged -= ConfigurePressurePlateTimerComponent;
+
+            ConfigureDrop(false);
 
             Log.Message($"{Plugin.Slug}> disabled.");
         }
@@ -92,6 +96,13 @@ namespace PressureDrop
 #if DEBUG
             if (sender != null) Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>ptt> {Config._pressurePlateTimer.Definition.Key} updated to {Config.PressurePlateTimer}</style>" });
 #endif
+        }
+
+        private void ConfigureDrop(bool shouldHook)
+        {
+            // todo: configs
+            if (shouldHook) Drop.Hook();
+            else Drop.Unhook();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿#if DEBUG
+using BepInEx;
 using RoR2;
 
 namespace PressureDrop
@@ -59,8 +60,10 @@ namespace PressureDrop
 
             const int expectedArgs = 2;
             if (args.Length == expectedArgs) {
-                if (args[1].ToLowerInvariant() == "e") {
-                    const string equipmentName = "Scanner";
+                string e = args[1].ToLowerInvariant();
+                string equipmentName = (e == "e") ? "Scanner" : (e == "e2") ? "Recycle" : "";
+
+                if (!equipmentName.IsNullOrWhiteSpace()) {
                     user.master.inventory.GiveEquipmentString(equipmentName);
                     EquipmentDef equipment = EquipmentCatalog.GetEquipmentDef(EquipmentCatalog.FindEquipmentIndex(equipmentName));
                     Output($"Gave {user.userName} <style=cIsDamage>{Language.GetString(equipment.nameToken)}</style>");
