@@ -62,8 +62,8 @@ namespace PressureDrop.Commands
 
             const int expectedArgs = 2;
             if (args.Length >= expectedArgs) {
-                string itemName;
-                int amount;
+                ItemDef item;
+                int count;
 
                 switch (args[1].ToLowerInvariant()) {
                     default:
@@ -71,33 +71,30 @@ namespace PressureDrop.Commands
                         return;
                     case "e":
                         {
-                            const string equipmentName = "Scanner";
-                            user.master.inventory.GiveEquipmentString(equipmentName);
-                            EquipmentDef equipment = EquipmentCatalog.GetEquipmentDef(EquipmentCatalog.FindEquipmentIndex(equipmentName));
-                            ChatCommander.Output($"Gave {user.userName} {ChatCommander.GetColoredPickupLanguageString(equipment.nameToken, equipment.equipmentIndex)}");
+                            EquipmentDef e = RoR2Content.Equipment.Scanner;
+                            user.master.inventory.GiveEquipmentString(e.name);
+                            ChatCommander.Output($"Gave {user.userName} {ChatCommander.GetColoredPickupLanguageString(e.nameToken, e.equipmentIndex)}");
                             return;
                         } 
                     case "t":
-                        itemName = "Bear";
-                        amount = 70;
+                        item = RoR2Content.Items.Bear;
+                        count = 70;
                         break;
                     case "s":
-                        itemName = "SprintBonus";
-                        amount = 5;
+                        item = RoR2Content.Items.SprintBonus;
+                        count = 5;
                         break;
                     case "g":
-                        itemName = "AutoCastEquipment";
-                        amount = 7;
+                        item = RoR2Content.Items.AutoCastEquipment;
+                        count = 7;
                         break;
                 }
 
-                if (args.Length > expectedArgs && int.TryParse(args[2], out int count)) amount = count;
-                if (amount > 1000) amount = 1000; // Let's not get too excessive
+                if (args.Length > expectedArgs && int.TryParse(args[2], out int num)) count = num;
+                if (count > 1000) count = 1000; // Let's not get too excessive
 
-                ItemDef item = ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex(itemName));
-                user.master.inventory.GiveItem(item, amount);
-
-                ChatCommander.Output($"Gave {user.userName} {ChatCommander.GetColoredPickupLanguageString(item.nameToken, item.itemIndex)} <style=cStack>x{amount}</style>");
+                user.master.inventory.GiveItem(item, count);
+                ChatCommander.Output($"Gave {user.userName} {ChatCommander.GetColoredPickupLanguageString(item.nameToken, item.itemIndex)} <style=cStack>x{count}</style>");
             }
             else ChatCommander.OutputFail(args[0], invalid);
         }
@@ -116,48 +113,48 @@ namespace PressureDrop.Commands
                         return;
                     case "i":
                         PressureDrop.Drop.DropStyleChest(target, [
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("SprintBonus")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("EquipmentMagazine")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ExtraLife")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("SprintWisp")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("AutoCastEquipment")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("Pearl"))
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.SprintBonus.itemIndex),
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.EquipmentMagazine.itemIndex),
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.ExtraLife.itemIndex),
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.SprintWisp.itemIndex),
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.AutoCastEquipment.itemIndex),
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.Pearl.itemIndex)
                         ], 3.4f, 14f);
                         ChatCommander.Output($"Dropped item pickups @ {user.userName}.");
                         break;
                     case "e":
                         PressureDrop.Drop.DropStyleChest(target, [
-                            PickupCatalog.FindPickupIndex(EquipmentCatalog.FindEquipmentIndex("Recycle")),
-                            PickupCatalog.FindPickupIndex(EquipmentCatalog.FindEquipmentIndex("Tonic")),
-                            PickupCatalog.FindPickupIndex(EquipmentCatalog.FindEquipmentIndex("EliteFireEquipment"))
+                            PickupCatalog.FindPickupIndex(RoR2Content.Equipment.Recycle.equipmentIndex),
+                            PickupCatalog.FindPickupIndex(RoR2Content.Equipment.Tonic.equipmentIndex),
+                            PickupCatalog.FindPickupIndex(RoR2Content.Equipment.AffixRed.equipmentIndex)
                         ], 3.4f, 14f);
                         ChatCommander.Output($"Dropped equipment pickups @ {user.userName}.");
                         break;
                     case "s":
                         PressureDrop.Drop.DropStyleChest(target, [
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapWhite")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapGreen")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapRed")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapYellow"))
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.ScrapWhite.itemIndex),
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.ScrapGreen.itemIndex),
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.ScrapRed.itemIndex),
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.ScrapYellow.itemIndex)
                         ], 3.4f, 14f);
                         ChatCommander.Output($"Dropped scrap pickups @ {user.userName}.");
                         break;
                     case "v":
                         PressureDrop.Drop.DropStyleChest(target, [
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("BearVoid")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("MissileVoid")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ExtraLifeVoid")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("VoidMegaCrabItem"))
+                            PickupCatalog.FindPickupIndex(DLC1Content.Items.BearVoid.itemIndex),
+                            PickupCatalog.FindPickupIndex(DLC1Content.Items.MissileVoid.itemIndex),
+                            PickupCatalog.FindPickupIndex(DLC1Content.Items.ExtraLifeVoid.itemIndex),
+                            PickupCatalog.FindPickupIndex(DLC1Content.Items.VoidMegaCrabItem.itemIndex)
                         ], 3.4f, 14f);
                         ChatCommander.Output($"Dropped void pickups @ {user.userName}.");
                         break;
                     case "h":
                         PressureDrop.Drop.DropStyleChest(target, [
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ExtraLifeConsumed")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("Tonic")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("HealingPotionConsumed")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("CaptainDefenseMatrix")),
-                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("DrizzlePlayerHelper"))
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.ExtraLifeConsumed.itemIndex),
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.TonicAffliction.itemIndex),
+                            PickupCatalog.FindPickupIndex(DLC1Content.Items.HealingPotionConsumed.itemIndex),
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.CaptainDefenseMatrix.itemIndex),
+                            PickupCatalog.FindPickupIndex(RoR2Content.Items.DrizzlePlayerHelper.itemIndex)
                         ], 3.4f, 14f);
                         ChatCommander.Output($"Dropped special pickups @ {user.userName}.");
                         break;
