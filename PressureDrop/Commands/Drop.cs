@@ -40,12 +40,12 @@ namespace PressureDrop.Commands
             ItemIndex itemIndex = inventory.FindItemInInventory(args[1]);
 
             if (itemIndex == ItemIndex.None) {
-                ChatCommander.Output($"'{args[1]}' did not match any items in {name}'s inventory.");
+                Feedback($"Could not match '<color=#e5eefc>{args[1]}</color>' to an item in {name}'s inventory.");
             }
             else {
                 ItemDef def = ItemCatalog.GetItemDef(itemIndex);
                 if (def == RoR2Content.Items.CaptainDefenseMatrix) {
-                    ChatCommander.Output($"{ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)} can not be dropped.");
+                    Feedback($"{ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)} can not be dropped.");
                 }
                 else {
                     int count = inventory.GetItemCount(def.itemIndex);
@@ -55,15 +55,22 @@ namespace PressureDrop.Commands
                         inventory.RemoveItem(def.itemIndex, count);
                         DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count);
                     }
-                    ChatCommander.Output($"{name} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)} <style=cStack>x{count}</style>");
+                    Feedback($"{name} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)}({((count != 1) ? count : "")})");
                 }
             }
         }
 
+        /// <summary>
+        /// Wrapper for sending a chat message styled after the vanilla "picked up {item}" message.
+        /// </summary>
+        /// <param name="message"></param>
+        private static void Feedback(string message)
+            => Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cEvent>" + message + "</color>"});
+
         private static void ShowHelp()
         {
             // todo
-            ChatCommander.Output("/syntax error");
+            ChatCommander.Output("syntax error");
         }
 
         public static void DropStyleChest(Transform target, PickupIndex dropPickup, int dropCount, float forwardVelocity = 2f, float upVelocity = 20f)
