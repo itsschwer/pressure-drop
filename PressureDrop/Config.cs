@@ -10,9 +10,13 @@ namespace PressureDrop
 
         // Drop Command
         private readonly ConfigEntry<bool> _dropEnabled;
+        private readonly ConfigEntry<bool> _dropTeleporterEnabled;
+        private readonly ConfigEntry<bool> _dropDeadEnabled;
         private readonly ConfigEntry<int> _maxItemsToDropAtATime;
         // Accessors
         public bool DropEnabled => _dropEnabled.Value;
+        public bool DropTeleporterEnabled => _dropTeleporterEnabled.Value;
+        public bool DropDeadEnabled => _dropDeadEnabled.Value;
         public int MaxItemsToDropAtATime => _maxItemsToDropAtATime.Value > 0 ? _maxItemsToDropAtATime.Value : 1;
 
 
@@ -46,6 +50,10 @@ namespace PressureDrop
             // Drop Command
             _dropEnabled = config.Bind<bool>("Drop Command", "dropEnabled", true,
                 "Whether the /drop command should be enabled or not.");
+            _dropTeleporterEnabled = config.Bind<bool>("Drop Command", "dropTeleporterEnabled", true,
+                "Whether players should be able to send their drops to the Teleporter or not.");
+            _dropDeadEnabled = config.Bind<bool>("Drop Command", "dropDeadEnabled", true,
+                "Whether dead players should be able to drop items.\nRequires dropTeleporterEnabled to be true.");
             _maxItemsToDropAtATime = config.Bind<int>("Drop Command", "maxItemsToDropAtATime", 10,
                 "The maximum amount of items to drop from the player at a time (similar to Scrappers).\nMinimum value is 1.");
 

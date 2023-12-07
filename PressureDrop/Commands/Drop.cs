@@ -39,8 +39,6 @@ namespace PressureDrop.Commands
             Transform target = user.GetCurrentBody()?.gameObject.transform;
             ItemIndex itemIndex = inventory.FindItemInInventory(args[1]);
 
-            bool isDead = (target == null);
-
             if (itemIndex == ItemIndex.None) {
                 Feedback($"Could not match '<color=#e5eefc>{args[1]}</color>' to an item in {name}'s inventory.");
             }
@@ -55,17 +53,48 @@ namespace PressureDrop.Commands
 
                     string displayCount = ((count != 1) ? $"({count})" : "");
                     string message = $"{name} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)}{displayCount}";
-                    if (count > 0) {
-                        inventory.RemoveItem(def.itemIndex, count);
 
-                        Transform tp = TeleporterInteraction.instance?.transform;
-                        if ((dropAtTeleporter || isDead) && tp != null) {
-                            target = tp;
-                            message += " at the Teleporter";
+                    if (count > 0) {
+                        // No body, assume dead
+                        if (target == null) {
+                            if (Plugin.Config.DropDeadEnabled && Plugin.Config.DropTeleporterEnabled) {
+                                dropAtTeleporter = true;
+                            }
+                            else {
+                                Feedback("Dead players can't drop items <sprite name=\"Skull\" tint=1>");
+                                return;
+                            }
                         }
 
-                        if (target == null) Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cUtility>No drop target <sprite name=\"Skull\" tint=1></style>" });
-                        else DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count);
+                        if (dropAtTeleporter) {
+                            if (Plugin.Config.DropTeleporterEnabled) {
+                                Transform tp = TeleporterInteraction.instance?.transform;
+
+                                // Chat message to check for if implementing ping requirement [language specific!]
+                                // <style=cIsDamage>USER has found: Teleporter.</style>"
+
+                                if (tp != null) {
+                                    target = tp;
+                                    message += " at the Teleporter";
+                                }
+                                else {
+                                    Feedback("There is no Teleporter to drop at <sprite name=\"Skull\" tint=1>");
+                                    return;
+                                }
+                            }
+                            else {
+                                Feedback("Dropping at the Teleporter is disabled <sprite name=\"Skull\" tint=1>");
+                                return;
+                            }
+                        }
+
+                        if (target == null) {
+                            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cUtility>No drop target <sprite name=\"Skull\" tint=1></style>" });
+                        }
+                        else {
+                            inventory.RemoveItem(def.itemIndex, count);
+                            DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count, 3.4f, 14f);
+                        }
                     }
                     Feedback(message);
                 }
@@ -79,10 +108,7 @@ namespace PressureDrop.Commands
         private static void Feedback(string message)
             => Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cEvent>" + message + "</color>"});
 
-        private static void ShowHelp(string[] args)
-        {
-            ChatCommander.OutputFail(args[0], "expects an item name (without spaces).");
-        }
+        private static void ShowHelp(string[] args) => ChatCommander.OutputFail(args[0], "expects an item name (without spaces).");
 
         public static void DropStyleChest(Transform target, PickupIndex dropPickup, int dropCount, float forwardVelocity = 2f, float upVelocity = 20f)
         {

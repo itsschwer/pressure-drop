@@ -21,12 +21,8 @@ I wanted to make activating the pressure plates more accessible *(no more waitin
 
 I don't know how this mod behaves when installed by both host and client (or just non-host).
 
-# temp: todo: drop
+# temp: todo
 
-- drop command: \<item\> \[@tp\]
-    - if player dead (or arg specified), do at teleporter instead
-        - ~~if no tp (hidden realm, moon), display message (no abusing timer, good luck o7)~~ — superseded by ping requirement
-- configs
-    - can drop
-        - can drop at tp (once pinged) *(public for reload sub/unsub? (stage start → false; chat regex → true))*
-            - can drop when dead
+- require teleporter to have been pinged before being able to drop items at it?
+    - sub to stage start event to set pinged state false?
+    - sub to chat and regex to find ping message to set pinged state true?
