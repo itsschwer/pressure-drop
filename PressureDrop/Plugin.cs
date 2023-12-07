@@ -10,8 +10,7 @@ namespace PressureDrop
     // BepInEx searches for all classes inheriting from BaseUnityPlugin to initialize on startup.
     public class Plugin : BaseUnityPlugin
     {
-        // The GUID should be a unique ID for this plugin,
-        // which is human readable (as it is used in places like the config).
+        // The GUID should be a unique ID for this plugin and human readable (as it is used in places like the config).
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
         public const string Name = "PressureDrop";
@@ -36,41 +35,37 @@ namespace PressureDrop
 
         private void OnEnable()
         {
+            ConfigureModules();
             ChatCommander.Subscribe();
             ChatCommander.OnChatCommand += ParseReload;
 #if DEBUG
-            DebugCheats.Enable();
+            Commands.DebugCheats.Enable();
 #endif
-            Config._pressurePlateTimer.SettingChanged += ConfigurePressurePlateTimerComponent;
-
-            ConfigurePressurePlateTimerComponent();
-
-            ConfigureDrop(true);
-
             Log.Message($"{Plugin.Slug}> enabled.");
         }
 
         private void OnDisable()
         {
+            ConfigureModules();
             ChatCommander.Unsubscribe();
             ChatCommander.OnChatCommand -= ParseReload;
 #if DEBUG
-            DebugCheats.Disable();
+            Commands.DebugCheats.Disable();
 #endif
-            Config._pressurePlateTimer.SettingChanged -= ConfigurePressurePlateTimerComponent;
-
-            ConfigureDrop(false);
-
             Log.Message($"{Plugin.Slug}> disabled.");
         }
 
+        /// <summary>
+        /// Wrapper for SetActive(bool), passing in NetworkServer.active,
+        /// which appears to be used for determining if client is host.
+        /// </summary>
         private void SetPluginActiveState(Run run = null) => SetActive(UnityEngine.Networking.NetworkServer.active);
 
         /// <summary>
         /// All plugins are attached to the same
         /// <see href="https://github.com/BepInEx/BepInEx/blob/0d06996b52c0215a8327b8c69a747f425bbb0023/BepInEx/Bootstrap/Chainloader.cs#L88">GameObject</see>,
         /// so manually manage components instead of calling
-        /// <c>this.gameObject.SetActive(value)</c>.
+        /// this.gameObject.SetActive(bool).
         /// </summary>
         private void SetActive(bool value) {
             this.enabled = value;
@@ -84,24 +79,27 @@ namespace PressureDrop
             if (user != LocalUserManager.GetFirstLocalUser().currentNetworkUser) return; // Only allow host to reload
 
             base.Config.Reload();
+            ConfigureModules();
             Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"Reloaded configuration for <style=cSub>{Plugin.Slug}</style>" });
         }
 
-        private void ConfigurePressurePlateTimerComponent(object sender = null, System.EventArgs e = null)
+        private void ConfigureModules()
         {
-            if (Config.PressurePlateTimer != 0) {
+            ConfigurePressurePlateTimerComponent();
+            ConfigureDropModule();
+        }
+
+        private void ConfigurePressurePlateTimerComponent()
+        {
+            if (Config.PressurePlateTimer != 0 && this.enabled) {
                 if (!pressure) pressure = this.gameObject.AddComponent<PressurePlateTimer>();
             }
             else Destroy(pressure);
-#if DEBUG
-            if (sender != null) Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>ptt> {Config._pressurePlateTimer.Definition.Key} updated to {Config.PressurePlateTimer}</style>" });
-#endif
         }
 
-        private void ConfigureDrop(bool shouldHook)
+        private void ConfigureDropModule()
         {
-            // todo: configs
-            if (shouldHook) Drop.Hook();
+            if (Config.DropEnabled && this.enabled) Drop.Hook();
             else Drop.Unhook();
         }
     }

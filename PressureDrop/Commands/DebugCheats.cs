@@ -2,7 +2,7 @@
 using RoR2;
 using UnityEngine;
 
-namespace PressureDrop
+namespace PressureDrop.Commands
 {
     public static class DebugCheats
     {

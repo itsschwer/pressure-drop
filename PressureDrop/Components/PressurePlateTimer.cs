@@ -22,7 +22,7 @@ namespace PressureDrop
                     // Pressure plates may no longer exist if unloaded (e.g. stage transition)
                     string identifier = $"[no longer exists.]";
                     if (key) identifier = $"{key.name} @ {key.transform.position}";
-                    Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>ppt> {identifier} inactive ({timers.Count} active)</style>" });
+                    Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>{identifier} inactive ({timers.Count} active)</style>" });
 #endif
                 }
             }
@@ -36,7 +36,7 @@ namespace PressureDrop
             if (switchIsDown) {
                 if (switchIsDown != self.switchDown) {
                     string message = (Random.value <= 0.2) ? "Press your plate!" : "A pressure plate is pressed..";
-                    Output(message);
+                    Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cEvent>" + message + "</style>" });
                 }
 
                 orig(self, switchIsDown);
@@ -44,18 +44,17 @@ namespace PressureDrop
 #if DEBUG
                 string identifier = $"[no longer exists?]";
                 if (self) identifier = $"{self.name} @ {self.transform.position}";
-                Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>ppt> {identifier} active {time}s ({timers.Count} active)</style>" });
+                Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>{identifier} active {time}s ({timers.Count} active)</style>" });
 #endif
             }
             else if (time > 0 && !timers.ContainsKey(self)) {
                 if (switchIsDown != self.switchDown) {
-                    Output("A pressure plate releases...");
+                    const string message = "A pressure plate releases...";
+                    Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cEvent>" + message + "</style>" });
                 }
 
                 orig(self, switchIsDown);
             }
         }
-
-        private static void Output(string message) => Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cStack>" + message + "</style>" });
     }
 }

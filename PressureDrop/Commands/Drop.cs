@@ -25,13 +25,13 @@ namespace PressureDrop.Commands
         private static void DropCommand(NetworkUser user, string[] args)
         {
             const int expectedArgs = 2;
-            if (args.Length < expectedArgs) { ShowHelp(); return; }
+            if (args.Length < expectedArgs) { ShowHelp(args); return; }
 
             bool dropAtTeleporter = false;
 
             if (args.Length > expectedArgs) {
                 if (args[2] == "@") dropAtTeleporter = true;
-                else { ShowHelp(); return; }
+                else { ShowHelp(args); return; }
             }
 
             string name = user.masterController.GetDisplayName();
@@ -67,10 +67,9 @@ namespace PressureDrop.Commands
         private static void Feedback(string message)
             => Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cEvent>" + message + "</color>"});
 
-        private static void ShowHelp()
+        private static void ShowHelp(string[] args)
         {
-            // todo
-            ChatCommander.Output("syntax error");
+            ChatCommander.OutputFail(args[0], "expects an item name (without spaces).");
         }
 
         public static void DropStyleChest(Transform target, PickupIndex dropPickup, int dropCount, float forwardVelocity = 2f, float upVelocity = 20f)

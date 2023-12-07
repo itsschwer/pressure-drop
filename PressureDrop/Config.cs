@@ -4,10 +4,7 @@ namespace PressureDrop
 {
     internal class Config
     {
-        /// <summary>
-        /// Only marked public to expose the SettingChanged event. Use the accessor instead where possible.
-        /// </summary>
-        public readonly ConfigEntry<float> _pressurePlateTimer;
+        private readonly ConfigEntry<float> _pressurePlateTimer;
         /// <summary>
         /// The length of time (seconds) a pressure plate will remain pressed after being activated.
         /// </summary>
@@ -44,9 +41,9 @@ namespace PressureDrop
         [System.Diagnostics.CodeAnalysis.SuppressMessage("", "IDE0290")] // Use primary constructor
         public Config(ConfigFile config)
         {
-            // Prefix with underscore to sort at top in config editor
-            _pressurePlateTimer = config.Bind<float>("_Timed Pressure Plates", "pressurePlateTimer", 30f,
-                "The length of time (seconds) a pressure plate will remain pressed after being activated.\nSpecial cases:\tnegative values — pressure plates never release\n\t\t0 — disables timed functionality (use vanilla behaviour).");
+            // Prefix section to sort to top in config editor
+            _pressurePlateTimer = config.Bind<float>("> Timed Pressure Plates", "pressurePlateTimer", 30f,
+                "The length of time (seconds) a pressure plate will remain pressed after being activated.\nZero disables time functionality (reverts to vanilla behaviour).\nNegative values prevent pressure plates from releasing once activated.");
 
 
             // Drop Command
