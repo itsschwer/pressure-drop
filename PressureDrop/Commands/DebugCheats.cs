@@ -103,7 +103,7 @@ namespace PressureDrop
 
         private static void PickupCommand(NetworkUser user, string[] args)
         {
-            string invalid = "expects one argument from the following options [<style=cSub>i</style>, <style=cSub>e</style>, <style=cSub>s</style>, <style=cSub>v</style>]";
+            string invalid = "expects one argument from the following options [<style=cSub>i</style>, <style=cSub>e</style>, <style=cSub>s</style>, <style=cSub>v</style>, <style=cSub>h</style>]";
 
             const int expectedArgs = 2;
             if (args.Length == expectedArgs) {
@@ -149,6 +149,16 @@ namespace PressureDrop
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("VoidMegaCrabItem"))
                         ]);
                         ChatCommander.Output($"Dropped void pickups @ {user.userName}.");
+                        break;
+                    case "h":
+                        Commands.Drop.DropStyleChest(target, [
+                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ExtraLifeConsumed")),
+                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("Tonic")),
+                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("HealingPotionConsumed")),
+                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("CaptainDefenseMatrix")),
+                            PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("DrizzlePlayerHelper"))
+                        ]);
+                        ChatCommander.Output($"Dropped special pickups @ {user.userName}.");
                         break;
                 }
             }

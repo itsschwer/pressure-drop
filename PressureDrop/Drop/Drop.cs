@@ -1,4 +1,6 @@
 ﻿using RoR2;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace PressureDrop
@@ -32,6 +34,10 @@ namespace PressureDrop
                 PickupDef def = PickupCatalog.GetPickupDef(createPickupInfo.pickupIndex);
 #if DEBUG
                 Log.Message($"itemIndex: {def.itemIndex} | itemTier: {def.itemTier} | equipmentIndex: {def.equipmentIndex} | isLunar: {def.isLunar} | isBoss: {def.isBoss}");
+                if (def.itemIndex != ItemIndex.None) {
+                    ItemDef itemDef = ItemCatalog.GetItemDef(def.itemIndex);
+                    Log.Message($"    hidden: {itemDef.hidden} | canRemove: {itemDef.canRemove} | {itemDef.nameToken}");
+                }
 #endif
                 if (!GetDropRecyclable(def)) drop.Recycled = true;
 

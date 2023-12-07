@@ -29,11 +29,11 @@ I don't know how this mod behaves when installed by both host and client (or jus
         - if player dead (or arg specified), do at teleporter instead
             - if no tp (hidden realm, moon), display message (no abusing timer, good luck o7)
         - track transform + last position if nulled
-- steal command: \<user\> \<item\> \[@tp\]
-    - same as drop, but uses specified user's inventory instead
 - configs
     - can drop
         - can drop when dead
         - can drop at tp
-    - can recycle drop
-    - can drop (tiers)
+            - tp pinged first *(public for reload sub/unsub?)*
+                - stage start → false
+                - check ping (chat regex) → true
+    - can drop equipment?
