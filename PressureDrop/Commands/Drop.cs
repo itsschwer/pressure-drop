@@ -53,19 +53,21 @@ namespace PressureDrop.Commands
                     int count = inventory.GetItemCount(def.itemIndex);
                     if (count > Plugin.Config.MaxItemsToDropAtATime) count = Plugin.Config.MaxItemsToDropAtATime;
 
+                    string displayCount = ((count != 1) ? $"({count})" : "");
+                    string message = $"{name} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)}{displayCount}";
                     if (count > 0) {
                         inventory.RemoveItem(def.itemIndex, count);
 
-                        if (dropAtTeleporter || isDead) {
-                            Transform tp = TeleporterInteraction.instance?.transform;
-                            if (tp != null) target = tp;
+                        Transform tp = TeleporterInteraction.instance?.transform;
+                        if ((dropAtTeleporter || isDead) && tp != null) {
+                            target = tp;
+                            message += " at the Teleporter";
                         }
 
                         if (target == null) Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cUtility>No drop target <sprite name=\"Skull\" tint=1></style>" });
                         else DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count);
                     }
-                    string displayCount = ((count != 1) ? $"({count})" : "");
-                    Feedback($"{name} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)}{displayCount}");
+                    Feedback(message);
                 }
             }
         }
