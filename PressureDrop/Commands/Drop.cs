@@ -28,7 +28,6 @@ namespace PressureDrop.Commands
             if (args.Length < expectedArgs) { ShowHelp(args); return; }
 
             bool dropAtTeleporter = false;
-
             if (args.Length > expectedArgs) {
                 if (args[2] == "@") dropAtTeleporter = true;
                 else { ShowHelp(args); return; }
@@ -93,7 +92,7 @@ namespace PressureDrop.Commands
                         }
                         else {
                             inventory.RemoveItem(def.itemIndex, count);
-                            DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count, 3.4f, 14f);
+                            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count, 3.4f, 14f);
                         }
                     }
                     Feedback(message);
@@ -109,41 +108,5 @@ namespace PressureDrop.Commands
             => Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cEvent>" + message + "</color>"});
 
         private static void ShowHelp(string[] args) => ChatCommander.OutputFail(args[0], "expects an item name (without spaces).");
-
-        public static void DropStyleChest(Transform target, PickupIndex dropPickup, int dropCount, float forwardVelocity = 2f, float upVelocity = 20f)
-        {
-            if (dropPickup != PickupIndex.none && dropCount >= 1) {
-                float angle = 360f / (float)dropCount;
-                Vector3 vector = Vector3.up * upVelocity + target.forward * forwardVelocity;
-                Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
-
-                for (int i = 0; i < dropCount; i++) {
-                    GenericPickupController.CreatePickupInfo info = default;
-                    info.rotation = PressureDrop.Drop.identifier;
-                    info.pickupIndex = dropPickup;
-                    PickupDropletController.CreatePickupDroplet(info, target.position + Vector3.up * 1.5f, vector);
-                    vector = quaternion * vector;
-                }
-            }
-        }
-
-        public static void DropStyleChest(Transform target, PickupIndex[] drops, float forwardVelocity = 2f, float upVelocity = 20f)
-        {
-            if (drops.Length >= 1) {
-                float angle = 360f / (float)drops.Length;
-                Vector3 vector = Vector3.up * upVelocity + target.forward * forwardVelocity;
-                Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
-
-                for (int i = 0; i < drops.Length; i++) {
-                    if (drops[i] == PickupIndex.none) continue;
-
-                    GenericPickupController.CreatePickupInfo info = default;
-                    info.rotation = PressureDrop.Drop.identifier;
-                    info.pickupIndex = drops[i];
-                    PickupDropletController.CreatePickupDroplet(info, target.position + Vector3.up * 1.5f, vector);
-                    vector = quaternion * vector;
-                }
-            }
-        }
     }
 }

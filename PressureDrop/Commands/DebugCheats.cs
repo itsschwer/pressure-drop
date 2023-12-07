@@ -115,50 +115,50 @@ namespace PressureDrop.Commands
                         ChatCommander.OutputFail(args[0], invalid);
                         return;
                     case "i":
-                        Commands.Drop.DropStyleChest(target, [
+                        PressureDrop.Drop.DropStyleChest(target, [
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("SprintBonus")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("EquipmentMagazine")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ExtraLife")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("SprintWisp")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("AutoCastEquipment")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("Pearl"))
-                        ]);
+                        ], 3.4f, 14f);
                         ChatCommander.Output($"Dropped item pickups @ {user.userName}.");
                         break;
                     case "e":
-                        Commands.Drop.DropStyleChest(target, [
+                        PressureDrop.Drop.DropStyleChest(target, [
                             PickupCatalog.FindPickupIndex(EquipmentCatalog.FindEquipmentIndex("Recycle")),
                             PickupCatalog.FindPickupIndex(EquipmentCatalog.FindEquipmentIndex("Tonic")),
                             PickupCatalog.FindPickupIndex(EquipmentCatalog.FindEquipmentIndex("EliteFireEquipment"))
-                        ]);
+                        ], 3.4f, 14f);
                         ChatCommander.Output($"Dropped equipment pickups @ {user.userName}.");
                         break;
                     case "s":
-                        Commands.Drop.DropStyleChest(target, [
+                        PressureDrop.Drop.DropStyleChest(target, [
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapWhite")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapGreen")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapRed")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ScrapYellow"))
-                        ]);
+                        ], 3.4f, 14f);
                         ChatCommander.Output($"Dropped scrap pickups @ {user.userName}.");
                         break;
                     case "v":
-                        Commands.Drop.DropStyleChest(target, [
+                        PressureDrop.Drop.DropStyleChest(target, [
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("BearVoid")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("MissileVoid")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ExtraLifeVoid")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("VoidMegaCrabItem"))
-                        ]);
+                        ], 3.4f, 14f);
                         ChatCommander.Output($"Dropped void pickups @ {user.userName}.");
                         break;
                     case "h":
-                        Commands.Drop.DropStyleChest(target, [
+                        PressureDrop.Drop.DropStyleChest(target, [
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ExtraLifeConsumed")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("Tonic")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("HealingPotionConsumed")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("CaptainDefenseMatrix")),
                             PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("DrizzlePlayerHelper"))
-                        ]);
+                        ], 3.4f, 14f);
                         ChatCommander.Output($"Dropped special pickups @ {user.userName}.");
                         break;
                 }
