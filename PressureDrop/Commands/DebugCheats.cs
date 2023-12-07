@@ -92,6 +92,7 @@ namespace PressureDrop.Commands
                 }
 
                 if (args.Length > expectedArgs && int.TryParse(args[2], out int count)) amount = count;
+                if (amount > 1000) amount = 1000; // Let's not get too excessive
 
                 ItemDef item = ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex(itemName));
                 user.master.inventory.GiveItem(item, amount);

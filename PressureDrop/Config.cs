@@ -5,9 +5,6 @@ namespace PressureDrop
     internal class Config
     {
         private readonly ConfigEntry<float> _pressurePlateTimer;
-        /// <summary>
-        /// The length of time (seconds) a pressure plate will remain pressed after being activated.
-        /// </summary>
         public float PressurePlateTimer => _pressurePlateTimer.Value;
 
 
@@ -43,12 +40,12 @@ namespace PressureDrop
         {
             // Prefix section to sort to top in config editor
             _pressurePlateTimer = config.Bind<float>("> Timed Pressure Plates", "pressurePlateTimer", 30f,
-                "The length of time (seconds) a pressure plate will remain pressed after being activated.\nZero disables time functionality (reverts to vanilla behaviour).\nNegative values prevent pressure plates from releasing once activated.");
+                "The length of time (seconds) a pressure plate will remain pressed after being activated.\nZero disables time functionality (reverts to vanilla behaviour). Negative values prevent pressure plates from releasing once activated.");
 
 
             // Drop Command
             _dropEnabled = config.Bind<bool>("Drop Command", "dropEnabled", true,
-                "TODO");
+                "Whether the /drop command should be enabled or not.");
             _maxItemsToDropAtATime = config.Bind<int>("Drop Command", "maxItemsToDropAtATime", 10,
                 "The maximum amount of items to drop from the player at a time (similar to Scrappers).\nMinimum value is 1.");
 

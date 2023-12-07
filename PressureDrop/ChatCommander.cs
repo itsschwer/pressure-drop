@@ -71,7 +71,7 @@ namespace PressureDrop
         /// <param name="message"></param>
         public static void OutputFail(string cmd, string message)
         {
-            Output($"<style=cDeath>Failed:</style> <style=cSub>{ChatCommander.commandPrefix}{cmd}</style> {message}");
+            Output($"<style=cDeath>Failed:</style> <color=#ffffff>{ChatCommander.commandPrefix}{cmd}</color> {message}");
         }
     }
 }
