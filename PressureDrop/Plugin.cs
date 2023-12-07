@@ -99,8 +99,8 @@ namespace PressureDrop
 
         private void ConfigureDropModule()
         {
+            Drop.Unhook();
             if (Config.DropEnabled && this.enabled) Drop.Hook();
-            else Drop.Unhook();
         }
     }
 }

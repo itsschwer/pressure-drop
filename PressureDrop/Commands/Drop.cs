@@ -53,9 +53,16 @@ namespace PressureDrop.Commands
 
                     if (count > 0) {
                         inventory.RemoveItem(def.itemIndex, count);
+
+                        if (dropAtTeleporter) {
+                            Transform tp = TeleporterInteraction.instance?.transform;
+                            if (tp != null) target = tp;
+                        }
+
                         DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count);
                     }
-                    Feedback($"{name} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)}({((count != 1) ? count : "")})");
+                    string displayCount = ((count != 1) ? $"({count})" : "");
+                    Feedback($"{name} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)}{displayCount}");
                 }
             }
         }
