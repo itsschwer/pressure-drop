@@ -36,8 +36,10 @@ namespace PressureDrop.Commands
 
             string name = user.masterController.GetDisplayName();
             Inventory inventory = user.master.inventory;
-            Transform target = user.GetCurrentBody().gameObject.transform;
+            Transform target = user.GetCurrentBody()?.gameObject.transform;
             ItemIndex itemIndex = inventory.FindItemInInventory(args[1]);
+
+            bool isDead = (target == null);
 
             if (itemIndex == ItemIndex.None) {
                 Feedback($"Could not match '<color=#e5eefc>{args[1]}</color>' to an item in {name}'s inventory.");
@@ -54,12 +56,13 @@ namespace PressureDrop.Commands
                     if (count > 0) {
                         inventory.RemoveItem(def.itemIndex, count);
 
-                        if (dropAtTeleporter) {
+                        if (dropAtTeleporter || isDead) {
                             Transform tp = TeleporterInteraction.instance?.transform;
                             if (tp != null) target = tp;
                         }
 
-                        DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count);
+                        if (target == null) Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cUtility>No drop target <sprite name=\"Skull\" tint=1></style>" });
+                        else DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count);
                     }
                     string displayCount = ((count != 1) ? $"({count})" : "");
                     Feedback($"{name} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)}{displayCount}");
