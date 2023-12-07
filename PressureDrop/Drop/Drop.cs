@@ -77,5 +77,38 @@ namespace PressureDrop
 
             return result;
         }
+
+        /// <summary>
+        /// Searches the inventory for an item with a name that matches the search query. Items are checked in reverse acquisition order (most recent match first).
+        /// </summary>
+        /// <param name="inventory"></param>
+        /// <param name="query"></param>
+        /// <returns>The ItemIndex of the matched item. If there is no match, returns ItemIndex.None instead.</returns>
+        public static ItemIndex FindItemInInventory(this Inventory inventory, string query)
+        {
+            List<ItemIndex> items = inventory.itemAcquisitionOrder;
+            if (items == null || items.Count <= 0) return ItemIndex.None;
+
+            query = FormatStringForQuerying(query);
+            // Iterate in reverse to match most recent
+            for (int i = (items.Count - 1); i >= 0; i--) {
+                ItemDef check = ItemCatalog.GetItemDef(items[i]);
+                // Do not match hidden (internal) items
+                if (check.hidden) continue;
+                // Do not match non-removable (consumed) items
+                if (!check.canRemove) continue;
+
+                if (FormatStringForQuerying(Language.GetString(check.nameToken)).Contains(query)) return check.itemIndex;
+            }
+
+            return ItemIndex.None;
+        }
+
+        /// <summary>
+        /// Formats the input string to be ready for comparison (removes some common punctuation marks and converts to lowercase).
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>The formatted string.</returns>
+        public static string FormatStringForQuerying(string input) => Regex.Replace(input, "[ '_.,-]", string.Empty).ToLowerInvariant();
     }
 }

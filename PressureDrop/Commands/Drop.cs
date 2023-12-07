@@ -19,31 +19,58 @@ namespace PressureDrop.Commands
                 case "drop":
                     DropCommand(user, args);
                     break;
-                case "s":
-                case "steal":
-                    StealCommand(user, args);
-                    break;
             }
         }
 
         private static void DropCommand(NetworkUser user, string[] args)
         {
-            // todo
+            const int expectedArgs = 2;
+            if (args.Length < expectedArgs) { ShowHelp(); return; }
+
+            bool dropAtTeleporter = false;
+
+            if (args.Length > expectedArgs) {
+                if (args[2] == "@") dropAtTeleporter = true;
+                else { ShowHelp(); return; }
+            }
+
+            string name = user.masterController.GetDisplayName();
+            Inventory inventory = user.master.inventory;
+            Transform target = user.GetCurrentBody().gameObject.transform;
+            ItemIndex itemIndex = inventory.FindItemInInventory(args[1]);
+
+            if (itemIndex == ItemIndex.None) {
+                ChatCommander.Output($"'{args[1]}' did not match any items in {name}'s inventory.");
+            }
+            else {
+                ItemDef def = ItemCatalog.GetItemDef(itemIndex);
+                if (def == RoR2Content.Items.CaptainDefenseMatrix) {
+                    ChatCommander.Output($"{ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)} can not be dropped.");
+                }
+                else {
+                    int count = inventory.GetItemCount(def.itemIndex);
+                    if (count > Plugin.Config.MaxItemsToDropAtATime) count = Plugin.Config.MaxItemsToDropAtATime;
+
+                    if (count > 0) {
+                        inventory.RemoveItem(def.itemIndex, count);
+                        DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count);
+                    }
+                    ChatCommander.Output($"{name} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)} <style=cStack>x{count}</style>");
+                }
+            }
         }
 
-        private static void StealCommand(NetworkUser user, string[] args)
+        private static void ShowHelp()
         {
             // todo
+            ChatCommander.Output("/syntax error");
         }
 
-        public static void DropStyleChest(Transform target, PickupIndex dropPickup, int dropCount)
+        public static void DropStyleChest(Transform target, PickupIndex dropPickup, int dropCount, float forwardVelocity = 2f, float upVelocity = 20f)
         {
-            float upStrength = 20f;
-            float forwardStrength = 2f;
-
             if (dropPickup != PickupIndex.none && dropCount >= 1) {
                 float angle = 360f / (float)dropCount;
-                Vector3 vector = Vector3.up * upStrength + target.forward * forwardStrength;
+                Vector3 vector = Vector3.up * upVelocity + target.forward * forwardVelocity;
                 Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
 
                 for (int i = 0; i < dropCount; i++) {
@@ -56,14 +83,11 @@ namespace PressureDrop.Commands
             }
         }
 
-        public static void DropStyleChest(Transform target, PickupIndex[] drops)
+        public static void DropStyleChest(Transform target, PickupIndex[] drops, float forwardVelocity = 2f, float upVelocity = 20f)
         {
-            float upStrength = 20f;
-            float forwardStrength = 2f;
-
             if (drops.Length >= 1) {
                 float angle = 360f / (float)drops.Length;
-                Vector3 vector = Vector3.up * upStrength + target.forward * forwardStrength;
+                Vector3 vector = Vector3.up * upVelocity + target.forward * forwardVelocity;
                 Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
 
                 for (int i = 0; i < drops.Length; i++) {

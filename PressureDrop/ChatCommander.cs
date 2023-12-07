@@ -45,6 +45,16 @@ namespace PressureDrop
             return null;
         }
 
+        public static string GetColoredPickupLanguageString(string token, ItemIndex itemIndex)
+            => GetColoredPickupLanguageString(token, PickupCatalog.FindPickupIndex(itemIndex));
+        public static string GetColoredPickupLanguageString(string token, EquipmentIndex equipmentIndex)
+            => GetColoredPickupLanguageString(token, PickupCatalog.FindPickupIndex(equipmentIndex));
+        public static string GetColoredPickupLanguageString(string token, PickupIndex pickupIndex)
+        {
+            PickupDef def = PickupCatalog.GetPickupDef(pickupIndex);
+            return Util.GenerateColoredString(Language.GetString(token), def.baseColor);
+        }
+
         /// <summary>
         /// Wrapper for sending a chat message styled as an output of a command.
         /// </summary>

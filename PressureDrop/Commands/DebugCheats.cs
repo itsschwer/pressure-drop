@@ -74,7 +74,7 @@ namespace PressureDrop
                             const string equipmentName = "Scanner";
                             user.master.inventory.GiveEquipmentString(equipmentName);
                             EquipmentDef equipment = EquipmentCatalog.GetEquipmentDef(EquipmentCatalog.FindEquipmentIndex(equipmentName));
-                            ChatCommander.Output($"Gave {user.userName} <style=cIsDamage>{Language.GetString(equipment.nameToken)}</style>");
+                            ChatCommander.Output($"Gave {user.userName} {ChatCommander.GetColoredPickupLanguageString(equipment.nameToken, equipment.equipmentIndex)}");
                             return;
                         } 
                     case "t":
@@ -96,7 +96,7 @@ namespace PressureDrop
                 ItemDef item = ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex(itemName));
                 user.master.inventory.GiveItem(item, amount);
 
-                ChatCommander.Output($"Gave {user.userName} <style=cIsDamage>{Language.GetString(item.nameToken)}</style> <style=cStack>x{amount}</style>");
+                ChatCommander.Output($"Gave {user.userName} {ChatCommander.GetColoredPickupLanguageString(item.nameToken, item.itemIndex)} <style=cStack>x{amount}</style>");
             }
             else ChatCommander.OutputFail(args[0], invalid);
         }
@@ -107,7 +107,7 @@ namespace PressureDrop
 
             const int expectedArgs = 2;
             if (args.Length == expectedArgs) {
-                Transform target = user.masterController.master.GetBodyObject().transform;
+                Transform target = user.GetCurrentBody().gameObject.transform;
 
                 switch (args[1].ToLowerInvariant()) {
                     default:
