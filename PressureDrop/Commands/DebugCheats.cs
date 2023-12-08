@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PressureDrop.Commands
 {
-    public static class DebugCheats
+    internal static class DebugCheats
     {
         public static void  Enable() => ChatCommander.OnChatCommand += ParseCommand;
         public static void Disable() => ChatCommander.OnChatCommand -= ParseCommand;

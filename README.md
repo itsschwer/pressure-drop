@@ -32,8 +32,8 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 - leave items for your allies:
     - to help distribute the wealth
     - to help them win against the Teleporter boss *(you died)*
-- can spread void items between players
 - can remove items you are not having fun with
+- can spread void items between players
 
 ## configurable
 
@@ -46,6 +46,7 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 - the drop command can be disabled
 - the ability to send items to the Teleporter can be disabled
 - the ability for dead players to drop items can be disabled
+- the ability to drop void items can be enabled
 - which item tiers should be recyclable when dropped can be configured as you see fit *(default: only white and green)*
 
 ## issues

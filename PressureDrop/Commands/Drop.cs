@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PressureDrop.Commands
 {
-    public static class Drop
+    internal static class Drop
     {
         public static void  Enable() => ChatCommander.OnChatCommand += ParseCommand;
         public static void Disable() => ChatCommander.OnChatCommand -= ParseCommand;
@@ -43,7 +43,7 @@ namespace PressureDrop.Commands
             }
             else {
                 ItemDef def = ItemCatalog.GetItemDef(itemIndex);
-                if (def == RoR2Content.Items.CaptainDefenseMatrix) {
+                if (def == RoR2Content.Items.CaptainDefenseMatrix || (!Plugin.Config.DropVoidAllowed && PressureDrop.Drop.IsVoidTier(def.tier))) {
                     Feedback($"{ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)} can not be dropped.");
                 }
                 else {

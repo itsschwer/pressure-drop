@@ -47,10 +47,23 @@ namespace PressureDrop
         }
 
         /// <summary>
+        /// Checks if an ItemTier belongs to a void tier.
+        /// </summary>
+        /// <param name="def"></param>
+        /// <returns>Whether the tier is a void tier or not.</returns>
+        public static bool IsVoidTier(ItemTier tier)
+        {
+            return tier == ItemTier.VoidTier1 ||
+                   tier == ItemTier.VoidTier2 ||
+                   tier == ItemTier.VoidTier3 ||
+                   tier == ItemTier.VoidBoss;
+        }
+
+        /// <summary>
         /// Checks a PickupDef against the config settings to determine whether the item or equipment should be recyclable.
         /// </summary>
         /// <param name="def"></param>
-        /// <returns>Whether the item or equipment should be recyclable.</returns>
+        /// <returns>Whether the item or equipment should be recyclable or not.</returns>
         public static bool GetDropRecyclable(PickupDef def)
         {
             bool result = true;
@@ -61,11 +74,7 @@ namespace PressureDrop
                     (def.itemTier == ItemTier.Tier3 && !Plugin.Config.DropRecyclableRed)   ||
                     (def.itemTier == ItemTier.Boss && !Plugin.Config.DropRecyclableYellow) ||
                     (def.itemTier == ItemTier.Lunar && !Plugin.Config.DropRecyclableLunar) ||
-                    (!Plugin.Config.DropRecyclableVoid &&
-                        ((def.itemTier == ItemTier.VoidTier1) ||
-                         (def.itemTier == ItemTier.VoidTier2) ||
-                         (def.itemTier == ItemTier.VoidTier3) ||
-                         (def.itemTier == ItemTier.VoidBoss))))
+                    (!Plugin.Config.DropRecyclableVoid && IsVoidTier(def.itemTier)))
                     result = false;
             }
             else if (def.equipmentIndex != EquipmentIndex.None) {
