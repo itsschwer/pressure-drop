@@ -91,9 +91,16 @@ namespace PressureDrop.Commands
                             Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cUtility>No drop target <sprite name=\"Skull\" tint=1></style>" });
                         }
                         else {
-                            Vector3 forwardOverride = user.cameraRigController.transform.forward;
-                            forwardOverride.y = 0f;
-                            forwardOverride.Normalize();
+                            Vector3? forwardOverride = null;
+                            CameraRigController c = GetUserCameraRigController(user);
+                            if (c) {
+                                Vector3 f = c.transform.forward;
+                                f.y = 0f;
+                                forwardOverride = f.normalized;
+                            }
+                            else {
+                                Log.Warning($"{name} does not have a CameraRigController?");
+                            }
 
                             inventory.RemoveItem(def.itemIndex, count);
                             PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count, 3.4f, 14f, forwardOverride);
@@ -102,6 +109,20 @@ namespace PressureDrop.Commands
                     Feedback(message);
                 }
             }
+        }
+
+        public static CameraRigController GetUserCameraRigController(NetworkUser user)
+        {
+            // Only works for local user?
+            if (user.cameraRigController) return user.cameraRigController;
+            // Same indices implied by RoR2.RunCameraManager.Update() -- WRONG
+            for (int i = 0; i < NetworkUser.readOnlyInstancesList.Count; i++) {
+                if (NetworkUser.readOnlyInstancesList[i] == user) {
+                    return CameraRigController.readOnlyInstancesList[i];
+                }
+            }
+            // Failed to find
+            return null;
         }
 
         /// <summary>
