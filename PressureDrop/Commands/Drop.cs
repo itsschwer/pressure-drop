@@ -92,9 +92,9 @@ namespace PressureDrop.Commands
                         }
                         else {
                             Vector3? forwardOverride = null;
-                            CameraRigController c = GetUserCameraRigController(user);
-                            if (c) {
-                                Vector3 f = c.transform.forward;
+                            Transform aim = user.GetCurrentBody()?.aimOriginTransform;
+                            if (aim) {
+                                Vector3 f = aim.forward;
                                 f.y = 0f;
                                 forwardOverride = f.normalized;
                             }
@@ -109,20 +109,6 @@ namespace PressureDrop.Commands
                     Feedback(message);
                 }
             }
-        }
-
-        public static CameraRigController GetUserCameraRigController(NetworkUser user)
-        {
-            // Only works for local user?
-            if (user.cameraRigController) return user.cameraRigController;
-            // Same indices implied by RoR2.RunCameraManager.Update() -- WRONG
-            for (int i = 0; i < NetworkUser.readOnlyInstancesList.Count; i++) {
-                if (NetworkUser.readOnlyInstancesList[i] == user) {
-                    return CameraRigController.readOnlyInstancesList[i];
-                }
-            }
-            // Failed to find
-            return null;
         }
 
         /// <summary>
