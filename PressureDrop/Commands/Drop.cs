@@ -91,8 +91,12 @@ namespace PressureDrop.Commands
                             Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cUtility>No drop target <sprite name=\"Skull\" tint=1></style>" });
                         }
                         else {
+                            Vector3 forwardOverride = user.cameraRigController.transform.forward;
+                            forwardOverride.y = 0f;
+                            forwardOverride.Normalize();
+
                             inventory.RemoveItem(def.itemIndex, count);
-                            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count, 3.4f, 14f);
+                            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count, 3.4f, 14f, forwardOverride);
                         }
                     }
                     Feedback(message);
