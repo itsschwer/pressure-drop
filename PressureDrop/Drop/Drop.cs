@@ -128,7 +128,7 @@ namespace PressureDrop
             if (dropPickup != PickupIndex.none && dropCount >= 1)
             {
                 float angle = 360f / (float)dropCount;
-                Vector3 forward = forwardOverride.HasValue ? forwardOverride.Value : target.forward;
+                Vector3 forward = forwardOverride ?? target.forward;
                 Vector3 velocity = Vector3.up * upVelocity + forward * forwardVelocity;
                 Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
 
@@ -148,7 +148,7 @@ namespace PressureDrop
             if (drops.Length >= 1)
             {
                 float angle = 360f / (float)drops.Length;
-                Vector3 forward = forwardOverride.HasValue ? forwardOverride.Value : target.forward;
+                Vector3 forward = forwardOverride ?? target.forward;
                 Vector3 velocity = Vector3.up * upVelocity + forward * forwardVelocity;
                 Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
 

@@ -92,11 +92,11 @@ namespace PressureDrop.Commands
                         }
                         else {
                             Vector3? forwardOverride = null;
-                            Transform aim = user.GetCurrentBody()?.aimOriginTransform;
-                            if (aim) {
-                                Vector3 f = aim.forward;
-                                f.y = 0f;
-                                forwardOverride = f.normalized;
+                            CameraRigController c = GetUserCameraRigController(user);
+                            if (c) {
+                                Vector3 forward = c.transform.forward;
+                                forward.y = 0f;
+                                forwardOverride = forward.normalized;
                             }
                             else {
                                 Log.Warning($"{name} does not have a CameraRigController?");
@@ -109,6 +109,18 @@ namespace PressureDrop.Commands
                     Feedback(message);
                 }
             }
+        }
+
+        public static CameraRigController GetUserCameraRigController(NetworkUser user)
+        {
+            CharacterBody body = user?.GetCurrentBody();
+            if (body) {
+                foreach (CameraRigController c in CameraRigController.readOnlyInstancesList) {
+                    if (c.targetBody == body) return c;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
