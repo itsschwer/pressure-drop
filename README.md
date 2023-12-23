@@ -53,8 +53,6 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 
 I'm not quite sure I've successfully designed it such that the mod is only active as host.
 
-also, dropping items in the facing direction only works for the host *(non-hosts will always drop in the 'north' direction)*.
-
 ## see also
 
 - [DropItem](https://thunderstore.io/package/Thrayonlosa/DropItem/) by [Thrayonlosa](https://thunderstore.io/package/Thrayonlosa/) — similar `/drop` functionality, inspired this implementation
