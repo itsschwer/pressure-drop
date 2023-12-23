@@ -39,19 +39,22 @@ namespace PressureDrop.Commands
                 return;
             }
 
-            ItemDef def = ItemCatalog.GetItemDef(itemIndex);
-            if (def == RoR2Content.Items.CaptainDefenseMatrix || (!Plugin.Config.DropVoidAllowed && PressureDrop.Drop.IsVoidTier(def.tier))) {
-                Feedback($"{ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)} can not be dropped.");
+            ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
+            if (itemDef == RoR2Content.Items.CaptainDefenseMatrix || (!Plugin.Config.DropVoidAllowed && PressureDrop.Drop.IsVoidTier(itemDef.tier))) {
+                Feedback($"{ChatCommander.GetColoredPickupLanguageString(itemDef.nameToken, itemDef.itemIndex)} can not be dropped.");
                 return;
             }
 
-            // Droppable item found ------------------------
+            DropExecute(user, itemDef, dropAtTeleporter);
+        }
 
-            int count = user.master.inventory.GetItemCount(def.itemIndex);
+        private static void DropExecute(NetworkUser user, ItemDef itemDef, bool dropAtTeleporter)
+        {
+            int count = user.master.inventory.GetItemCount(itemDef.itemIndex);
             if (count > Plugin.Config.MaxItemsToDropAtATime) count = Plugin.Config.MaxItemsToDropAtATime;
 
             string displayCount = ((count != 1) ? $"({count})" : "");
-            string message = $"{user.masterController.GetDisplayName()} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)}{displayCount}";
+            string message = $"{user.masterController.GetDisplayName()} dropped {ChatCommander.GetColoredPickupLanguageString(itemDef.nameToken, itemDef.itemIndex)}{displayCount}";
 
             Transform target = user.GetCurrentBody()?.gameObject.transform;
             // Assume dead if no body
@@ -89,8 +92,8 @@ namespace PressureDrop.Commands
                 return;
             }
 
-            user.master.inventory.RemoveItem(def.itemIndex, count);
-            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count, 3.4f, 14f, GetAimDirection(user));
+            user.master.inventory.RemoveItem(itemDef.itemIndex, count);
+            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(itemDef.itemIndex), count, 3.4f, 14f, GetAimDirection(user));
             Feedback(message);
         }
 
