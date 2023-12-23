@@ -29,17 +29,13 @@ namespace PressureDrop.Commands
 
             bool dropAtTeleporter = false;
             if (args.Length > expectedArgs) {
-                if (args[2] == "@") dropAtTeleporter = true;
+                if (args[2] == "@") { dropAtTeleporter = true; }
                 else { ShowHelp(args); return; }
             }
 
-            string name = user.masterController.GetDisplayName();
-            Inventory inventory = user.master.inventory;
-            Transform target = user.GetCurrentBody()?.gameObject.transform;
-            ItemIndex itemIndex = inventory.FindItemInInventory(args[1]);
-
+            ItemIndex itemIndex = user.master.inventory.FindItemInInventory(args[1]);
             if (itemIndex == ItemIndex.None) {
-                Feedback($"Could not match '<color=#e5eefc>{args[1]}</color>' to an item in {name}'s inventory.");
+                Feedback($"Could not match '<color=#e5eefc>{args[1]}</color>' to an item in {user.masterController.GetDisplayName()}'s inventory.");
             }
             else {
                 ItemDef def = ItemCatalog.GetItemDef(itemIndex);
@@ -47,13 +43,14 @@ namespace PressureDrop.Commands
                     Feedback($"{ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)} can not be dropped.");
                 }
                 else {
-                    int count = inventory.GetItemCount(def.itemIndex);
+                    int count = user.master.inventory.GetItemCount(def.itemIndex);
                     if (count > Plugin.Config.MaxItemsToDropAtATime) count = Plugin.Config.MaxItemsToDropAtATime;
 
                     string displayCount = ((count != 1) ? $"({count})" : "");
-                    string message = $"{name} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)}{displayCount}";
+                    string message = $"{user.masterController.GetDisplayName()} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)}{displayCount}";
 
                     if (count > 0) {
+                        Transform target = user.GetCurrentBody()?.gameObject.transform;
                         // No body, assume dead
                         if (target == null) {
                             if (Plugin.Config.DropDeadEnabled && Plugin.Config.DropTeleporterEnabled) {
@@ -68,9 +65,6 @@ namespace PressureDrop.Commands
                         if (dropAtTeleporter) {
                             if (Plugin.Config.DropTeleporterEnabled) {
                                 Transform tp = TeleporterInteraction.instance?.transform;
-
-                                // Chat message to check for if implementing ping requirement [language specific!]
-                                // <style=cIsDamage>USER has found: Teleporter.</style>"
 
                                 if (tp != null) {
                                     target = tp;
@@ -92,7 +86,7 @@ namespace PressureDrop.Commands
                             return;
                         }
                         else {
-                            inventory.RemoveItem(def.itemIndex, count);
+                            user.master.inventory.RemoveItem(def.itemIndex, count);
                             PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count, 3.4f, 14f, GetAimDirection(user));
                         }
                     }
