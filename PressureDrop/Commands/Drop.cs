@@ -91,16 +91,7 @@ namespace PressureDrop.Commands
                             Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cUtility>No drop target <sprite name=\"Skull\" tint=1></style>" });
                         }
                         else {
-                            Vector3? forwardOverride = null;
-                            CameraRigController c = GetUserCameraRigController(user);
-                            if (c) {
-                                Vector3 forward = c.transform.forward;
-                                forward.y = 0f;
-                                forwardOverride = forward.normalized;
-                            }
-                            else {
-                                Log.Warning($"{name} does not have a CameraRigController?");
-                            }
+                            Vector3? forwardOverride = user.GetCurrentBody()?.characterDirection.forward;
 
                             inventory.RemoveItem(def.itemIndex, count);
                             PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count, 3.4f, 14f, forwardOverride);
@@ -109,18 +100,6 @@ namespace PressureDrop.Commands
                     Feedback(message);
                 }
             }
-        }
-
-        public static CameraRigController GetUserCameraRigController(NetworkUser user)
-        {
-            CharacterBody body = user?.GetCurrentBody();
-            if (body) {
-                foreach (CameraRigController c in CameraRigController.readOnlyInstancesList) {
-                    if (c.targetBody == body) return c;
-                }
-            }
-
-            return null;
         }
 
         /// <summary>
