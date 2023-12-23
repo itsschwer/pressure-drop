@@ -36,63 +36,62 @@ namespace PressureDrop.Commands
             ItemIndex itemIndex = user.master.inventory.FindItemInInventory(args[1]);
             if (itemIndex == ItemIndex.None) {
                 Feedback($"Could not match '<color=#e5eefc>{args[1]}</color>' to an item in {user.masterController.GetDisplayName()}'s inventory.");
+                return;
             }
-            else {
-                ItemDef def = ItemCatalog.GetItemDef(itemIndex);
-                if (def == RoR2Content.Items.CaptainDefenseMatrix || (!Plugin.Config.DropVoidAllowed && PressureDrop.Drop.IsVoidTier(def.tier))) {
-                    Feedback($"{ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)} can not be dropped.");
+
+            ItemDef def = ItemCatalog.GetItemDef(itemIndex);
+            if (def == RoR2Content.Items.CaptainDefenseMatrix || (!Plugin.Config.DropVoidAllowed && PressureDrop.Drop.IsVoidTier(def.tier))) {
+                Feedback($"{ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)} can not be dropped.");
+                return;
+            }
+
+            // Droppable item found ------------------------
+
+            int count = user.master.inventory.GetItemCount(def.itemIndex);
+            if (count > Plugin.Config.MaxItemsToDropAtATime) count = Plugin.Config.MaxItemsToDropAtATime;
+
+            string displayCount = ((count != 1) ? $"({count})" : "");
+            string message = $"{user.masterController.GetDisplayName()} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)}{displayCount}";
+
+            Transform target = user.GetCurrentBody()?.gameObject.transform;
+            // Assume dead if no body
+            if (target == null) {
+                if (Plugin.Config.DropDeadEnabled && Plugin.Config.DropTeleporterEnabled) {
+                    dropAtTeleporter = true;
                 }
                 else {
-                    int count = user.master.inventory.GetItemCount(def.itemIndex);
-                    if (count > Plugin.Config.MaxItemsToDropAtATime) count = Plugin.Config.MaxItemsToDropAtATime;
-
-                    string displayCount = ((count != 1) ? $"({count})" : "");
-                    string message = $"{user.masterController.GetDisplayName()} dropped {ChatCommander.GetColoredPickupLanguageString(def.nameToken, def.itemIndex)}{displayCount}";
-
-                    if (count > 0) {
-                        Transform target = user.GetCurrentBody()?.gameObject.transform;
-                        // No body, assume dead
-                        if (target == null) {
-                            if (Plugin.Config.DropDeadEnabled && Plugin.Config.DropTeleporterEnabled) {
-                                dropAtTeleporter = true;
-                            }
-                            else {
-                                Feedback("Dead players can't drop items <sprite name=\"Skull\" tint=1>");
-                                return;
-                            }
-                        }
-
-                        if (dropAtTeleporter) {
-                            if (Plugin.Config.DropTeleporterEnabled) {
-                                Transform tp = TeleporterInteraction.instance?.transform;
-
-                                if (tp != null) {
-                                    target = tp;
-                                    message += " at the Teleporter";
-                                }
-                                else {
-                                    Feedback("There is no Teleporter to drop at <sprite name=\"Skull\" tint=1>");
-                                    return;
-                                }
-                            }
-                            else {
-                                Feedback("Dropping at the Teleporter is disabled <sprite name=\"Skull\" tint=1>");
-                                return;
-                            }
-                        }
-
-                        if (target == null) {
-                            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cUtility>No drop target <sprite name=\"Skull\" tint=1></style>" });
-                            return;
-                        }
-                        else {
-                            user.master.inventory.RemoveItem(def.itemIndex, count);
-                            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count, 3.4f, 14f, GetAimDirection(user));
-                        }
-                    }
-                    Feedback(message);
+                    Feedback("Dead players can't drop items <sprite name=\"Skull\" tint=1>");
+                    return;
                 }
             }
+
+            if (dropAtTeleporter) {
+                if (Plugin.Config.DropTeleporterEnabled) {
+                    Transform tp = TeleporterInteraction.instance?.transform;
+
+                    if (tp != null) {
+                        target = tp;
+                        message += " at the Teleporter";
+                    }
+                    else {
+                        Feedback("There is no Teleporter to drop at <sprite name=\"Skull\" tint=1>");
+                        return;
+                    }
+                }
+                else {
+                    Feedback("Dropping at the Teleporter is disabled <sprite name=\"Skull\" tint=1>");
+                    return;
+                }
+            }
+
+            if (target == null) {
+                Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cUtility>No drop target <sprite name=\"Skull\" tint=1></style>" });
+                return;
+            }
+
+            user.master.inventory.RemoveItem(def.itemIndex, count);
+            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count, 3.4f, 14f, GetAimDirection(user));
+            Feedback(message);
         }
 
         private static Vector3? GetAimDirection(NetworkUser user)
