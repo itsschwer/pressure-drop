@@ -89,17 +89,28 @@ namespace PressureDrop.Commands
 
                         if (target == null) {
                             Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cUtility>No drop target <sprite name=\"Skull\" tint=1></style>" });
+                            return;
                         }
                         else {
-                            Vector3? forwardOverride = user.GetCurrentBody()?.characterDirection.forward;
-
                             inventory.RemoveItem(def.itemIndex, count);
-                            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count, 3.4f, 14f, forwardOverride);
+                            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(def.itemIndex), count, 3.4f, 14f, GetAimDirection(user));
                         }
                     }
                     Feedback(message);
                 }
             }
+        }
+
+        private static Vector3? GetAimDirection(NetworkUser user)
+        {
+            InputBankTest inputBank = user.GetCurrentBody()?.inputBank;
+            if (inputBank) {
+                Vector3 aimDirection = inputBank.aimDirection;
+                aimDirection.y = 0f;
+                return aimDirection.normalized;
+            }
+
+            return null;
         }
 
         /// <summary>
