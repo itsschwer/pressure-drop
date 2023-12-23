@@ -41,7 +41,7 @@ namespace PressureDrop.Commands
 
             ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
             if (itemDef == RoR2Content.Items.CaptainDefenseMatrix || (!Plugin.Config.DropVoidAllowed && PressureDrop.Drop.IsVoidTier(itemDef.tier))) {
-                Feedback($"{ChatCommander.GetColoredPickupLanguageString(itemDef.nameToken, itemDef.itemIndex)} can not be dropped.");
+                Feedback($"{ChatCommander.GetColoredPickupLanguageString(itemDef.itemIndex)} can not be dropped.");
                 return;
             }
 
@@ -54,7 +54,7 @@ namespace PressureDrop.Commands
             if (count > Plugin.Config.MaxItemsToDropAtATime) count = Plugin.Config.MaxItemsToDropAtATime;
 
             string displayCount = ((count != 1) ? $"({count})" : "");
-            string message = $"{user.masterController.GetDisplayName()} dropped {ChatCommander.GetColoredPickupLanguageString(itemDef.nameToken, itemDef.itemIndex)}{displayCount}";
+            string message = $"{user.masterController.GetDisplayName()} dropped {ChatCommander.GetColoredPickupLanguageString(itemDef.itemIndex)}{displayCount}";
 
             Transform target = user.GetCurrentBody()?.gameObject.transform;
             // Assume dead if no body

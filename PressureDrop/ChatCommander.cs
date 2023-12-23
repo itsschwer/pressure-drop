@@ -45,14 +45,14 @@ namespace PressureDrop
             return null;
         }
 
-        public static string GetColoredPickupLanguageString(string token, ItemIndex itemIndex)
-            => GetColoredPickupLanguageString(token, PickupCatalog.FindPickupIndex(itemIndex));
-        public static string GetColoredPickupLanguageString(string token, EquipmentIndex equipmentIndex)
-            => GetColoredPickupLanguageString(token, PickupCatalog.FindPickupIndex(equipmentIndex));
-        public static string GetColoredPickupLanguageString(string token, PickupIndex pickupIndex)
+        public static string GetColoredPickupLanguageString(ItemIndex itemIndex)
+            => GetColoredPickupLanguageString(PickupCatalog.FindPickupIndex(itemIndex));
+        public static string GetColoredPickupLanguageString(EquipmentIndex equipmentIndex)
+            => GetColoredPickupLanguageString(PickupCatalog.FindPickupIndex(equipmentIndex));
+        public static string GetColoredPickupLanguageString(PickupIndex pickupIndex)
         {
             PickupDef def = PickupCatalog.GetPickupDef(pickupIndex);
-            return Util.GenerateColoredString(Language.GetString(token), def.baseColor);
+            return Util.GenerateColoredString(Language.GetString(def.nameToken), def.baseColor);
         }
 
         /// <summary>

@@ -73,7 +73,7 @@ namespace PressureDrop.Commands
                         {
                             EquipmentDef e = RoR2Content.Equipment.Scanner;
                             user.master.inventory.GiveEquipmentString(e.name);
-                            ChatCommander.Output($"Gave {user.userName} {ChatCommander.GetColoredPickupLanguageString(e.nameToken, e.equipmentIndex)}");
+                            ChatCommander.Output($"Gave {user.userName} {ChatCommander.GetColoredPickupLanguageString(e.equipmentIndex)}");
                             return;
                         } 
                     case "t":
@@ -94,7 +94,7 @@ namespace PressureDrop.Commands
                 if (count > 1000) count = 1000; // Let's not get too excessive
 
                 user.master.inventory.GiveItem(item, count);
-                ChatCommander.Output($"Gave {user.userName} {ChatCommander.GetColoredPickupLanguageString(item.nameToken, item.itemIndex)} <style=cStack>x{count}</style>");
+                ChatCommander.Output($"Gave {user.userName} {ChatCommander.GetColoredPickupLanguageString(item.itemIndex)} <style=cStack>x{count}</style>");
             }
             else ChatCommander.OutputFail(args[0], invalid);
         }
