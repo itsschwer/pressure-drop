@@ -14,8 +14,7 @@ namespace PressureDrop
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
         public const string Name = "PressureDrop";
-        public const string Version = "0.0.0";
-        public const string Slug = "pressure-drop";
+        public const string Version = "1.0.0";
 
         internal static new Config Config { get; private set; }
 
@@ -41,7 +40,7 @@ namespace PressureDrop
 #if DEBUG
             Commands.DebugCheats.Enable();
 #endif
-            Log.Message($"{Plugin.Slug}> enabled.");
+            Log.Message($"{Plugin.GUID}> enabled.");
         }
 
         private void OnDisable()
@@ -52,7 +51,7 @@ namespace PressureDrop
 #if DEBUG
             Commands.DebugCheats.Disable();
 #endif
-            Log.Message($"{Plugin.Slug}> disabled.");
+            Log.Message($"{Plugin.GUID}> disabled.");
         }
 
         /// <summary>
@@ -70,7 +69,7 @@ namespace PressureDrop
         private void SetActive(bool value) {
             this.enabled = value;
             if (this.pressure) this.pressure.enabled = value;
-            Log.Message($"{Plugin.Slug}> {(value ? "active" : "inactive")}.");
+            Log.Message($"{Plugin.GUID}> {(value ? "active" : "inactive")}.");
         }
 
         private void ParseReload(NetworkUser user, string[] args)
@@ -80,7 +79,7 @@ namespace PressureDrop
 
             base.Config.Reload();
             ConfigureModules();
-            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"Reloaded configuration for <style=cSub>{Plugin.Slug}</style>" });
+            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"Reloaded configuration for <style=cSub>{Plugin.GUID}</style>" });
         }
 
         private void ConfigureModules()

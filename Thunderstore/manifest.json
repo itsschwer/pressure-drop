@@ -1,9 +1,9 @@
 ﻿{
 	"author": "itsschwer",
 	"name": "PressureDrop",
-	"version_number": "0.0.0",
-	"website_url": "",
-	"description": "",
+	"version_number": "1.0.0",
+	"website_url": "https://github.com/itsschwer/pressure-drop",
+	"description": "Adds configurable timed pressure plates and a /drop chat command — [ server-side ]",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2113",
 		"RiskofThunder-HookGenPatcher-1.2.3"

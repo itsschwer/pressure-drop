@@ -31,7 +31,7 @@ namespace PressureDrop.Commands
                 case "?":
                 case "h":
                 case "help":
-                    ChatCommander.Output($"Commands provided by <style=cSub>{Plugin.Slug}</style>:");
+                    ChatCommander.Output($"Commands provided by <style=cSub>{Plugin.GUID}</style>:");
                     ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}aq</style>: changes the stage to Abandoned Aqueduct.");
                     ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}g</style>: gives the user items for testing pressure plate changes.");
                     ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}p</style>: drops items for testing recyclability config.");

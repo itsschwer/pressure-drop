@@ -62,6 +62,7 @@ I'm not quite sure I've successfully designed it such that the mod is only activ
     - not configurable *(e.g. max drop stack size, recyclability)*
     - drops \[ *consumed* / *broken* \] items
     - drops all shoot in same direction — scatters messily once landed
+        - drop direction is fixed *(rather than using aim direction)*
 
 ## end
-- a tip: `/d .` is a shortcut to drop the newest item type in your inventory
+- a tip: `/d .` can be used to drop the newest item type in your inventory — experiment!
