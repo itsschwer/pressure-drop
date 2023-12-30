@@ -3,14 +3,10 @@ using RoR2;
 
 namespace PressureDrop
 {
-    // This attribute is required, and lists metadata for this plugin.
     [BepInPlugin(GUID, Name, Version)]
 
-    // This is the main declaration of this plugin class.
-    // BepInEx searches for all classes inheriting from BaseUnityPlugin to initialize on startup.
-    public class Plugin : BaseUnityPlugin
+    public sealed class Plugin : BaseUnityPlugin
     {
-        // The GUID should be a unique ID for this plugin and human readable (as it is used in places like the config).
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
         public const string Name = "PressureDrop";
@@ -21,6 +17,7 @@ namespace PressureDrop
         // MonoBehaviour components
         private PressurePlateTimer pressure;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void Awake()
         {
             Log.Init(Logger);
@@ -32,6 +29,7 @@ namespace PressureDrop
             SetPluginActiveState();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnEnable()
         {
             ConfigureModules();
@@ -43,6 +41,7 @@ namespace PressureDrop
             Log.Message($"{Plugin.GUID}> enabled.");
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnDisable()
         {
             ConfigureModules();

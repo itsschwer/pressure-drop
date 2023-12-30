@@ -2,7 +2,7 @@
 
 namespace PressureDrop
 {
-    internal class Config
+    internal sealed class Config
     {
         private readonly ConfigEntry<float> _pressurePlateTimer;
         public float PressurePlateTimer => _pressurePlateTimer.Value;

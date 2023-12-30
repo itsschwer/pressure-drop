@@ -29,7 +29,12 @@ namespace PressureDrop
             OnChatCommand.Invoke(userMessage.Value.user, message.Split(' '));
         }
 
-        private static (NetworkUser user, string text)? Construct(string chatLogMessage)
+        /// <summary>
+        /// Attempts to reconstruct a <paramref name="chatLogMessage"/> into the original chat message and the user who sent it.
+        /// </summary>
+        /// <param name="chatLogMessage"></param>
+        /// <returns></returns>
+        public static (NetworkUser user, string text)? Construct(string chatLogMessage)
         {
             const string pattern = @"<color=#e5eefc><noparse>(.+?)<\/noparse>: <noparse>(.+?)<\/noparse><\/color>";
             Match match = Regex.Match(chatLogMessage, pattern, RegexOptions.Compiled);
@@ -43,16 +48,6 @@ namespace PressureDrop
             }
 
             return null;
-        }
-
-        public static string GetColoredPickupLanguageString(ItemIndex itemIndex)
-            => GetColoredPickupLanguageString(PickupCatalog.FindPickupIndex(itemIndex));
-        public static string GetColoredPickupLanguageString(EquipmentIndex equipmentIndex)
-            => GetColoredPickupLanguageString(PickupCatalog.FindPickupIndex(equipmentIndex));
-        public static string GetColoredPickupLanguageString(PickupIndex pickupIndex)
-        {
-            PickupDef def = PickupCatalog.GetPickupDef(pickupIndex);
-            return Util.GenerateColoredString(Language.GetString(def.nameToken), def.baseColor);
         }
 
         /// <summary>
@@ -72,6 +67,16 @@ namespace PressureDrop
         public static void OutputFail(string cmd, string message)
         {
             Output($"<style=cDeath>Failed:</style> <color=#ffffff>{ChatCommander.commandPrefix}{cmd}</color> {message}");
+        }
+
+        public static string GetColoredPickupLanguageString(ItemIndex itemIndex)
+            => GetColoredPickupLanguageString(PickupCatalog.FindPickupIndex(itemIndex));
+        public static string GetColoredPickupLanguageString(EquipmentIndex equipmentIndex)
+            => GetColoredPickupLanguageString(PickupCatalog.FindPickupIndex(equipmentIndex));
+        public static string GetColoredPickupLanguageString(PickupIndex pickupIndex)
+        {
+            PickupDef def = PickupCatalog.GetPickupDef(pickupIndex);
+            return Util.GenerateColoredString(Language.GetString(def.nameToken), def.baseColor);
         }
     }
 }

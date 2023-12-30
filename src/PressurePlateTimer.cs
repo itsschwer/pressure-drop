@@ -5,13 +5,15 @@ using UnityEngine;
 
 namespace PressureDrop
 {
-    internal class PressurePlateTimer : MonoBehaviour
+    internal sealed class PressurePlateTimer : MonoBehaviour
     {
         private static readonly Dictionary<PressurePlateController, float> timers = new(2);
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void  OnEnable() => On.RoR2.PressurePlateController.SetSwitch += PressurePlateController_SetSwitch;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnDisable() => On.RoR2.PressurePlateController.SetSwitch -= PressurePlateController_SetSwitch;
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void Update()
         {
             foreach (PressurePlateController key in timers.Keys.ToList()) {
@@ -28,7 +30,7 @@ namespace PressureDrop
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("", "Publicizer001")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Member Access", "Publicizer001:Accessing a member that was not originally public")]
         private static void PressurePlateController_SetSwitch(On.RoR2.PressurePlateController.orig_SetSwitch orig, PressurePlateController self, bool switchIsDown)
         {
             float time = Plugin.Config.PressurePlateTimer;
