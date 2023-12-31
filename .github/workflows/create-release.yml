@@ -39,7 +39,7 @@ jobs:
   
   create-release:
     needs: create-artifact
-    runs-ons: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
         with:
