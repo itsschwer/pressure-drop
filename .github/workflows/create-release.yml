@@ -33,4 +33,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: ${{ steps.build.outputs.PATH }}
-          name: ${{ steps.manifest.outputs.NAME}}--${{ steps.manifest.outputs.VERSION }}
+          name: ${{ jobs.create-artifact.outputs.name }}
+    outputs:
+      name: ${{ steps.manifest.outputs.NAME }}--${{ steps.manifest.outputs.VERSION }}
