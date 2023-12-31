@@ -20,8 +20,8 @@ jobs:
 
       - name: Read Plugin.cs
         env:
-          m_NAME: ${{ steps.manifest.outputs.NAME }}
-          m_VERSION: ${{ steps.manifest.outputs.VERSION }}
+          NAME: ${{ steps.manifest.outputs.NAME }}
+          VERSION: ${{ steps.manifest.outputs.VERSION }}
         shell: pwsh
         run: |
           $plugin = Get-Content -Raw -path src/Plugin.cs
@@ -29,8 +29,8 @@ jobs:
           $name = $matches[1]
           $plugin -match 'const\s+string\s+Version\s*=\s*"([.\d\w-+]+)"'
           $version = $matches[1]
-          echo "$name--$version | $m_NAME--$m_VERSION"
-          if ( ( $name -ne $m_NAME ) -or ( $version -ne $m_VERSION ) ) { Write-Error -ErrorAction Stop -Message "Inconsistency between manifest.json and Plugin.cs" }
+          echo "$name--$version | $env:NAME--$env:VERSION"
+          if ( ( $name -ne $env:NAME ) -or ( $version -ne $env:VERSION" ) ) { Write-Error -ErrorAction Stop -Message "Inconsistency between manifest.json and Plugin.cs" }
 
       - uses: actions/setup-dotnet@v3
         with:
