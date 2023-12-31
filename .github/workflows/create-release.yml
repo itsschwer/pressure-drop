@@ -41,7 +41,7 @@ jobs:
         run: |
           cd src
           $output = dotnet build --configuration Release
-          "$($output)" -match "Package prepared ->\s*'([^\n\r\t]+)'"
+          "$($output)" -match '"([^"\n\r\t]+\.zip)"'
           echo "PATH=$($matches[1])" >> $env:GITHUB_OUTPUT
 
       - uses: actions/upload-artifact@v4
