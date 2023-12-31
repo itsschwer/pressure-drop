@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is learning GitHub Actions
 on: workflow_dispatch
 
 jobs:
-  build:
+  create-artifact:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
           $destination = dotnet build --configuration Release
           "$($destination)" -match '"([^"\n\r\t]+\.zip)"'
           echo "DESTINATION=$($matches[1])" >> $env:GITHUB_OUTPUT
-          $matches[1] - match '\\*([^\\\n\r\t]+).zip'
+          $matches[1] -match '\\*([^\\\n\r\t]+).zip'
           echo "NAME=$($matches[1])" >> $env:GITHUB_OUTPUT
 
       - uses: actions/upload-artifact@v4
