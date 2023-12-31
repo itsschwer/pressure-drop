@@ -33,6 +33,20 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: ${{ steps.build.outputs.PATH }}
-          name: ${{ jobs.create-artifact.outputs.name }}
+          name: ${{ steps.manifest.outputs.NAME }}--${{ steps.manifest.outputs.VERSION }}
     outputs:
       name: ${{ steps.manifest.outputs.NAME }}--${{ steps.manifest.outputs.VERSION }}
+  
+  create-release:
+    needs: create-artifact
+    runs-ons: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.create-artifact.outputs.name }}
+      
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: ${{ needs.create-artifact.outputs.name }}
+          skipIfReleaseExists: true
+          updateOnlyUnreleased: true
