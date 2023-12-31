@@ -64,7 +64,7 @@ jobs:
       
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: ${{ needs.create-artifact.outputs.name }}.zip
+          artifacts: ${{ GITHUB_WORKSPACE }}/${{ needs.create-artifact.outputs.name }}.zip
           tag: ${{ needs.create-artifact.outputs.version }}
           skipIfReleaseExists: true
           updateOnlyUnreleased: true
