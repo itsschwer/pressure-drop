@@ -41,7 +41,7 @@ jobs:
         run: |
           cd src
           $output = dotnet build --configuration Release
-          "$($output)" -match '"([^"\n\r\t]+\.zip)"'
+          "$($output)" -match "Package prepared ->\s*'([^\n\r\t]+)'"
           echo "PATH=$($matches[1])" >> $env:GITHUB_OUTPUT
 
       - uses: actions/upload-artifact@v4
@@ -60,13 +60,18 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: ${{ needs.create-artifact.outputs.name }}
-      
-      - run: ls -1 -r
+          name: ${{ needs.create-artifact.outputs.name }}      
+          # [feat req] Keep artifact in ZIP format instead of extracting
+          # https://github.com/actions/download-artifact/issues/143
+
+      - name: zip
+        run: |
+          ls -1 -r
+          zip -r ${{ needs.create-artifact.outputs.name }}.zip .
       
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: ${{ github.workspace }}/${{ needs.create-artifact.outputs.name }}/*
+          artifacts: ${{ needs.create-artifact.outputs.name }}.zip
           tag: ${{ needs.create-artifact.outputs.version }}
           skipIfReleaseExists: true
           updateOnlyUnreleased: true
