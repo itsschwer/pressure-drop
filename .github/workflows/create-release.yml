@@ -33,4 +33,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: ${{ steps.build.outputs.PATH }}
-          name: ${{ steps.manifest.outputs.NAME}}--${{ steps.manifest.outputs.VERSION }}.zip
+          name: ${{ steps.manifest.outputs.NAME}}--${{ steps.manifest.outputs.VERSION }}
