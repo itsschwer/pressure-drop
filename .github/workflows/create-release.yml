@@ -15,7 +15,7 @@ jobs:
         id: build
         shell: pwsh
         run: |
-          $destination = dotnet build --configuration Release
+          $destination = dotnet build --configuration Release --verbosity normal
           $destination -match '"([^"\n\r\t]+\.zip)"'
           echo "DESTINATION=$($matches[1])" >> "$GITHUB_OUTPUT"
 
