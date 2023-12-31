@@ -28,7 +28,11 @@
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginDir)" />
         <Copy SourceFiles="$(RootDir)README.md;$(RootDir)CHANGELOG.md;" DestinationFolder="$(ProductDir)" ContinueOnError="true" />
 
-        <Message Importance="High" Text="Package prepared -> '$(ProductDir)'" />
+        <ConvertToAbsolutePath Paths="$(ProductDir)">
+            <Output TaskParameter="AbsolutePaths" PropertyName="AbsoluteProductDir" />
+        </ConvertToAbsolutePath>
+        <Message Importance="High" Text="Package prepared -> '$(AbsoluteProductDir)'" />
+
         <ZipDirectory SourceDirectory="$(ProductDir)" DestinationFile="$(RootDir)$(MSBuildProjectName)--$(Configuration).zip" Overwrite="true" />
     </Target>
 </Project>
