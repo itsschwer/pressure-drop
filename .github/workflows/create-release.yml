@@ -1,0 +1,25 @@
+name: create-release
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+      - name: build
+        id: build
+        shell: pwsh
+        run: |
+          $destination = dotnet build --configuration Release
+          $destination -match '"([^"\n\r\t]+\.zip)"'
+          echo "DESTINATION=$($matches[1])" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          path: steps.build.outputs.DESTINATION
+          # name:
