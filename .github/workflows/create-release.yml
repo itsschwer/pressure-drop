@@ -20,8 +20,8 @@ jobs:
 
       - name: Read Plugin.cs
         env:
-          m_NAME: ${{ needs.read-manifest.outputs.name }}
-          m_VERSION: ${{ needs.read-manifest.outputs.version }}
+          m_NAME: ${{ steps.manifest.outputs.NAME }}
+          m_VERSION: ${{ steps.manifest.outputs.VERSION }}
         shell: pwsh
         run: |
           $plugin = Get-Content -Raw -path src/Plugin.cs
