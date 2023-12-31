@@ -27,7 +27,7 @@ jobs:
           $plugin = Get-Content -Raw -path src/Plugin.cs
           $plugin -match 'const\s+string\s+Name\s*=\s*"([\w\d]+)"'
           $name = $matches[1]
-          $manifest -match 'const\s+string\s+Version\s*=\s*"([.\d\w-+]+)"'
+          $plugin -match 'const\s+string\s+Version\s*=\s*"([.\d\w-+]+)"'
           $version = $matches[1]
           if ( ( $name -ne $m_NAME ) -or ( $version -ne $m_VERSION ) ) {
             Write-Error -ErrorAction Stop -Message "Inconsistency between manifest.json and Plugin.cs"
