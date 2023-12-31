@@ -1,7 +1,7 @@
 ﻿{
 	"author": "itsschwer",
 	"name": "PressureDrop",
-	"version_number": "1.0.0",
+	"version_number": "1.0.1",
 	"website_url": "https://github.com/itsschwer/pressure-drop",
 	"description": "Adds configurable timed pressure plates and a /drop chat command — [ server-side ]",
 	"dependencies": [

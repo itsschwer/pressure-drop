@@ -1,5 +1,5 @@
 name: create-release
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: Creating and tagging a new release
 on: workflow_dispatch
 
 jobs:
@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Read manifest
+      - name: Read Thunderstore/manifest.json
         id: manifest
         shell: pwsh
         run: |
@@ -18,7 +18,7 @@ jobs:
           $manifest -match '"version_number":\s*"([.\d\w-+]+)"'
           echo "VERSION=$($matches[1])" >> $env:GITHUB_OUTPUT
 
-      - name: Read Plugin.cs
+      - name: Read src/Plugin.cs
         env:
           NAME: ${{ steps.manifest.outputs.NAME }}
           VERSION: ${{ steps.manifest.outputs.VERSION }}
