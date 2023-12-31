@@ -30,7 +30,7 @@ jobs:
           $plugin -match 'const\s+string\s+Version\s*=\s*"([.\d\w-+]+)"'
           $version = $matches[1]
           echo "$name--$version | $env:NAME--$env:VERSION"
-          if ( ( $name -ne $env:NAME ) -or ( $version -ne $env:VERSION" ) ) { Write-Error -ErrorAction Stop -Message "Inconsistency between manifest.json and Plugin.cs" }
+          if ( ( $name -ne $env:NAME ) -or ( $version -ne $env:VERSION ) ) { Write-Error -ErrorAction Stop -Message "Inconsistency between manifest.json and Plugin.cs" }
 
       - uses: actions/setup-dotnet@v3
         with:
