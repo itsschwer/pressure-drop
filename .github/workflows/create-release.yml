@@ -8,13 +8,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get manifest version
+      - name: Read manifest
         id: manifest
         shell: pwsh
         run: |
           $manifest = Get-Content -Raw -path Thunderstore/manifest.json
-          $manifest -match '"version_number":.*"([.\d\w-+]+)"'
+          $manifest -match '"version_number":\s*"([.\d\w-+]+)"'
           echo "VERSION=$($matches[1])" >> $env:GITHUB_OUTPUT
+          $manifest -match '"name":\s*"([^"\n\r\t]+)"'
+          echo "NAME=$($matches[1])" >> $env:GITHUB_OUTPUT
 
       - uses: actions/setup-dotnet@v3
         with:
@@ -27,10 +29,8 @@ jobs:
           $destination = dotnet build --configuration Release
           "$($destination)" -match '"([^"\n\r\t]+\.zip)"'
           echo "DESTINATION=$($matches[1])" >> $env:GITHUB_OUTPUT
-          $matches[1] -match '\\*([^\\\n\r\t]+).zip'
-          echo "NAME=$($matches[1])" >> $env:GITHUB_OUTPUT
 
       - uses: actions/upload-artifact@v4
         with:
           path: ${{ steps.build.outputs.DESTINATION }}
-          name: ${{ steps.build.outputs.NAME}}-${{ steps.manifest.outputs.VERSION }}.zip
+          name: ${{ steps.manifest.outputs.NAME}}--${{ steps.manifest.outputs.VERSION }}.zip
