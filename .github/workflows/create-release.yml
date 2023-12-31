@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is learning GitHub Actions
 on: workflow_dispatch
 
 jobs:
-  create-artifact:
+  read-manifest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,11 +13,39 @@ jobs:
         shell: pwsh
         run: |
           $manifest = Get-Content -Raw -path Thunderstore/manifest.json
+          $manifest -match '"name":\s*"([\w\d]+)"'
+          echo "NAME=$($matches[1])" >> $env:GITHUB_OUTPUT
           $manifest -match '"version_number":\s*"([.\d\w-+]+)"'
           echo "VERSION=$($matches[1])" >> $env:GITHUB_OUTPUT
-          $manifest -match '"name":\s*"([^"\n\r\t]+)"'
-          echo "NAME=$($matches[1])" >> $env:GITHUB_OUTPUT
+    outputs:
+      name: ${{ steps.manifest.outputs.NAME }}
+      version: ${{ steps.manifest.outputs.VERSION }}
+      name--version: ${{ steps.manifest.outputs.NAME }}--${{ steps.manifest.outputs.VERSION }}
 
+  check-src:
+    needs: read-manifest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read Plugin.cs
+        id: plugin
+        env:
+          m_NAME: ${{ needs.read-manifest.outputs.name }}
+          m_VERSION: ${{ needs.read-manifest.outputs.version }}
+        shell: pwsh
+        run: |
+          $plugin = Get-Content -Raw -path src/Plugin.cs
+          $plugin -match 'const\s+string\s+Name\s*=\s*"([\w\d]+)"'
+          $name = $matches[1]
+          $manifest -match 'const\s+string\s+Version\s*=\s*"([.\d\w-+]+)"'
+          $version = $matches[1]
+          if ( ( $name -ne $m_NAME ) -or ( $version -ne $m_VERSION ) ) {
+            Write-Error -ErrorAction Stop -Message "Inconsistency between manifest.json and Plugin.cs"
+          }
+
+  create-artifact:
+    needs: [ read-manifest, check-src ]
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
@@ -33,9 +61,10 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: ${{ steps.build.outputs.PATH }}
-          name: ${{ steps.manifest.outputs.NAME }}--${{ steps.manifest.outputs.VERSION }}
+          name: ${{ needs.read-manifest.outputs.name--version }}
     outputs:
-      name: ${{ steps.manifest.outputs.NAME }}--${{ steps.manifest.outputs.VERSION }}
+      name: ${{ needs.read-manifest.outputs.name--version }}
+      version: ${{ needs.read-manifest.outputs.version }}
   
   create-release:
     needs: create-artifact
@@ -48,5 +77,6 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           artifacts: ${{ needs.create-artifact.outputs.name }}
+          tag: ${{ needs.create-artifact.outputs.version }}
           skipIfReleaseExists: true
           updateOnlyUnreleased: true
