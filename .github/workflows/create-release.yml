@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is learning GitHub Actions
 on: workflow_dispatch
 
 jobs:
-  read-manifest:
+  create-artifact:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,17 +17,8 @@ jobs:
           echo "NAME=$($matches[1])" >> $env:GITHUB_OUTPUT
           $manifest -match '"version_number":\s*"([.\d\w-+]+)"'
           echo "VERSION=$($matches[1])" >> $env:GITHUB_OUTPUT
-    outputs:
-      name: ${{ steps.manifest.outputs.NAME }}
-      version: ${{ steps.manifest.outputs.VERSION }}
-      name--version: ${{ steps.manifest.outputs.NAME }}--${{ steps.manifest.outputs.VERSION }}
 
-  check-src:
-    needs: read-manifest
-    runs-on: ubuntu-latest
-    steps:
       - name: Read Plugin.cs
-        id: plugin
         env:
           m_NAME: ${{ needs.read-manifest.outputs.name }}
           m_VERSION: ${{ needs.read-manifest.outputs.version }}
@@ -42,10 +33,6 @@ jobs:
             Write-Error -ErrorAction Stop -Message "Inconsistency between manifest.json and Plugin.cs"
           }
 
-  create-artifact:
-    needs: [ read-manifest, check-src ]
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
@@ -61,10 +48,10 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: ${{ steps.build.outputs.PATH }}
-          name: ${{ needs.read-manifest.outputs.name--version }}
+          name: ${{ steps.manifest.outputs.NAME }}--${{ steps.manifest.outputs.VERSION }}
     outputs:
-      name: ${{ needs.read-manifest.outputs.name--version }}
-      version: ${{ needs.read-manifest.outputs.version }}
+      name: ${{ steps.manifest.outputs.NAME }}--${{ steps.manifest.outputs.VERSION }}
+      version: ${{ steps.manifest.outputs.VERSION }}
   
   create-release:
     needs: create-artifact
