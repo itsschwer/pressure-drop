@@ -28,8 +28,7 @@
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginDir)" />
         <Copy SourceFiles="$(RootDir)README.md;$(RootDir)CHANGELOG.md;" DestinationFolder="$(ProductDir)" ContinueOnError="true" />
 
-        <!-- Is there a way to automate updating manifest name and version number based on plugin consts? -->
-
+        <Message Importance="High" Text="Package prepared -> '$(ProductDir)'" />
         <ZipDirectory SourceDirectory="$(ProductDir)" DestinationFile="$(RootDir)$(MSBuildProjectName)--$(Configuration).zip" Overwrite="true" />
     </Target>
 </Project>

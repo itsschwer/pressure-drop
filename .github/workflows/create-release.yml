@@ -26,11 +26,11 @@ jobs:
         shell: pwsh
         run: |
           cd src
-          $destination = dotnet build --configuration Release
-          "$($destination)" -match '"([^"\n\r\t]+\.zip)"'
-          echo "DESTINATION=$($matches[1])" >> $env:GITHUB_OUTPUT
+          $output = dotnet build --configuration Release
+          "$($output)" -match "Package prepared ->\s*'([^\n\r\t]+)'"
+          echo "PATH=$($matches[1])" >> $env:GITHUB_OUTPUT
 
       - uses: actions/upload-artifact@v4
         with:
-          path: ${{ steps.build.outputs.DESTINATION }}
+          path: ${{ steps.build.outputs.PATH }}
           name: ${{ steps.manifest.outputs.NAME}}--${{ steps.manifest.outputs.VERSION }}.zip
