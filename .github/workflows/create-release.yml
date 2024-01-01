@@ -60,7 +60,7 @@ jobs:
   
   create-release:
     needs: create-artifact
-    if: ${{ inputs.debug }}
+    if: ${{ inputs.debug != true }}
     permissions:
       contents: write
     runs-on: ubuntu-latest
