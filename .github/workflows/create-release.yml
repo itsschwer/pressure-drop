@@ -1,6 +1,12 @@
 name: create-release
 run-name: Creating and tagging a new release
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      debug:
+        description: 'Only create debug artifact'
+        required: false
+        type: boolean
 
 jobs:
   create-artifact:
@@ -54,6 +60,7 @@ jobs:
   
   create-release:
     needs: create-artifact
+    if: ${{ inputs.debug }}
     permissions:
       contents: write
     runs-on: ubuntu-latest
