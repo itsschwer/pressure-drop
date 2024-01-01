@@ -22,11 +22,11 @@ namespace PressureDrop
         {
             Log.Init(Logger);
             Config = new Config(base.Config);
-
             // Use run start/end events to run check for if plugin should be active
             Run.onRunStartGlobal += SetPluginActiveState;
             Run.onRunDestroyGlobal += SetPluginActiveState;
             SetPluginActiveState();
+            Log.Message($"{Plugin.GUID}> awake.");
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
