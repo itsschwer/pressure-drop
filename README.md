@@ -17,11 +17,6 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 ---
 
 - how long a pressure plate stays pressed can be configured as you see fit
-    | value | behaviour |
-    |  ---: | :---      |
-    |     0 | disable *(vanilla)* |
-    | *(any negative value)* | pressure plates stay down forever once pressed
-    | *(any positive value)* | pressure plates stay down for the specified number of seconds
 
 ---
 
@@ -39,7 +34,14 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 
 > `/reload` can be used to apply changes made to the configuration file without needing to restart the game *(must be hosting a run to use)*.
 
+---
+
 - how long a pressure plate stays pressed can be configured as you see fit
+    | value | behaviour |
+    |  ---: | :---      |
+    |     0 | disable *(vanilla)* |
+    | *(any negative value)* | pressure plates stay down forever once pressed
+    | *(any positive value)* | pressure plates stay down for the specified number of seconds
 
 ---
 
