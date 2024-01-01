@@ -19,9 +19,9 @@ jobs:
         shell: pwsh
         run: |
           $manifest = Get-Content -Raw -path Thunderstore/manifest.json
-          $manifest -match '"name":\s*"([\w\d]+)"'
+          if (!( $manifest -match '"name":\s*"([\w\d]+)"' )) { Write-Error -ErrorAction Stop -Message "Could not find name." }
           echo "NAME=$($matches[1])" >> $env:GITHUB_OUTPUT
-          $manifest -match '"version_number":\s*"([.\d\w-+]+)"'
+          if (!( $manifest -match '"version_number":\s*"([.\d\w-+]+)"' )) { Write-Error -ErrorAction Stop -Message "Could not find version number." }
           echo "VERSION=$($matches[1])" >> $env:GITHUB_OUTPUT
 
       - name: Read src/Plugin.cs
@@ -31,9 +31,9 @@ jobs:
         shell: pwsh
         run: |
           $plugin = Get-Content -Raw -path src/Plugin.cs
-          $plugin -match 'const\s+string\s+Name\s*=\s*"([\w\d]+)"'
+          if (!( $plugin -match 'const\s+string\s+Name\s*=\s*"([\w\d]+)"' )) { Write-Error -ErrorAction Stop -Message "Could not find name." }
           $name = $matches[1]
-          $plugin -match 'const\s+string\s+Version\s*=\s*"([.\d\w-+]+)"'
+          if (!( $plugin -match 'const\s+string\s+Version\s*=\s*"([.\d\w-+]+)"' )) { Write-Error -ErrorAction Stop -Message "Could not find version number." }
           $version = $matches[1]
           echo "$name--$version | $env:NAME--$env:VERSION"
           if ( ( $name -ne $env:NAME ) -or ( $version -ne $env:VERSION ) ) { Write-Error -ErrorAction Stop -Message "Inconsistency between manifest.json and Plugin.cs" }
