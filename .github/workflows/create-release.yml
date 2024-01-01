@@ -7,6 +7,12 @@ on:
         description: 'Only create debug artifact'
         required: false
         type: boolean
+  workflow_call:
+    inputs:
+      debug:
+        description: 'Only create debug artifact'
+        required: false
+        type: boolean
 
 jobs:
   create-artifact:
