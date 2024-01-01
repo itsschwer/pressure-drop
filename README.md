@@ -1,6 +1,6 @@
 # pressure drop
 
-A \[ server-side / host-only \] mod that adds configurable timed pressure plates *(Abandoned Aqueduct)* and a `/drop` chat command.
+A \[ server-side / host-only \] mod that adds configurable timed pressure plates *(Abandoned Aqueduct)* and a `/drop` *(`/drop <itemnamenospaces> [@]`)* chat command.
 
 ## why?
 
