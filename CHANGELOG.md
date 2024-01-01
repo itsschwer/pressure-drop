@@ -1,3 +1,6 @@
+### 1.0.3
+- Include syntax for `/drop` in readme
+
 ### 1.0.2
 - Thunderstore release
 - Add log message on awake
