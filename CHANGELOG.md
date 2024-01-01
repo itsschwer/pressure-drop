@@ -1,3 +1,7 @@
+### 1.0.2
+- Thunderstore release
+- Add log message on awake
+
 ### 1.0.1
 - Use GitHub Actions to generate releases
 - Tiny code clean up
