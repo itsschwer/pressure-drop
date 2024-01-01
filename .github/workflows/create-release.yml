@@ -52,7 +52,9 @@ jobs:
         shell: pwsh
         run: |
           cd src
-          $output = dotnet build --configuration Release
+          $config = "Release"
+          if (${{ inputs.debug }}) { $config = "Debug" }
+          $output = dotnet build --configuration $config
           "$($output)" -match "Package prepared ->\s*'([^\n\r\t]+)'"
           echo "PATH=$($matches[1])" >> $env:GITHUB_OUTPUT
 
