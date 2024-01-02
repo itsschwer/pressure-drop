@@ -41,8 +41,6 @@ namespace PressureDrop.Commands
         }
 
 
-
-
         private static void ForceAqueduct(string[] args)
         {
             if (args.Length > 1) {
@@ -111,8 +109,6 @@ namespace PressureDrop.Commands
         }
 
 
-
-
         private static void PickupCommand(NetworkUser user, string[] args)
         {
             string invalid = "{ <style=cSub>t</style> | <style=cSub>v</style> | <style=cSub>s</style> }";
@@ -161,8 +157,6 @@ namespace PressureDrop.Commands
             }
             else ChatCommander.OutputFail(args[0], invalid);
         }
-
-
 
 
         private static void DisableEnemySpawns(string[] args)
