@@ -1,6 +1,6 @@
 # pressure drop
 
-A \[ server-side / host-only \] mod that adds configurable timed pressure plates *(Abandoned Aqueduct)* and a `/drop` *(`/drop <itemnamenospaces> [@]`)* chat command.
+A \[ server-side / host-only \] mod that adds configurable timed pressure plates *(Abandoned Aqueduct)* and a `/drop` item *(`/drop <itemnamenospaces> [@]`)* chat command.
 
 ## why?
 
@@ -32,7 +32,7 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 
 ## configurable
 
-> `/reload` can be used to apply changes made to the configuration file without needing to restart the game *(must be hosting a run to use)*.
+> `/reload` can be used to apply changes made to the configuration file without needing to restart the game *(must be hosting a run to use)*
 
 ---
 
