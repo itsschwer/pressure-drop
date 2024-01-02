@@ -1,4 +1,6 @@
+### 1.0.4
 - Refactor code
+- Prevent generating extraneous `RoR2BepInExPack` 'Hook removed' messages
 - Mark `Config` as public
 
 ### 1.0.3
