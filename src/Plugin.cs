@@ -78,7 +78,7 @@ namespace PressureDrop
 
             base.Config.Reload();
             ConfigureModules();
-            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"Reloaded configuration for <style=cSub>{Plugin.GUID}</style>" });
+            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"Reloaded configuration for <style=cWorldEvent>{Plugin.GUID}</style>" });
         }
 
         private void ConfigureModules()

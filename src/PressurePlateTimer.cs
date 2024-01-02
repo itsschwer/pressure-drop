@@ -16,14 +16,13 @@ namespace PressureDrop
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void Update()
         {
-            foreach (PressurePlateController key in timers.Keys.ToList()) {
-                timers[key] -= Time.deltaTime;
-                if (timers[key] <= 0) {
-                    timers.Remove(key);
+            foreach (PressurePlateController self in timers.Keys.ToList()) {
+                timers[self] -= Time.deltaTime;
+                if (timers[self] <= 0) {
+                    timers.Remove(self);
 #if DEBUG
                     // Pressure plates may no longer exist if unloaded (e.g. stage transition)
-                    string identifier = $"[no longer exists.]";
-                    if (key) identifier = $"{key.name} @ {key.transform.position}";
+                    string identifier = (self != null) ? $"[{self.name}]" : "[no longer exists.]";
                     Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>{identifier} inactive ({timers.Count} active)</style>" });
 #endif
                 }
@@ -44,8 +43,7 @@ namespace PressureDrop
                 orig(self, switchIsDown);
                 timers[self] = time;
 #if DEBUG
-                string identifier = $"[no longer exists?]";
-                if (self) identifier = $"{self.name} @ {self.transform.position}";
+                string identifier = (self != null) ? $"[{self.name}]" : "[no longer exists?]";
                 Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>{identifier} active {time}s ({timers.Count} active)</style>" });
 #endif
             }

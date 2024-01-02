@@ -25,7 +25,6 @@ namespace PressureDrop
             if (!message.StartsWith(commandPrefix)) return;
 
             message = message.Substring(commandPrefix.Length);
-            
             OnChatCommand.Invoke(userMessage.Value.user, message.Split(' '));
         }
 
@@ -68,6 +67,9 @@ namespace PressureDrop
         {
             Output($"<style=cDeath>Failed:</style> <color=#ffffff>{ChatCommander.commandPrefix}{cmd}</color> {message}");
         }
+
+
+
 
         public static string GetColoredPickupLanguageString(ItemIndex itemIndex)
             => GetColoredPickupLanguageString(PickupCatalog.FindPickupIndex(itemIndex));

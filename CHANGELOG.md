@@ -1,3 +1,6 @@
+- Refactor code
+- Mark `Config` as public
+
 ### 1.0.3
 - Include syntax for `/drop` in readme
 

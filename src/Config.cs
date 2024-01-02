@@ -2,7 +2,7 @@
 
 namespace PressureDrop
 {
-    internal sealed class Config
+    public sealed class Config
     {
         private readonly ConfigEntry<float> _pressurePlateTimer;
         public float PressurePlateTimer => _pressurePlateTimer.Value;
@@ -41,7 +41,7 @@ namespace PressureDrop
         public bool DropRecyclableEquipment => _dropRecyclableEquipment.Value;
         public bool DropRecyclableEquipmentLunar => _dropRecyclableEquipmentLunar.Value;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("", "IDE0290")] // Use primary constructor
+
         public Config(ConfigFile config)
         {
             // Prefix section to sort to top in config editor
@@ -62,22 +62,22 @@ namespace PressureDrop
                 "The maximum amount of items to drop from the player at a time (similar to Scrappers).\nMinimum value is 1.");
 
 
-            // Drop Recyclable
-            _dropRecyclableWhite = config.Bind<bool>("Drop Recyclable", "dropRecyclableWhite", true,
+            const string DropRecyclable = "Drop Recyclable";
+            _dropRecyclableWhite = config.Bind<bool>(DropRecyclable, "dropRecyclableWhite", true,
                 "Whether dropped white tier items should be recyclable.");
-            _dropRecyclableGreen = config.Bind<bool>("Drop Recyclable", "dropRecyclableGreen", true,
+            _dropRecyclableGreen = config.Bind<bool>(DropRecyclable, "dropRecyclableGreen", true,
                 "Whether dropped green tier items should be recyclable.");
-            _dropRecyclableRed = config.Bind<bool>("Drop Recyclable", "dropRecyclableRed", false,
+            _dropRecyclableRed = config.Bind<bool>(DropRecyclable, "dropRecyclableRed", false,
                 "Whether dropped red tier items should be recyclable.");
-            _dropRecyclableYellow = config.Bind<bool>("Drop Recyclable", "dropRecyclableYellow", false,
+            _dropRecyclableYellow = config.Bind<bool>(DropRecyclable, "dropRecyclableYellow", false,
                 "Whether dropped yellow tier items should be recyclable.");
-            _dropRecyclableLunar = config.Bind<bool>("Drop Recyclable", "dropRecyclableLunar", false,
+            _dropRecyclableLunar = config.Bind<bool>(DropRecyclable, "dropRecyclableLunar", false,
                 "Whether dropped lunar items should be recyclable.");
-            _dropRecyclableVoid = config.Bind<bool>("Drop Recyclable", "dropRecyclableVoid", false,
+            _dropRecyclableVoid = config.Bind<bool>(DropRecyclable, "dropRecyclableVoid", false,
                 "Whether dropped void items should be recyclable.");
-            _dropRecyclableEquipment = config.Bind<bool>("Drop Recyclable", "dropRecyclableEquipment", true,
+            _dropRecyclableEquipment = config.Bind<bool>(DropRecyclable, "dropRecyclableEquipment", true,
                 "Whether dropped equipment should be recyclable.");
-            _dropRecyclableEquipmentLunar = config.Bind<bool>("Drop Recyclable", "dropRecyclableEquipmentLunar", false,
+            _dropRecyclableEquipmentLunar = config.Bind<bool>(DropRecyclable, "dropRecyclableEquipmentLunar", false,
                 "Whether dropped lunar equipment should be recyclable.");
         }
     }
