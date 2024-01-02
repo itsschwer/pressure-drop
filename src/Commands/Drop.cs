@@ -93,20 +93,8 @@ namespace PressureDrop.Commands
             }
 
             user.master.inventory.RemoveItem(itemDef.itemIndex, count);
-            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(itemDef.itemIndex), count, 3.4f, 14f, GetAimDirection(user));
+            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(itemDef.itemIndex), count, 3.4f, 14f, PressureDrop.Drop.GetAimDirection(user?.GetCurrentBody()));
             Feedback(message);
-        }
-
-        private static Vector3? GetAimDirection(NetworkUser user)
-        {
-            InputBankTest inputBank = user.GetCurrentBody()?.inputBank;
-            if (inputBank) {
-                Vector3 aimDirection = inputBank.aimDirection;
-                aimDirection.y = 0f;
-                return aimDirection.normalized;
-            }
-
-            return null;
         }
 
         /// <summary>

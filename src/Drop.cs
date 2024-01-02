@@ -130,6 +130,16 @@ namespace PressureDrop
 
         // Drop ============================================
 
+        public static Vector3? GetAimDirection(CharacterBody body)
+        {
+            InputBankTest inputBank = body?.inputBank;
+            if (inputBank == null) return null;
+
+            Vector3 aimDirection = inputBank.aimDirection;
+            aimDirection.y = 0f;
+            return aimDirection.normalized;
+        }
+
         public static void DropStyleChest(Transform target, PickupIndex dropPickup, int dropCount, float forwardVelocity = 2f, float upVelocity = 20f, Vector3? forwardOverride = null)
         {
             if (dropPickup != PickupIndex.none && dropCount >= 1)
