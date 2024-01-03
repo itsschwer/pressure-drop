@@ -53,9 +53,6 @@ namespace PressureDrop.Commands
             int count = user.master.inventory.GetItemCount(itemDef.itemIndex);
             if (count > Plugin.Config.MaxItemsToDropAtATime) count = Plugin.Config.MaxItemsToDropAtATime;
 
-            string displayCount = ((count != 1) ? $"({count})" : "");
-            string message = $"{user.masterController.GetDisplayName()} dropped {ChatCommander.GetColoredPickupLanguageString(itemDef.itemIndex)}{displayCount}";
-
             Transform target = user.GetCurrentBody()?.gameObject.transform;
             // Assume dead if no body
             if (target == null) {
@@ -74,7 +71,6 @@ namespace PressureDrop.Commands
 
                     if (tp != null) {
                         target = tp;
-                        message += " at the Teleporter";
                     }
                     else {
                         Feedback("There is no Teleporter to drop at <sprite name=\"Skull\" tint=1>");
@@ -94,12 +90,31 @@ namespace PressureDrop.Commands
 
             user.master.inventory.RemoveItem(itemDef.itemIndex, count);
             PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(itemDef.itemIndex), count, 3.4f, 14f, PressureDrop.Drop.GetAimDirection(user?.GetCurrentBody()));
-            Feedback(message);
+            Feedback(user, itemDef, count, dropAtTeleporter);
         }
 
         /// <summary>
-        /// Wrapper for sending a chat message styled after the vanilla "picked up {item}" message.
+        /// Wrapper for sending a chat message styled after the vanilla "{<paramref name="user"/>} picked up {<paramref name="item"/>}[&lt;<paramref name="count"/>&gt;]" message.
         /// </summary>
+        /// <param name="user"></param>
+        /// <param name="item"></param>
+        /// <param name="count"></param>
+        /// <param name="dropAtTeleporter"></param>
+        private static void Feedback(NetworkUser user, ItemDef item, int count, bool dropAtTeleporter)
+        {
+            string subject = user.masterController.GetDisplayName();
+            string itemDisplay = ChatCommander.GetColoredPickupLanguageString(item.itemIndex);
+            string countDisplay = (count != 1) ? $"({count})" : "";
+            string location = dropAtTeleporter ? " at the Teleporter" : "";
+            Feedback($"{subject} dropped {itemDisplay}{countDisplay}{location}");
+        }
+
+        /// <summary>
+        /// Wrapper for sending a styled chat message.
+        /// </summary>
+        /// <remarks>
+        /// The missing closing style tag and the extraneous closing color tag mimics vanilla.
+        /// </remarks>
         /// <param name="message"></param>
         private static void Feedback(string message)
             => Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cEvent>" + message + "</color>"});
