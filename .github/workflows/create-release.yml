@@ -50,12 +50,12 @@ jobs:
       - name: Build project
         id: build
         env:
-          CONFIG: ${{ inputs.debug }}
+          DEBUG: ${{ inputs.debug }}
         shell: pwsh
         run: |
           cd src
           $config = "Release"
-          if ( $env:CONFIG -eq $true ) { $config = "Debug" }
+          if ( $env:DEBUG -eq $true ) { $config = "Debug" }
           $output = dotnet build --configuration $config
           "$($output)" -match "Package prepared ->\s*'([^\n\r\t]+)'"
           echo "PATH=$($matches[1])" >> $env:GITHUB_OUTPUT
@@ -82,9 +82,7 @@ jobs:
           # https://github.com/actions/download-artifact/issues/143
 
       - name: zip
-        run: |
-          ls -1 -r
-          zip -r ${{ needs.create-artifact.outputs.name }}.zip .
+        run: zip -r ${{ needs.create-artifact.outputs.name }}.zip .
       
       - uses: ncipollo/release-action@v1
         with:
