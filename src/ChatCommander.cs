@@ -22,10 +22,10 @@ namespace PressureDrop
         private static void Console_RunCmd(On.RoR2.Console.orig_RunCmd orig, RoR2.Console self, RoR2.Console.CmdSender sender, string concommandName, List<string> userArgs)
         {
             string message = userArgs.FirstOrDefault();
-            string[] args = message.Split(' ');
+            string[] args = message?.Split(' ');
             // Not server, not a chat command, or not a registered command
             if (!NetworkServer.active || !concommandName.Equals("say", StringComparison.InvariantCultureIgnoreCase)
-                || string.IsNullOrWhiteSpace(message)
+                || string.IsNullOrWhiteSpace(message) || args == null || args.Length <= 0
                 || !Commands.TryGetValue(args[0], out Action<NetworkUser, string[]> command) || command == null)
             {
                 orig.Invoke(self, sender, concommandName, userArgs);
@@ -34,7 +34,8 @@ namespace PressureDrop
             // Otherwise, execute and stop propagation
 
             // Finish say command (add player chat message) | RoR2.Chat.CCSay()
-            Chat.SendBroadcastChat(new Chat.UserChatMessage {
+            Chat.SendBroadcastChat(new Chat.UserChatMessage
+            {
                 sender = sender.networkUser.gameObject,
                 text = message
             });
@@ -48,7 +49,7 @@ namespace PressureDrop
         /// <param name="token"></param>
         /// <param name="action"></param>
         /// <returns>
-        /// Returns <see cref="false"/> if the chat command could not be registered.
+        /// Returns <see langword="false"/> if the chat command could not be registered.
         /// </returns>
         public static bool Register(string token, Action<NetworkUser, string[]> action, bool replace = false)
         {
@@ -72,7 +73,7 @@ namespace PressureDrop
         /// </summary>
         /// <param name="token"></param>
         /// <param name="action"></param>
-        /// <returns>Returns <see cref="true"/> if the chat command was successfully unregistered.</returns>
+        /// <returns>Returns <see langword="true"/> if the chat command was successfully unregistered.</returns>
         public static bool Unregister(string token, Action<NetworkUser, string[]> action)
         {
             if (Commands.TryGetValue(token, out Action<NetworkUser, string[]> command)) {
