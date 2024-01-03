@@ -85,7 +85,9 @@ namespace PressureDrop.Commands
             }
 
             user.master.inventory.RemoveItem(itemDef.itemIndex, count);
-            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(itemDef.itemIndex), count, 3.4f, 14f, PressureDrop.Drop.GetAimDirection(user?.GetCurrentBody()));
+            Vector3? direction = PressureDrop.Drop.GetAimDirection(user?.GetCurrentBody());
+            if (Plugin.Config.DropInvertDirection && direction.HasValue) direction = -direction.Value;
+            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(itemDef.itemIndex), count, 3.4f, 14f, direction);
             Feedback(user, itemDef, count, dropAtTeleporter);
         }
 

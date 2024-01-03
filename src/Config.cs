@@ -12,12 +12,14 @@ namespace PressureDrop
         private readonly ConfigEntry<bool> _dropEnabled;
         private readonly ConfigEntry<bool> _dropTeleporterEnabled;
         private readonly ConfigEntry<bool> _dropDeadEnabled;
+        private readonly ConfigEntry<bool> _dropInvertDirection;
         private readonly ConfigEntry<bool> _dropVoidAllowed;
         private readonly ConfigEntry<int> _maxItemsToDropAtATime;
         // Accessors
         public bool DropEnabled => _dropEnabled.Value;
         public bool DropTeleporterEnabled => _dropTeleporterEnabled.Value;
         public bool DropDeadEnabled => _dropDeadEnabled.Value;
+        public bool DropInvertDirection => _dropInvertDirection.Value;
         public bool DropVoidAllowed => _dropVoidAllowed.Value;
         public int MaxItemsToDropAtATime => _maxItemsToDropAtATime.Value > 0 ? _maxItemsToDropAtATime.Value : 1;
 
@@ -56,6 +58,8 @@ namespace PressureDrop
                 "Whether players should be able to send their drops to the Teleporter or not.");
             _dropDeadEnabled = config.Bind<bool>("Drop Command", "dropDeadEnabled", true,
                 "Whether dead players should be able to drop items or not.\nRequires dropTeleporterEnabled to be true.");
+            _dropInvertDirection = config.Bind<bool>("Drop Command", "dropInvertDirection", false,
+                "Whether items should be dropped opposite the aim direction or not.");
             _dropVoidAllowed = config.Bind<bool>("Drop Command", "dropVoidAllowed", false,
                 "Whether void items are allowed to be dropped or not.");
             _maxItemsToDropAtATime = config.Bind<int>("Drop Command", "maxItemsToDropAtATime", 10,
