@@ -1,3 +1,11 @@
+## 1.1.0
+- Add configuration option `dropInvertDirection`
+    - Controls whether items should be dropped opposite the aim direction or not
+- Rework how chat commands are handled
+    - *(Hook `Console.RunCmd` instead of listening to `Chat.onChatChanged`*)
+    - Prevent propagation of 'say' command if a chat command is matched
+        - Hopefully avoids triggering any "unable to find command" messages from other mods implementing chat commands
+
 ### 1.0.4
 - Refactor code
 - Prevent generating extraneous `RoR2BepInExPack` 'Hook removed' messages

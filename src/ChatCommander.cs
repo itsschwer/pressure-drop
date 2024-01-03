@@ -1,5 +1,4 @@
-﻿using BepInEx.Logging;
-using RoR2;
+﻿using RoR2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,8 +33,7 @@ namespace PressureDrop
             // Otherwise, execute and stop propagation
 
             // Finish say command (add player chat message) | RoR2.Chat.CCSay()
-            Chat.SendBroadcastChat(new Chat.UserChatMessage
-            {
+            Chat.SendBroadcastChat(new Chat.UserChatMessage {
                 sender = sender.networkUser.gameObject,
                 text = message
             });
