@@ -8,10 +8,10 @@ namespace PressureDrop.Commands
     {
         public static void  Enable()
         {
-            ChatCommander.Register("~aq", ForceAqueduct);
-            ChatCommander.Register("~g", GiveCommand);
-            ChatCommander.Register("~p", PickupCommand);
-            ChatCommander.Register("~ne", DisableEnemySpawns);
+            ChatCommander.Register(".aq", ForceAqueduct);
+            ChatCommander.Register(".g", GiveCommand);
+            ChatCommander.Register(".p", PickupCommand);
+            ChatCommander.Register(".ne", DisableEnemySpawns);
 
             ChatCommander.Register("/?", Help);
             ChatCommander.Register("/h", Help);
@@ -19,10 +19,10 @@ namespace PressureDrop.Commands
         }
         public static void Disable()
         {
-            ChatCommander.Unregister("~aq", ForceAqueduct);
-            ChatCommander.Unregister("~g", GiveCommand);
-            ChatCommander.Unregister("~p", PickupCommand);
-            ChatCommander.Unregister("~ne", DisableEnemySpawns);
+            ChatCommander.Unregister(".aq", ForceAqueduct);
+            ChatCommander.Unregister(".g", GiveCommand);
+            ChatCommander.Unregister(".p", PickupCommand);
+            ChatCommander.Unregister(".ne", DisableEnemySpawns);
 
             ChatCommander.Unregister("/?", Help);
             ChatCommander.Unregister("/h", Help);
@@ -32,10 +32,10 @@ namespace PressureDrop.Commands
         private static void Help(NetworkUser user, string[] args)
         {
             ChatCommander.Output($"<style=cWorldEvent>{Plugin.GUID}</style> debug cheats:");
-            ChatCommander.Output($"  <style=cSub>~aq</style>: changes the stage to Abandoned Aqueduct.");
-            ChatCommander.Output($"  <style=cSub>~g</style>: gives the user items for testing pressure plate changes.");
-            ChatCommander.Output($"  <style=cSub>~p</style>: drops items for testing recyclability config.");
-            ChatCommander.Output($"  <style=cSub>~ne</style>: toggles enemy spawns.");
+            ChatCommander.Output($"  <style=cSub>.aq</style>: changes the stage to Abandoned Aqueduct.");
+            ChatCommander.Output($"  <style=cSub>.g</style>: gives the user items for testing pressure plate changes.");
+            ChatCommander.Output($"  <style=cSub>.p</style>: drops items for testing recyclability config.");
+            ChatCommander.Output($"  <style=cSub>.ne</style>: toggles enemy spawns.");
         }
 
         private static void ForceAqueduct(NetworkUser user, string[] args)
