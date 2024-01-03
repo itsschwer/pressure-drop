@@ -29,7 +29,7 @@ namespace PressureDrop
         }
 
         /// <summary>
-        /// Attempts to reconstruct a <paramref name="chatLogMessage"/> into the original chat message and the user who sent it.
+        /// Attempts to reconstruct a <paramref name="chatLogMessage"/> into the original chat message and the <see cref="NetworkUser"/> who sent it.
         /// </summary>
         /// <param name="chatLogMessage"></param>
         /// <returns></returns>

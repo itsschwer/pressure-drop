@@ -54,16 +54,15 @@ namespace PressureDrop
         }
 
         /// <summary>
-        /// Wrapper for SetActive(bool), passing in NetworkServer.active,
+        /// Wrapper for <see cref="SetActive"/>, passing in <see cref="UnityEngine.Networking.NetworkServer.active"/>,
         /// which appears to be used for determining if client is host.
         /// </summary>
         private void SetPluginActiveState(Run run = null) => SetActive(UnityEngine.Networking.NetworkServer.active);
 
         /// <summary>
-        /// All plugins are attached to the same
-        /// <see href="https://github.com/BepInEx/BepInEx/blob/0d06996b52c0215a8327b8c69a747f425bbb0023/BepInEx/Bootstrap/Chainloader.cs#L88">GameObject</see>,
-        /// so manually manage components instead of calling
-        /// this.gameObject.SetActive(bool).
+        /// All plugins are attached to the
+        /// <see href="https://github.com/BepInEx/BepInEx/blob/0d06996b52c0215a8327b8c69a747f425bbb0023/BepInEx/Bootstrap/Chainloader.cs#L88">same</see>
+        /// <see cref="UnityEngine.GameObject"/>, so manually manage components instead of calling <see cref="UnityEngine.GameObject.SetActive"/>.
         /// </summary>
         private void SetActive(bool value) {
             this.enabled = value;

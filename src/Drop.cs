@@ -8,9 +8,9 @@ namespace PressureDrop
     internal static class Drop
     {
         /// <summary>
-        /// An invalid Quaternion to check for as a hacky workaround
+        /// An invalid <see cref="Quaternion"/> to check for as a hacky workaround
         /// for finding pickups the plugin aims to manipulate.
-        /// <para>(Valid Quaternion's xyzw values range from -1 to 1).</para>
+        /// <para>(A valid <see cref="Quaternion"/>'s xyzw values range from -1 to 1).</para>
         /// </summary>
         private static readonly Quaternion identifier = new Quaternion(-2, -4, -8, -16);
 
@@ -54,10 +54,10 @@ namespace PressureDrop
         }
 
         /// <summary>
-        /// Checks if an ItemTier belongs to a void tier.
+        /// Checks if an <see cref="ItemTier"/> belongs to a void tier.
         /// </summary>
-        /// <param name="def"></param>
-        /// <returns>Whether the tier is a void tier or not.</returns>
+        /// <param name="tier"></param>
+        /// <returns>Whether the <paramref name="tier"/> is a void tier or not.</returns>
         public static bool IsVoidTier(ItemTier tier)
         {
             return tier == ItemTier.VoidTier1 ||
@@ -67,7 +67,7 @@ namespace PressureDrop
         }
 
         /// <summary>
-        /// Checks a PickupDef against the config settings to determine whether the item or equipment should be recyclable.
+        /// Checks a <see cref="PickupDef"/> against the config settings to determine whether the item or equipment should be recyclable.
         /// </summary>
         /// <param name="def"></param>
         /// <returns>Whether the item or equipment should be recyclable or not.</returns>
@@ -95,11 +95,12 @@ namespace PressureDrop
         }
 
         /// <summary>
-        /// Searches the inventory for an item with a name that matches the search query. Items are checked in reverse acquisition order (most recent match first).
+        /// Searches the <paramref name="inventory"/> for an item with a name that matches the search <paramref name="query"/>.
+        /// <br/>Items are checked in reverse acquisition order (most recent match first).
         /// </summary>
         /// <param name="inventory"></param>
         /// <param name="query"></param>
-        /// <returns>The ItemIndex of the matched item. If there is no match, returns ItemIndex.None instead.</returns>
+        /// <returns>The <see cref="ItemIndex"/> of the matched item. If there is no match, returns <see cref="ItemIndex.None"/> instead.</returns>
         public static ItemIndex FindItemInInventory(this Inventory inventory, string query)
         {
             List<ItemIndex> items = inventory.itemAcquisitionOrder;
