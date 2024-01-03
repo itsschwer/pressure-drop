@@ -6,42 +6,39 @@ namespace PressureDrop.Commands
 {
     internal static class DebugCheats
     {
-        public static void  Enable() => ChatCommander.OnChatCommand += ParseCommand;
-        public static void Disable() => ChatCommander.OnChatCommand -= ParseCommand;
-
-        private static void ParseCommand(NetworkUser user, string[] args)
+        public static void  Enable()
         {
-            if (!Run.instance || args.Length < 1) return;
+            ChatCommander.Register("~aq", ForceAqueduct);
+            ChatCommander.Register("~g", GiveCommand);
+            ChatCommander.Register("~p", PickupCommand);
+            ChatCommander.Register("~ne", DisableEnemySpawns);
 
-            switch (args[0].ToLowerInvariant()) {
-                default:
-                    break;
-                case "aq":
-                    ForceAqueduct(args);
-                    break;
-                case "g":
-                    GiveCommand(user, args);
-                    break;
-                case "p":
-                    PickupCommand(user, args);
-                    break;
-                case "ne":
-                    DisableEnemySpawns(args);
-                    break;
-                case "?":
-                case "h":
-                case "help":
-                    ChatCommander.Output($"<style=cWorldEvent>{Plugin.GUID}</style> debug cheats:");
-                    ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}aq</style>: changes the stage to Abandoned Aqueduct.");
-                    ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}g</style>: gives the user items for testing pressure plate changes.");
-                    ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}p</style>: drops items for testing recyclability config.");
-                    ChatCommander.Output($"  <style=cSub>{ChatCommander.commandPrefix}ne</style>: toggles enemy spawns.");
-                    break;
-            }
+            ChatCommander.Register("/?", Help);
+            ChatCommander.Register("/h", Help);
+            ChatCommander.Register("/help", Help);
+        }
+        public static void Disable()
+        {
+            ChatCommander.Unregister("~aq", ForceAqueduct);
+            ChatCommander.Unregister("~g", GiveCommand);
+            ChatCommander.Unregister("~p", PickupCommand);
+            ChatCommander.Unregister("~ne", DisableEnemySpawns);
+
+            ChatCommander.Unregister("/?", Help);
+            ChatCommander.Unregister("/h", Help);
+            ChatCommander.Unregister("/help", Help);
         }
 
+        private static void Help(NetworkUser user, string[] args)
+        {
+            ChatCommander.Output($"<style=cWorldEvent>{Plugin.GUID}</style> debug cheats:");
+            ChatCommander.Output($"  <style=cSub>~aq</style>: changes the stage to Abandoned Aqueduct.");
+            ChatCommander.Output($"  <style=cSub>~g</style>: gives the user items for testing pressure plate changes.");
+            ChatCommander.Output($"  <style=cSub>~p</style>: drops items for testing recyclability config.");
+            ChatCommander.Output($"  <style=cSub>~ne</style>: toggles enemy spawns.");
+        }
 
-        private static void ForceAqueduct(string[] args)
+        private static void ForceAqueduct(NetworkUser user, string[] args)
         {
             if (args.Length > 1) {
                 ChatCommander.OutputFail(args[0], "expects zero arguments.");
@@ -159,7 +156,7 @@ namespace PressureDrop.Commands
         }
 
 
-        private static void DisableEnemySpawns(string[] args)
+        private static void DisableEnemySpawns(NetworkUser user, string[] args)
         {
             if (args.Length > 1) {
                 ChatCommander.OutputFail(args[0], "expects zero arguments.");

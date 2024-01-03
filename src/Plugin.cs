@@ -22,6 +22,7 @@ namespace PressureDrop
         {
             Log.Init(Logger);
             Config = new Config(base.Config);
+            ChatCommander.Hook();
             // Use run start/end events to run check for if plugin should be active
             Run.onRunStartGlobal += SetPluginActiveState;
             Run.onRunDestroyGlobal += SetPluginActiveState;
@@ -33,8 +34,7 @@ namespace PressureDrop
         private void OnEnable()
         {
             ConfigureModules();
-            ChatCommander.Subscribe();
-            ChatCommander.OnChatCommand += ParseReload;
+            ChatCommander.Register("/reload", ReloadConfig, true);
 #if DEBUG
             Commands.DebugCheats.Enable();
 #endif
@@ -45,8 +45,7 @@ namespace PressureDrop
         private void OnDisable()
         {
             ConfigureModules();
-            ChatCommander.Unsubscribe();
-            ChatCommander.OnChatCommand -= ParseReload;
+            ChatCommander.Unregister("/reload", ReloadConfig);
 #if DEBUG
             Commands.DebugCheats.Disable();
 #endif
@@ -70,9 +69,8 @@ namespace PressureDrop
             Log.Message($"{Plugin.GUID}> {(value ? "active" : "inactive")}.");
         }
 
-        private void ParseReload(NetworkUser user, string[] args)
+        private void ReloadConfig(NetworkUser user, string[] args)
         {
-            if (args.Length != 1 || args[0].ToLowerInvariant() != "reload") return; // Only accept command with no additional args
             if (user != LocalUserManager.GetFirstLocalUser().currentNetworkUser) return; // Only allow host to reload
 
             base.Config.Reload();

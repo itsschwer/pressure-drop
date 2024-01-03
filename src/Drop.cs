@@ -15,7 +15,6 @@ namespace PressureDrop
         private static readonly Quaternion identifier = new Quaternion(-2, -4, -8, -16);
 
         private static bool _hooked = false;
-
         public static void Hook()
         {
             if (_hooked) return;

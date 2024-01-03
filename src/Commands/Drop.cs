@@ -5,25 +5,21 @@ namespace PressureDrop.Commands
 {
     internal static class Drop
     {
-        public static void  Enable() => ChatCommander.OnChatCommand += ParseCommand;
-        public static void Disable() => ChatCommander.OnChatCommand -= ParseCommand;
-
-        private static void ParseCommand(NetworkUser user, string[] args)
+        public static void  Enable()
         {
-            if (!Run.instance || args.Length < 1) return;
-
-            switch (args[0].ToLowerInvariant()) {
-                default:
-                    break;
-                case "d":
-                case "drop":
-                    DropCommand(user, args);
-                    break;
-            }
+            ChatCommander.Register("/d", DropCommand);
+            ChatCommander.Register("/drop", DropCommand);
+        }
+        public static void Disable()
+        {
+            ChatCommander.Unregister("/d", DropCommand);
+            ChatCommander.Unregister("/drop", DropCommand);
         }
 
         private static void DropCommand(NetworkUser user, string[] args)
         {
+            if (Run.instance == null) return;
+
             const int expectedArgs = 2;
             if (args.Length < expectedArgs) { ShowHelp(args); return; }
 
