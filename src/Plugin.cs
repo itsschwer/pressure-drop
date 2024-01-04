@@ -12,7 +12,7 @@ namespace PressureDrop
         public const string Name = "PressureDrop";
         public const string Version = "1.1.0";
 
-        internal static new Config Config { get; private set; }
+        public static new Config Config { get; private set; }
 
         // MonoBehaviour components
         private PressurePlateTimer pressure;
@@ -27,7 +27,7 @@ namespace PressureDrop
             Run.onRunStartGlobal += SetPluginActiveState;
             Run.onRunDestroyGlobal += SetPluginActiveState;
             SetPluginActiveState();
-            Log.Message($"{Plugin.GUID}> awake.");
+            Log.Message("~awake.");
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
@@ -38,7 +38,7 @@ namespace PressureDrop
 #if DEBUG
             Commands.DebugCheats.Enable();
 #endif
-            Log.Message($"{Plugin.GUID}> enabled.");
+            Log.Message("~enabled.");
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
@@ -49,7 +49,7 @@ namespace PressureDrop
 #if DEBUG
             Commands.DebugCheats.Disable();
 #endif
-            Log.Message($"{Plugin.GUID}> disabled.");
+            Log.Message("~ disabled.");
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace PressureDrop
         private void SetActive(bool value) {
             this.enabled = value;
             if (this.pressure) this.pressure.enabled = value;
-            Log.Message($"{Plugin.GUID}> {(value ? "active" : "inactive")}.");
+            Log.Message($"~{(value ? "active" : "inactive")}.");
         }
 
         private void ReloadConfig(NetworkUser user, string[] args)
