@@ -49,7 +49,7 @@ namespace PressureDrop
 #if DEBUG
             Commands.DebugCheats.Disable();
 #endif
-            Log.Message("~ disabled.");
+            Log.Message("~disabled.");
         }
 
         /// <summary>
