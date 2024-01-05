@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PressureDrop
 {
-    internal static class Drop
+    public static class Drop
     {
         /// <summary>
         /// An invalid <see cref="Quaternion"/> to check for as a hacky workaround
@@ -15,7 +15,8 @@ namespace PressureDrop
         private static readonly Quaternion identifier = new Quaternion(-2, -4, -8, -16);
 
         private static bool _hooked = false;
-        public static void Hook()
+
+        internal static void Hook()
         {
             if (_hooked) return;
             _hooked = true;
@@ -23,7 +24,7 @@ namespace PressureDrop
             Commands.Drop.Enable();
         }
 
-        public static void Unhook()
+        internal static void Unhook()
         {
             if (!_hooked) return;
             _hooked = false;
