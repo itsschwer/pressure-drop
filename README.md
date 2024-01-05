@@ -2,6 +2,10 @@
 
 A \[ server-side / host-only \] mod that adds configurable timed pressure plates *(Abandoned Aqueduct)* and a `/drop` item *(`/drop <itemnamenospaces> [@]`)* chat command.
 
+Vanilla pressure plate | Timed pressure plate *(config: 3s)* | `/drop` item command
+--- | --- | ---
+![gif demonstration of vanilla pressure plate](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-pressure-plate-vanilla.gif?raw=true) | ![gif demonstration of timed pressure plate](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-pressure-plate-timed.gif?raw=true) | ![gif demonstration of /drop item command](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-drop-item.gif?raw=true)
+
 ## why?
 
 I wanted to make activating the pressure plates more accessible *(no more waiting for friends / pushing pots)*.
@@ -54,6 +58,10 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 ## issues
 
 I'm not quite sure I've successfully designed it such that the mod is only active as host.
+
+## developers
+
+If you'd like to implement your own chat commands, you can include this plugin as a dependency and register your commands using `ChatCommander` — please refer to [this guide](https://github.com/itsschwer/pressure-drop/blob/main/xtra/developers.md)!
 
 ## see also
 
