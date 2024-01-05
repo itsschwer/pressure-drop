@@ -2,12 +2,6 @@
 
 A \[ server-side / host-only \] mod that adds configurable timed pressure plates *(Abandoned Aqueduct)* and a `/drop` item *(`/drop <itemnamenospaces> [@]`)* chat command.
 
-> timed pressure plate *(config: 3s)*
-![gif demonstration of timed pressure plate](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-pressure-plate-timed.gif?raw=true)
-
-> `/drop` item command
-![gif demonstration of /drop item command](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-drop-item.gif?raw=true)
-
 ## why?
 
 I wanted to make activating the pressure plates more accessible *(no more waiting for friends / pushing pots)*.
@@ -22,7 +16,10 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 
 ---
 
-- how long a pressure plate stays pressed can be configured as you see fit
+- how long a pressure plate stays pressed can be configured as you see fit *(default: 30s)*
+
+> timed pressure plate *(config: 3s)*
+![gif demonstration of timed pressure plate](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-pressure-plate-timed.gif?raw=true)
 
 ---
 
@@ -36,13 +33,16 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 - can remove items you are not having fun with
 - can spread void items between players
 
+> `/drop` item command
+![gif demonstration of /drop item command](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-drop-item.gif?raw=true)
+
 ## configurable
 
 > `/reload` can be used to apply changes made to the configuration file without needing to restart the game *(must be hosting a run to use)*
 
 ---
 
-- how long a pressure plate stays pressed can be configured as you see fit
+- how long a pressure plate stays pressed can be configured as you see fit *(default: 30s)*
     | value | behaviour |
     |  ---: | :---      |
     |     0 | disable *(vanilla)* |
