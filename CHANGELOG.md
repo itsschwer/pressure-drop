@@ -1,3 +1,9 @@
+## 1.1.1
+- Add demo gifs to readme
+- Create developers.md
+- \[`ChatCommander`\] Log source assembly when registering command
+- Mark `Drop` as public
+
 ## 1.1.0
 - Add configuration option `dropInvertDirection`
     - Controls whether items should be dropped opposite the aim direction or not
