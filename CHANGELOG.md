@@ -1,4 +1,4 @@
-## 1.1.1
+### 1.1.1
 - Add demo gifs to readme
 - Create developers.md
 - \[`ChatCommander`\] Log source assembly when registering command
