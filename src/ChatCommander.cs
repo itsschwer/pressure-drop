@@ -56,13 +56,15 @@ namespace PressureDrop
                     Log.Warning($"{nameof(ChatCommander)}> '{token}' is replacing a previously registered chat command.");
                 }
                 else {
-                    Log.Warning($"{nameof(ChatCommander)}> A chat command is already registered under '{token}'.");
+                    Log.Warning($"{nameof(ChatCommander)}> A chat command is already registered under '{token}'");
                     return false;
                 }
             }
 
             Commands[token] = action;
-            Log.Info($"{nameof(ChatCommander)}> Registering a chat command under '{token}'.");
+            string origin = action.Method.DeclaringType.Assembly.GetName().Name;
+            origin = (origin != typeof(ChatCommander).Assembly.GetName().Name) ? $" [from {origin}.dll]" : "";
+            Log.Info($"{nameof(ChatCommander)}> Registering a chat command under '{token}'{origin}");
             return true;
         }
 
