@@ -2,9 +2,11 @@
 
 A \[ server-side / host-only \] mod that adds configurable timed pressure plates *(Abandoned Aqueduct)* and a `/drop` item *(`/drop <itemnamenospaces> [@]`)* chat command.
 
-Vanilla pressure plate | Timed pressure plate *(config: 3s)* | `/drop` item command
---- | --- | ---
-![gif demonstration of vanilla pressure plate](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-pressure-plate-vanilla.gif?raw=true) | ![gif demonstration of timed pressure plate](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-pressure-plate-timed.gif?raw=true) | ![gif demonstration of /drop item command](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-drop-item.gif?raw=true)
+> timed pressure plate *(config: 3s)*
+![gif demonstration of timed pressure plate](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-pressure-plate-timed.gif?raw=true)
+
+> `/drop` item command
+![gif demonstration of /drop item command](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-drop-item.gif?raw=true)
 
 ## why?
 
