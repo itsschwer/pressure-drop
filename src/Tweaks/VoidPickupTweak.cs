@@ -5,7 +5,7 @@ namespace PressureDrop
 {
     internal static class VoidPickupTweak
     {
-        private static readonly Dictionary<ItemTier, ItemTierDef.PickupRules> originalRules;
+        private static readonly Dictionary<ItemTier, ItemTierDef.PickupRules> originalRules = [];
 
         public static void SetActive(bool value)
         {
