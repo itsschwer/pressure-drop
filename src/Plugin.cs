@@ -83,6 +83,7 @@ namespace PressureDrop
             ManagePressurePlateTimer();
             ManageDropCommand();
             ManageVoidFieldTweak();
+            VoidPickupTweak.SetActive(this.enabled && Config.VoidPickupConfirmAll);
         }
 
         private void ManagePressurePlateTimer()
@@ -102,7 +103,7 @@ namespace PressureDrop
         private void ManageVoidFieldTweak()
         {
             VoidFieldTweak.Unhook();
-            if (this.enabled && Config.DisableFogOnEntry) VoidFieldTweak.Hook();
+            if (this.enabled && Config.VoidFieldFogAltStart) VoidFieldTweak.Hook();
         }
     }
 }

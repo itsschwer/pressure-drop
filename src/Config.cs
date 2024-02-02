@@ -44,9 +44,12 @@ namespace PressureDrop
         public bool DropRecyclableEquipmentLunar => _dropRecyclableEquipmentLunar.Value;
 
 
-        // Void Field Tweak
-        private readonly ConfigEntry<bool> _disableFogOnEntry;
-        public bool DisableFogOnEntry => _disableFogOnEntry.Value;
+        // Tweaks
+        private readonly ConfigEntry<bool> _voidPickupConfirmAll;
+        private readonly ConfigEntry<bool> _voidFieldFogAltStart;
+        // Accessors
+        public bool VoidPickupConfirmAll => _voidPickupConfirmAll.Value;
+        public bool VoidFieldFogAltStart => _voidFieldFogAltStart.Value;
 
 
         public Config(ConfigFile config)
@@ -90,8 +93,10 @@ namespace PressureDrop
                 "Whether dropped lunar equipment should be recyclable.");
 
 
-            // Void Field Tweak
-            _disableFogOnEntry = config.Bind<bool>("Void Field Tweak", "disableFogOnEntry", false,
+            const string Tweaks = "Tweaks";
+            _voidPickupConfirmAll = config.Bind<bool>(Tweaks, "voidPickupConfirmAll", false,
+                "Whether void items always need to picked up intentionally via interact prompt.");
+            _voidFieldFogAltStart = config.Bind<bool>(Tweaks, "voidFieldFogAltStart", false,
                 "Whether the Void Fog should only become active once a Cell Vent has been activated.");
         }
     }
