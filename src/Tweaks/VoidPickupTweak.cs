@@ -22,6 +22,7 @@ namespace PressureDrop
                     def.pickupRules = ItemTierDef.PickupRules.ConfirmAll;
                 }
             }
+            Log.Message($"Void Pickup Rule> applied.");
         }
 
         private static void Revert()
@@ -31,6 +32,7 @@ namespace PressureDrop
                     def.pickupRules = original;
                 }
             }
+            Log.Message($"Void Pickup Rule> reverted.");
         }
     }
 }

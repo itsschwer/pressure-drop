@@ -38,7 +38,7 @@ namespace PressureDrop
         private static void SetFogActive(this ArenaMissionController controller, bool value)
         {
 #if DEBUG
-            Log.Message($"Arena Fog Active>: {value}");
+            Log.Message($"[Arena Fog] {(value ? "active" : "inactive")}");
 #endif
             controller.fogDamageInstance?.SetActive(value);
             controller.clearedEffect.SetActive(!value);
