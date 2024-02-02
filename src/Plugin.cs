@@ -33,7 +33,7 @@ namespace PressureDrop
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnEnable()
         {
-            ConfigureModules();
+            ManageHooks();
             ChatCommander.Register("/reload", ReloadConfig, true);
 #if DEBUG
             Commands.DebugCheats.Enable();
@@ -44,7 +44,7 @@ namespace PressureDrop
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnDisable()
         {
-            ConfigureModules();
+            ManageHooks();
             ChatCommander.Unregister("/reload", ReloadConfig);
 #if DEBUG
             Commands.DebugCheats.Disable();
@@ -74,32 +74,32 @@ namespace PressureDrop
             if (user != LocalUserManager.GetFirstLocalUser().currentNetworkUser) return; // Only allow host to reload
 
             base.Config.Reload();
-            ConfigureModules();
+            ManageHooks();
             Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"Reloaded configuration for <style=cWorldEvent>{Plugin.GUID}</style>" });
         }
 
-        private void ConfigureModules()
+        private void ManageHooks()
         {
-            ConfigurePressurePlateTimerComponent();
-            ConfigureDropModule();
-            ConfigureVoidTweak();
+            ManagePressurePlateTimer();
+            ManageDropCommand();
+            ManageVoidFieldTweak();
         }
 
-        private void ConfigurePressurePlateTimerComponent()
+        private void ManagePressurePlateTimer()
         {
             if (this.enabled && Config.PressurePlateTimer != 0) {
-                if (!pressure) pressure = this.gameObject.AddComponent<PressurePlateTimer>();
+                if (!this.pressure) this.pressure = this.gameObject.AddComponent<PressurePlateTimer>();
             }
-            else Destroy(pressure);
+            else Destroy(this.pressure);
         }
 
-        private void ConfigureDropModule()
+        private void ManageDropCommand()
         {
             Drop.Unhook();
             if (this.enabled && Config.DropEnabled) Drop.Hook();
         }
 
-        private void ConfigureVoidTweak()
+        private void ManageVoidFieldTweak()
         {
             VoidFieldTweak.Unhook();
             if (this.enabled && Config.DisableFogOnEntry) VoidFieldTweak.Hook();
