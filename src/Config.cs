@@ -44,6 +44,11 @@ namespace PressureDrop
         public bool DropRecyclableEquipmentLunar => _dropRecyclableEquipmentLunar.Value;
 
 
+        // Void Field Tweak
+        private readonly ConfigEntry<bool> _disableFogOnEntry;
+        public bool DisableFogOnEntry => _disableFogOnEntry.Value;
+
+
         public Config(ConfigFile config)
         {
             // Prefix section to sort to top in config editor
@@ -51,18 +56,18 @@ namespace PressureDrop
                 "The length of time (seconds) a pressure plate will remain pressed after being activated.\nZero disables time functionality (reverts to vanilla behaviour). Negative values prevent pressure plates from releasing once activated.");
 
 
-            // Drop Command
-            _dropEnabled = config.Bind<bool>("Drop Command", "dropEnabled", true,
+            const string DropCommand = "Drop Command";
+            _dropEnabled = config.Bind<bool>(DropCommand, "dropEnabled", true,
                 "Whether the /drop command should be enabled or not.");
-            _dropTeleporterEnabled = config.Bind<bool>("Drop Command", "dropTeleporterEnabled", true,
+            _dropTeleporterEnabled = config.Bind<bool>(DropCommand, "dropTeleporterEnabled", true,
                 "Whether players should be able to send their drops to the Teleporter or not.");
-            _dropDeadEnabled = config.Bind<bool>("Drop Command", "dropDeadEnabled", true,
+            _dropDeadEnabled = config.Bind<bool>(DropCommand, "dropDeadEnabled", true,
                 "Whether dead players should be able to drop items or not.\nRequires dropTeleporterEnabled to be true.");
-            _dropInvertDirection = config.Bind<bool>("Drop Command", "dropInvertDirection", false,
+            _dropInvertDirection = config.Bind<bool>(DropCommand, "dropInvertDirection", false,
                 "Whether items should be dropped opposite the aim direction or not.");
-            _dropVoidAllowed = config.Bind<bool>("Drop Command", "dropVoidAllowed", false,
+            _dropVoidAllowed = config.Bind<bool>(DropCommand, "dropVoidAllowed", false,
                 "Whether void items are allowed to be dropped or not.");
-            _maxItemsToDropAtATime = config.Bind<int>("Drop Command", "maxItemsToDropAtATime", 10,
+            _maxItemsToDropAtATime = config.Bind<int>(DropCommand, "maxItemsToDropAtATime", 10,
                 "The maximum amount of items to drop from the player at a time (similar to Scrappers).\nMinimum value is 1.");
 
 
@@ -83,6 +88,11 @@ namespace PressureDrop
                 "Whether dropped equipment should be recyclable.");
             _dropRecyclableEquipmentLunar = config.Bind<bool>(DropRecyclable, "dropRecyclableEquipmentLunar", false,
                 "Whether dropped lunar equipment should be recyclable.");
+
+
+            // Void Field Tweak
+            _disableFogOnEntry = config.Bind<bool>("Void Field Tweak", "disableFogOnEntry", false,
+                "Whether the Void Fog should only become active once a Cell Vent has been activated.");
         }
     }
 }

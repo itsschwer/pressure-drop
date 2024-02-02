@@ -82,11 +82,12 @@ namespace PressureDrop
         {
             ConfigurePressurePlateTimerComponent();
             ConfigureDropModule();
+            ConfigureVoidTweak();
         }
 
         private void ConfigurePressurePlateTimerComponent()
         {
-            if (Config.PressurePlateTimer != 0 && this.enabled) {
+            if (this.enabled && Config.PressurePlateTimer != 0) {
                 if (!pressure) pressure = this.gameObject.AddComponent<PressurePlateTimer>();
             }
             else Destroy(pressure);
@@ -95,7 +96,13 @@ namespace PressureDrop
         private void ConfigureDropModule()
         {
             Drop.Unhook();
-            if (Config.DropEnabled && this.enabled) Drop.Hook();
+            if (this.enabled && Config.DropEnabled) Drop.Hook();
+        }
+
+        private void ConfigureVoidTweak()
+        {
+            VoidFieldTweak.Unhook();
+            if (this.enabled && Config.DisableFogOnEntry) VoidFieldTweak.Hook();
         }
     }
 }

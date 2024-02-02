@@ -38,19 +38,24 @@ namespace PressureDrop.Commands
             ChatCommander.Output($"  <style=cSub>.ne</style>: toggles enemy spawns.");
         }
 
-        private static void ForceAqueduct(NetworkUser user, string[] args)
+        private static void ForceStage(string sceneBaseName)
         {
-            if (args.Length > 1) {
-                ChatCommander.OutputFail(args[0], "expects zero arguments.");
-                return;
-            }
-
             // Run.instance.AdvanceStage(scene);
 #pragma warning disable Publicizer001 // Accessing a member that was not originally public
             Run.instance.GenerateStageRNG();
 #pragma warning restore Publicizer001 // Accessing a member that was not originally public
-            UnityEngine.Networking.NetworkManager.singleton.ServerChangeScene("goolake");
+            UnityEngine.Networking.NetworkManager.singleton.ServerChangeScene(sceneBaseName);
+        }
 
+        private static void ForceAqueduct(NetworkUser user, string[] args)
+        {
+            if (args.Length > 1) {
+                if (args[1] == "arena") ForceStage(args[1]);
+                else ChatCommander.OutputFail(args[0], "expects zero arguments.");
+                return;
+            }
+
+            ForceStage("goolake");
             Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cWorldEvent>Sending you to the Origin of Tar <sprite name=\"Skull\" tint=1></style>" });
         }
 
