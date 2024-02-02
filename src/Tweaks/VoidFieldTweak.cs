@@ -17,6 +17,7 @@ namespace PressureDrop
         internal static void Unhook()
         {
             if (!_hooked) return;
+            _hooked = false;
             On.RoR2.ArenaMissionController.OnStartServer -= ArenaMissionController_OnStartServer;
             On.RoR2.ArenaMissionController.BeginRound -= ArenaMissionController_BeginRound;
         }
