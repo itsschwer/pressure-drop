@@ -1,3 +1,7 @@
+- Add configuration option to change void tier pickup rule from `ConfirmFirst` to `ConfirmAll`
+- Add configuration option to change *Void Fields*' fog effect to start when a *Cell Vent* is activated, rather than on entry
+- Refactor config generation
+
 ### 1.1.1
 - Add demo gifs to readme
 - Create developers.md

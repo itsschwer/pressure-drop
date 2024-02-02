@@ -25,8 +25,8 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 
 ~~strategic! a typing challenge!~~
 
-- sacrifice more time than at a Scrapper to reduce the risk of a Printer taking the wrong item
-- more opportunities to use the Recycler *(recyclable tiers configurable)*
+- sacrifice more time than at a Scrapper to reduce the risk of a Printer or Cauldron taking the wrong item
+- more opportunities to use the Recycler
 - leave items for your allies:
     - to help distribute the wealth
     - to help them win against the Teleporter boss *(you died)*
@@ -57,13 +57,11 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 - the ability to drop void items can be enabled
 - which item tiers should be recyclable when dropped can be configured as you see fit *(default: only white and green)*
 
-## issues
+## extra
 
-I'm not quite sure I've successfully designed it such that the mod is only active as host.
-
-## developers
-
-If you'd like to implement your own chat commands, you can include this plugin as a dependency and register your commands using `ChatCommander` — please refer to [this guide](https://github.com/itsschwer/pressure-drop/blob/main/xtra/developers.md)!
+- the option to change void items to always require confirmation before being picked up can be enabled
+- the option to change *Void Fields*' fog effect to start when a *Cell Vent* is activated *(rather than on entry)* can be enabled
+    - intended to make it easier to find and obtain the *Mysterious Cuff / Condemned Bond* from [**Starstorm 2**](https://thunderstore.io/package/TeamMoonstorm/Starstorm2/)
 
 ## see also
 
@@ -76,5 +74,9 @@ If you'd like to implement your own chat commands, you can include this plugin a
     - drops all shoot in same direction — scatters messily once landed
         - drop direction is fixed *(rather than using aim direction)*
 
+## developers
+
+If you'd like to implement your own chat commands, you can include this plugin as a dependency and register your commands using `ChatCommander` — please refer to [this guide](https://github.com/itsschwer/pressure-drop/blob/main/xtra/developers.md)!
+
 ## end
-- a tip: `/d .` can be used to drop the newest item type in your inventory — experiment!
+- **a tip**: `/d .` can be used to drop the newest item type in your inventory — experiment!

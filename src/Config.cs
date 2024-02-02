@@ -95,9 +95,9 @@ namespace PressureDrop
 
             const string Tweaks = "Tweaks";
             config.Bind<bool>(Tweaks, ref voidPickupConfirmAll, false,
-                "Whether void items always need to picked up intentionally via interact prompt.");
+                "Whether void items always require confirmation before being picked up.");
             config.Bind<bool>(Tweaks, ref voidFieldFogAltStart, false,
-                "Whether the Void Fog should only become active once a Cell Vent has been activated.");
+                "Whether the fog in the Void Fields should only become active once a Cell Vent has been activated.");
         }
     }
 
