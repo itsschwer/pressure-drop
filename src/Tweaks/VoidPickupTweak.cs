@@ -9,8 +9,10 @@ namespace PressureDrop
 
         public static void SetActive(bool value)
         {
-            Revert();
-            originalRules.Clear();
+            if (originalRules.Count > 0) {
+                Revert();
+                originalRules.Clear();
+            }
             if (value) Apply();
         }
 

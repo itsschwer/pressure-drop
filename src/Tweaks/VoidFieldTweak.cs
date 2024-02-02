@@ -31,14 +31,14 @@ namespace PressureDrop
         private static void ArenaMissionController_BeginRound(On.RoR2.ArenaMissionController.orig_BeginRound orig, ArenaMissionController self)
         {
             orig(self);
-            self.SetFogActive(true);
+            if (self.currentRound == 1) self.SetFogActive(true);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Member Access", "Publicizer001:Accessing a member that was not originally public")]
         private static void SetFogActive(this ArenaMissionController controller, bool value)
         {
 #if DEBUG
-            Log.Message($"[Arena Fog] {(value ? "active" : "inactive")}");
+            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>[Arena Fog] {(value ? "active" : "inactive")}</style>" });
 #endif
             controller.fogDamageInstance?.SetActive(value);
             controller.clearedEffect.SetActive(!value);
