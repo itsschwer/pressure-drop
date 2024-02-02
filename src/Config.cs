@@ -55,56 +55,49 @@ namespace PressureDrop
         public Config(ConfigFile config)
         {
             // Prefix section to sort to top in config editor
-            config.Bind<float>("> Timed Pressure Plates", ref pressurePlateTimer, 30f,
+            pressurePlateTimer = config.Bind<float>("> Timed Pressure Plates", nameof(pressurePlateTimer), 30f,
                 "The length of time (seconds) a pressure plate will remain pressed after being activated.\nZero disables time functionality (reverts to vanilla behaviour). Negative values prevent pressure plates from releasing once activated.");
 
 
             const string DropCommand = "Drop Command";
-            config.Bind<bool>(DropCommand, ref dropEnabled, true,
+            dropEnabled = config.Bind<bool>(DropCommand, nameof(dropEnabled), true,
                 "Whether the /drop command should be enabled or not.");
-            config.Bind<bool>(DropCommand, ref dropTeleporterEnabled, true,
+            dropTeleporterEnabled = config.Bind<bool>(DropCommand, nameof(dropTeleporterEnabled), true,
                 "Whether players should be able to send their drops to the Teleporter or not.");
-            config.Bind<bool>(DropCommand, ref dropDeadEnabled, true,
+            dropDeadEnabled = config.Bind<bool>(DropCommand, nameof(dropDeadEnabled), true,
                 "Whether dead players should be able to drop items or not.\nRequires dropTeleporterEnabled to be true.");
-            config.Bind<bool>(DropCommand, ref dropInvertDirection, false,
+            dropInvertDirection = config.Bind<bool>(DropCommand, nameof(dropInvertDirection), false,
                 "Whether items should be dropped opposite the aim direction or not.");
-            config.Bind<bool>(DropCommand, ref dropVoidAllowed, false,
+            dropVoidAllowed = config.Bind<bool>(DropCommand, nameof(dropVoidAllowed), false,
                 "Whether void items are allowed to be dropped or not.");
-            config.Bind<int>(DropCommand, ref maxItemsToDropAtATime, 10,
+            maxItemsToDropAtATime = config.Bind<int>(DropCommand, nameof(maxItemsToDropAtATime), 10,
                 "The maximum amount of items to drop from the player at a time (similar to Scrappers).\nMinimum value is 1.");
 
 
             const string DropRecyclable = "Drop Recyclable";
-            config.Bind<bool>(DropRecyclable, ref dropRecyclableWhite, true,
+            dropRecyclableWhite = config.Bind<bool>(DropRecyclable, nameof(dropRecyclableWhite), true,
                 "Whether dropped white tier items should be recyclable.");
-            config.Bind<bool>(DropRecyclable, ref dropRecyclableGreen, true,
+            dropRecyclableGreen = config.Bind<bool>(DropRecyclable, nameof(dropRecyclableGreen), true,
                 "Whether dropped green tier items should be recyclable.");
-            config.Bind<bool>(DropRecyclable, ref dropRecyclableRed, false,
+            dropRecyclableRed = config.Bind<bool>(DropRecyclable, nameof(dropRecyclableRed), false,
                 "Whether dropped red tier items should be recyclable.");
-            config.Bind<bool>(DropRecyclable, ref dropRecyclableYellow, false,
+            dropRecyclableYellow = config.Bind<bool>(DropRecyclable, nameof(dropRecyclableYellow), false,
                 "Whether dropped yellow tier items should be recyclable.");
-            config.Bind<bool>(DropRecyclable, ref dropRecyclableLunar, false,
+            dropRecyclableLunar = config.Bind<bool>(DropRecyclable, nameof(dropRecyclableLunar), false,
                 "Whether dropped lunar items should be recyclable.");
-            config.Bind<bool>(DropRecyclable, ref dropRecyclableVoid, false,
+            dropRecyclableVoid = config.Bind<bool>(DropRecyclable, nameof(dropRecyclableVoid), false,
                 "Whether dropped void items should be recyclable.");
-            config.Bind<bool>(DropRecyclable, ref dropRecyclableEquipment, true,
+            dropRecyclableEquipment = config.Bind<bool>(DropRecyclable, nameof(dropRecyclableEquipment), true,
                 "Whether dropped equipment should be recyclable.");
-            config.Bind<bool>(DropRecyclable, ref dropRecyclableEquipmentLunar, false,
+            dropRecyclableEquipmentLunar = config.Bind<bool>(DropRecyclable, nameof(dropRecyclableEquipmentLunar), false,
                 "Whether dropped lunar equipment should be recyclable.");
 
 
             const string Tweaks = "Tweaks";
-            config.Bind<bool>(Tweaks, ref voidPickupConfirmAll, false,
+            voidPickupConfirmAll = config.Bind<bool>(Tweaks, nameof(voidPickupConfirmAll), false,
                 "Whether void items always require confirmation before being picked up.");
-            config.Bind<bool>(Tweaks, ref voidFieldFogAltStart, false,
+            voidFieldFogAltStart = config.Bind<bool>(Tweaks, nameof(voidFieldFogAltStart), false,
                 "Whether the fog in the Void Fields should only become active once a Cell Vent has been activated.");
-        }
-    }
-
-    internal static class ConfigUtility
-    {
-        public static void Bind<T>(this ConfigFile config, string section, ref ConfigEntry<T> key, T defaultValue, string description) {
-            key = config.Bind(section, nameof(key), defaultValue, description);
         }
     }
 }
