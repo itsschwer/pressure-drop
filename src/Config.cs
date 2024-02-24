@@ -45,9 +45,11 @@ namespace PressureDrop
 
 
         // Tweaks
+        private readonly ConfigEntry<bool> scoreboardShowChat;
         private readonly ConfigEntry<bool> voidPickupConfirmAll;
         private readonly ConfigEntry<bool> voidFieldFogAltStart;
         // Accessors
+        public bool ScoreboardShowChat => scoreboardShowChat.Value;
         public bool VoidPickupConfirmAll => voidPickupConfirmAll.Value;
         public bool VoidFieldFogAltStart => voidFieldFogAltStart.Value;
 
@@ -94,10 +96,12 @@ namespace PressureDrop
 
 
             const string Tweaks = "Tweaks";
+            scoreboardShowChat = config.Bind<bool>(Tweaks, nameof(scoreboardShowChat), false,
+                "Show chat history when the scoreboard is open.");
             voidPickupConfirmAll = config.Bind<bool>(Tweaks, nameof(voidPickupConfirmAll), false,
-                "Whether void items always require confirmation before being picked up.");
+                "Always require confirmation to pick up void items.");
             voidFieldFogAltStart = config.Bind<bool>(Tweaks, nameof(voidFieldFogAltStart), false,
-                "Whether the fog in the Void Fields should only become active once a Cell Vent has been activated.");
+                "Change the Void Fields fog to only become active once a Cell Vent has been activated.");
         }
     }
 }

@@ -1,3 +1,5 @@
+- Add configuration option to show chat history when the scoreboard is open
+
 ## 1.2.0
 - Add configuration option to change void tier pickup rule from `ConfirmFirst` to `ConfirmAll`
 - Add configuration option to change *Void Fields*' fog effect to start when a *Cell Vent* is activated, rather than on entry

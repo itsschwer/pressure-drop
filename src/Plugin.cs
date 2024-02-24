@@ -82,8 +82,7 @@ namespace PressureDrop
         {
             ManagePressurePlateTimer();
             ManageDropCommand();
-            ManageVoidFieldTweak();
-            VoidPickupTweak.SetActive(this.enabled && Config.VoidPickupConfirmAll);
+            ManageTweaks();
         }
 
         private void ManagePressurePlateTimer()
@@ -100,10 +99,15 @@ namespace PressureDrop
             if (this.enabled && Config.DropEnabled) Drop.Hook();
         }
 
-        private void ManageVoidFieldTweak()
+        private void ManageTweaks()
         {
+            ScoreboardShowChat.Unhook();
+            if (this.enabled && Config.ScoreboardShowChat) ScoreboardShowChat.Hook();
+
             VoidFieldTweak.Unhook();
             if (this.enabled && Config.VoidFieldFogAltStart) VoidFieldTweak.Hook();
+
+            VoidPickupTweak.SetActive(this.enabled && Config.VoidPickupConfirmAll);
         }
     }
 }
