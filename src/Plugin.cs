@@ -56,7 +56,7 @@ namespace PressureDrop
         /// Wrapper for <see cref="SetActive"/>, passing in <see cref="UnityEngine.Networking.NetworkServer.active"/>,
         /// which appears to be used for determining if client is host.
         /// </summary>
-        private void SetPluginActiveState(Run run = null) => SetActive(UnityEngine.Networking.NetworkServer.active);
+        private void SetPluginActiveState(Run _ = null) => SetActive(UnityEngine.Networking.NetworkServer.active);
 
         /// <summary>
         /// All plugins are attached to the
@@ -102,15 +102,9 @@ namespace PressureDrop
         private void ManageTweaks()
         {
             ScoreboardShowChat.Unhook();
-            if (this.enabled && Config.ScoreboardShowChat) ScoreboardShowChat.Hook();
-
-            VoidFieldTweak.Unhook();
-            if (this.enabled && Config.VoidFieldFogAltStart) VoidFieldTweak.Hook();
+            if (Config.ScoreboardShowChat) ScoreboardShowChat.Hook();
 
             VoidPickupTweak.SetActive(this.enabled && Config.VoidPickupConfirmAll);
-
-            PostMithrixPortal.Unhook();
-            if (this.enabled && Config.PostMithrixPortal) PostMithrixPortal.Hook();
         }
     }
 }

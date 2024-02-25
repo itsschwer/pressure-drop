@@ -47,13 +47,9 @@ namespace PressureDrop
         // Tweaks
         private readonly ConfigEntry<bool> scoreboardShowChat;
         private readonly ConfigEntry<bool> voidPickupConfirmAll;
-        private readonly ConfigEntry<bool> voidFieldFogAltStart;
-        private readonly ConfigEntry<bool> postMithrixPortal;
         // Accessors
         public bool ScoreboardShowChat => scoreboardShowChat.Value;
         public bool VoidPickupConfirmAll => voidPickupConfirmAll.Value;
-        public bool VoidFieldFogAltStart => voidFieldFogAltStart.Value;
-        public bool PostMithrixPortal => postMithrixPortal.Value;
 
 
         public Config(ConfigFile config)
@@ -102,10 +98,6 @@ namespace PressureDrop
                 "Show chat history when the scoreboard is open.");
             voidPickupConfirmAll = config.Bind<bool>(Tweaks, nameof(voidPickupConfirmAll), false,
                 "Always require confirmation to pick up void items.");
-            voidFieldFogAltStart = config.Bind<bool>(Tweaks, nameof(voidFieldFogAltStart), false,
-                "Change the Void Fields fog to only become active once a Cell Vent has been activated.");
-            postMithrixPortal = config.Bind<bool>(Tweaks, nameof(postMithrixPortal), false,
-                "Spawn a portal after Mithrix is defeated to continue runs.");
         }
     }
 }
