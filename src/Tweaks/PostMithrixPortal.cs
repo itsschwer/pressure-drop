@@ -32,12 +32,11 @@ namespace PressureDrop
             if (self.inBoundsObjectiveToken == "OBJECTIVE_MOON_CHARGE_DROPSHIP") {
 #if DEBUG
                 Log.Debug($"Dropship> pos: {self.transform.position} | rot: {self.transform.rotation} | euler: {self.transform.rotation.eulerAngles} | up: {self.transform.up} | forward: {self.transform.forward} | right: {self.transform.right}");
-                hold = self;
 #endif
                 Vector3 position = self.transform.position;
                 position += (self.transform.up * 10f);
-                position += (self.transform.forward * Plugin.Config.PortalOffsetForward);
-                position += (self.transform.right * Plugin.Config.PortalOffsetRight);
+                position += (self.transform.forward * -3.5f);
+                position += (self.transform.right * -1.8f);
                 Quaternion rotation = Quaternion.Inverse(self.transform.rotation) * Quaternion.Euler(self.transform.up * 90f);
                 InstantiatePortal(position, rotation);
             }
@@ -52,29 +51,10 @@ namespace PressureDrop
             gameObject.GetComponent<SceneExitController>().useRunNextStageScene = true;
 #if DEBUG
             Log.Debug($"{nameof(PostMithrixPortal)}> pos: {position} | rot: {rotation}");
-            portal = gameObject;
 #endif
             NetworkServer.Spawn(gameObject);
 
-            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsVoid>The Void beckons...</style>" });
+            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<size=120%><style=cIsVoid>The Void beckons...</style></size>" });
         }
-
-#if DEBUG
-        private static HoldoutZoneController hold;
-        private static GameObject portal;
-        internal static void Reposition()
-        {
-            if (portal == null) return;
-            if (hold == null) return;
-
-            Object.Destroy(portal);
-
-            Vector3 pos = hold.transform.position;
-            pos += (hold.transform.up * 10f);
-            pos += (hold.transform.forward * Plugin.Config.PortalOffsetForward);
-            pos += (hold.transform.right * Plugin.Config.PortalOffsetRight);
-            InstantiatePortal(pos, Quaternion.Inverse(hold.transform.rotation) * Quaternion.Euler(hold.transform.up * 90f));
-        }
-#endif
     }
 }

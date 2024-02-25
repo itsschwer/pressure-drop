@@ -106,19 +106,6 @@ namespace PressureDrop
                 "Change the Void Fields fog to only become active once a Cell Vent has been activated.");
             postMithrixPortal = config.Bind<bool>(Tweaks, nameof(postMithrixPortal), false,
                 "Spawn a portal after Mithrix is defeated to continue runs.");
-
-#if DEBUG
-            portalOffsetForward = config.Bind<float>("__DEBUG", nameof(portalOffsetForward), -4f);
-            portalOffsetRight = config.Bind<float>("__DEBUG", nameof(portalOffsetRight), -4f);
-#endif
         }
-
-
-#if DEBUG
-        private readonly ConfigEntry<float> portalOffsetForward;
-        private readonly ConfigEntry<float> portalOffsetRight;
-        public float PortalOffsetForward => portalOffsetForward.Value;
-        public float PortalOffsetRight => portalOffsetRight.Value;
-#endif
     }
 }
