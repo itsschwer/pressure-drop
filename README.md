@@ -59,9 +59,10 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 
 ## extra
 
-- the option to show chat history when the scoreboard is open can be enabled
+- the option to show chat history when the scoreboard is open can be enabled *(client-side)*
 - the option to change void items to always require confirmation before being picked up can be enabled
     - intended to encourage sharing void items in multiplayer when the ability to drop void items is disabled
+<!-- beyond scope? -->
 - the option to change *Void Fields*' fog effect to start when a *Cell Vent* is activated *(rather than on entry)* can be enabled
     - intended to make it easier to find and obtain the *Mysterious Cuff / Condemned Bond* from [**Starstorm 2**](https://thunderstore.io/package/TeamMoonstorm/Starstorm2/)
 - the option to spawn a portal after Mithrix is defeated can be enabled
