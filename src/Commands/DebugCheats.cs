@@ -13,6 +13,8 @@ namespace PressureDrop.Commands
             ChatCommander.Register(".p", PickupCommand);
             ChatCommander.Register(".ne", DisableEnemySpawns);
 
+            ChatCommander.Register(".tp", TestPostMithrixPortal);
+
             ChatCommander.Register("/?", Help);
             ChatCommander.Register("/h", Help);
             ChatCommander.Register("/help", Help);
@@ -23,6 +25,8 @@ namespace PressureDrop.Commands
             ChatCommander.Unregister(".g", GiveCommand);
             ChatCommander.Unregister(".p", PickupCommand);
             ChatCommander.Unregister(".ne", DisableEnemySpawns);
+
+            ChatCommander.Unregister(".tp", TestPostMithrixPortal);
 
             ChatCommander.Unregister("/?", Help);
             ChatCommander.Unregister("/h", Help);
@@ -50,19 +54,36 @@ namespace PressureDrop.Commands
         private static void ForceAqueduct(NetworkUser user, string[] args)
         {
             if (args.Length > 1) {
-                if (args[1] == "arena") ForceStage(args[1]);
-                else if (args[1] == "portal" && user.GetCurrentBody()) PostMithrixPortal.InstantiatePortal(user.GetCurrentBody().footPosition, Quaternion.identity);
-                else ChatCommander.OutputFail(args[0], "expects zero arguments.");
-                return;
+                switch (args[1]) {
+                    default:
+                        ChatCommander.OutputFail(args[0], "expects zero arguments.");
+                        return;
+                    case "arena":
+                        ForceStage(args[1]);
+                        return;
+                    case "moon":
+                        ForceStage("moon2");
+                        return;
+                }
             }
 
             ForceStage("goolake");
             Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cWorldEvent>Sending you to the Origin of Tar <sprite name=\"Skull\" tint=1></style>" });
         }
 
+        private static void TestPostMithrixPortal(NetworkUser user, string[] args)
+        {
+            CharacterBody body = user.GetCurrentBody();
+            if (body == null) return;
+            InputBankTest inputBank = body.inputBank;
+            if (inputBank == null) return;
+
+            PostMithrixPortal.InstantiatePortal(body.footPosition, Quaternion.LookRotation(inputBank.aimDirection));
+        }
+
         private static void GiveCommand(NetworkUser user, string[] args)
         {
-            string invalid = "{ <style=cSub>e</style> | <style=cSub>t</style> | <style=cSub>s</style> | <style=cSub>g</style> } [<style=cSub><count></style>]";
+            string invalid = "{ <style=cSub>e</style> | <style=cSub>t</style> | <style=cSub>s</style> | <style=cSub>w</style> | <style=cSub>g</style> } [<style=cSub><count></style>]";
 
             const int expectedArgs = 2;
             if (args.Length >= expectedArgs) {
@@ -103,6 +124,10 @@ namespace PressureDrop.Commands
                 case "s":
                     item = RoR2Content.Items.SprintBonus;
                     count = 5;
+                    break;
+                case "w":
+                    item = RoR2Content.Items.SprintWisp;
+                    count = 500;
                     break;
                 case "g":
                     item = RoR2Content.Items.AutoCastEquipment;

@@ -33,24 +33,17 @@ namespace PressureDrop
 
         internal static void InstantiatePortal(Vector3 position, Quaternion rotation)
         {
-            string path = portals[idx];
-            InteractableSpawnCard isc = Addressables.LoadAssetAsync<InteractableSpawnCard>(path).WaitForCompletion();
+            InteractableSpawnCard isc = Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/DLC1/GameModes/InfiniteTowerRun/InfiniteTowerAssets/iscInfiniteTowerPortal.asset").WaitForCompletion();
 
             // RoR2.InteractableSpawnCard.Spawn() & RoR2.ArtifactTrialMissionController.SpawnExitPortalAndIdle.OnEnter()
             GameObject gameObject = Object.Instantiate(isc.prefab, position, rotation);
-            Log.Warning(gameObject.GetComponent<SceneExitController>().useRunNextStageScene);
             gameObject.GetComponent<SceneExitController>().useRunNextStageScene = true;
+#if DEBUG
+            Log.Debug($"{nameof(PostMithrixPortal)}> pos: {position} | rot: {rotation}");
+#endif
             NetworkServer.Spawn(gameObject);
 
-            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cWorldEvent>The void beckons..</style>{idx}" });
-            idx++; if (idx >= portals.Length) { idx = 0; }
+            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsVoid>The Void beckons...</style>" });
         }
-
-        internal static int idx = 0;
-        internal static string[] portals = [
-            "RoR2/DLC1/PortalVoid/iscVoidPortal.asset",
-            "RoR2/DLC1/DeepVoidPortal/iscDeepVoidPortal.asset",
-            "RoR2/DLC1/GameModes/InfiniteTowerRun/InfiniteTowerAssets/iscInfiniteTowerPortal.asset",
-        ];
     }
 }
