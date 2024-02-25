@@ -14,6 +14,7 @@ namespace PressureDrop.Commands
             ChatCommander.Register(".ne", DisableEnemySpawns);
 
             ChatCommander.Register(".tp", TestPostMithrixPortal);
+            ChatCommander.Register(".esc", ForceEscapeController);
 
             ChatCommander.Register("/?", Help);
             ChatCommander.Register("/h", Help);
@@ -27,6 +28,7 @@ namespace PressureDrop.Commands
             ChatCommander.Unregister(".ne", DisableEnemySpawns);
 
             ChatCommander.Unregister(".tp", TestPostMithrixPortal);
+            ChatCommander.Unregister(".esc", ForceEscapeController);
 
             ChatCommander.Unregister("/?", Help);
             ChatCommander.Unregister("/h", Help);
@@ -37,7 +39,7 @@ namespace PressureDrop.Commands
         {
             ChatCommander.Output($"<style=cWorldEvent>{Plugin.GUID}</style> debug cheats:");
             ChatCommander.Output($"  <style=cSub>.aq</style>: changes the stage to Abandoned Aqueduct.");
-            ChatCommander.Output($"  <style=cSub>.g</style>: gives the user items for testing pressure plate changes.");
+            ChatCommander.Output($"  <style=cSub>.g</style>: gives the user items for testing purposes.");
             ChatCommander.Output($"  <style=cSub>.p</style>: drops items for testing recyclability config.");
             ChatCommander.Output($"  <style=cSub>.ne</style>: toggles enemy spawns.");
         }
@@ -78,7 +80,13 @@ namespace PressureDrop.Commands
             InputBankTest inputBank = body.inputBank;
             if (inputBank == null) return;
 
-            PostMithrixPortal.InstantiatePortal(body.footPosition, Quaternion.LookRotation(inputBank.aimDirection));
+            PostMithrixPortal.InstantiatePortal(body.footPosition, Quaternion.LookRotation(-inputBank.aimDirection));
+        }
+
+        private static void ForceEscapeController(NetworkUser user, string[] args)
+        {
+            EscapeSequenceController esc = Object.FindObjectOfType<EscapeSequenceController>();
+            esc?.onEnterMainEscapeSequence?.Invoke();
         }
 
         private static void GiveCommand(NetworkUser user, string[] args)
