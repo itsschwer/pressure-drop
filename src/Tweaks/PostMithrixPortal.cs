@@ -14,7 +14,7 @@ namespace PressureDrop
             if (_hooked) return;
             _hooked = true;
 
-            On.EntityStates.Missions.BrotherEncounter.EncounterFinished.OnEnter += EncounterFinished_OnEnter;
+            On.RoR2.HoldoutZoneController.Start += HoldoutZoneController_Start;
         }
 
         internal static void Unhook()
@@ -22,13 +22,19 @@ namespace PressureDrop
             if (!_hooked) return;
             _hooked = false;
 
-            On.EntityStates.Missions.BrotherEncounter.EncounterFinished.OnEnter -= EncounterFinished_OnEnter;
+            On.RoR2.HoldoutZoneController.Start -= HoldoutZoneController_Start;
         }
 
-        private static void EncounterFinished_OnEnter(On.EntityStates.Missions.BrotherEncounter.EncounterFinished.orig_OnEnter orig, EntityStates.Missions.BrotherEncounter.EncounterFinished self)
+        private static void HoldoutZoneController_Start(On.RoR2.HoldoutZoneController.orig_Start orig, HoldoutZoneController self)
         {
             orig(self);
-            InstantiatePortal(new Vector3(-87.5f, 492f, 5.2f), Quaternion.identity);
+
+            if (self.inBoundsObjectiveToken == "OBJECTIVE_MOON_CHARGE_DROPSHIP") {
+#if DEBUG
+                Log.Debug($"Dropship> pos: {self.transform.position} | rot: {self.transform.rotation} | fwd: {self.transform.forward} | up: {self.transform.up} ");
+#endif
+                InstantiatePortal(new Vector3(306.5f, -172.2f, 391.8f), new Quaternion(0.0f, 1.0f, 0.0f, -0.2f));
+            }
         }
 
         internal static void InstantiatePortal(Vector3 position, Quaternion rotation)
