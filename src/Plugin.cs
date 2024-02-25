@@ -76,6 +76,9 @@ namespace PressureDrop
             base.Config.Reload();
             ManageHooks();
             Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"Reloaded configuration for <style=cWorldEvent>{Plugin.GUID}</style>" });
+#if DEBUG
+            PostMithrixPortal.Reposition();
+#endif
         }
 
         private void ManageHooks()

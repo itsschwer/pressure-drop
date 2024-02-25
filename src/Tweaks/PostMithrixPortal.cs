@@ -31,9 +31,15 @@ namespace PressureDrop
 
             if (self.inBoundsObjectiveToken == "OBJECTIVE_MOON_CHARGE_DROPSHIP") {
 #if DEBUG
-                Log.Debug($"Dropship> pos: {self.transform.position} | rot: {self.transform.rotation} | fwd: {self.transform.forward} | up: {self.transform.up} ");
+                Log.Debug($"Dropship> pos: {self.transform.position} | rot: {self.transform.rotation} | euler: {self.transform.rotation.eulerAngles} | up: {self.transform.up} | forward: {self.transform.forward} | right: {self.transform.right}");
+                hold = self;
 #endif
-                InstantiatePortal(new Vector3(306.5f, -172.2f, 391.8f), new Quaternion(0.0f, 1.0f, 0.0f, -0.2f));
+                Vector3 position = self.transform.position;
+                position += (self.transform.up * 10f);
+                position += (self.transform.forward * Plugin.Config.PortalOffsetForward);
+                position += (self.transform.right * Plugin.Config.PortalOffsetRight);
+                Quaternion rotation = Quaternion.Inverse(self.transform.rotation) * Quaternion.Euler(self.transform.up * 90f);
+                InstantiatePortal(position, rotation);
             }
         }
 
@@ -46,10 +52,29 @@ namespace PressureDrop
             gameObject.GetComponent<SceneExitController>().useRunNextStageScene = true;
 #if DEBUG
             Log.Debug($"{nameof(PostMithrixPortal)}> pos: {position} | rot: {rotation}");
+            portal = gameObject;
 #endif
             NetworkServer.Spawn(gameObject);
 
             Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsVoid>The Void beckons...</style>" });
         }
+
+#if DEBUG
+        private static HoldoutZoneController hold;
+        private static GameObject portal;
+        internal static void Reposition()
+        {
+            if (portal == null) return;
+            if (hold == null) return;
+
+            Object.Destroy(portal);
+
+            Vector3 pos = hold.transform.position;
+            pos += (hold.transform.up * 10f);
+            pos += (hold.transform.forward * Plugin.Config.PortalOffsetForward);
+            pos += (hold.transform.right * Plugin.Config.PortalOffsetRight);
+            InstantiatePortal(pos, Quaternion.Inverse(hold.transform.rotation) * Quaternion.Euler(hold.transform.up * 90f));
+        }
+#endif
     }
 }
