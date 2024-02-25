@@ -51,6 +51,7 @@ namespace PressureDrop.Commands
         {
             if (args.Length > 1) {
                 if (args[1] == "arena") ForceStage(args[1]);
+                else if (args[1] == "portal" && user.GetCurrentBody()) PostMithrixPortal.InstantiatePortal(user.GetCurrentBody().footPosition, Quaternion.identity);
                 else ChatCommander.OutputFail(args[0], "expects zero arguments.");
                 return;
             }

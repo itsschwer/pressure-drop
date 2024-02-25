@@ -1,4 +1,5 @@
 - Add configuration option to show chat history when the scoreboard is open
+- Add configuration option to spawn a portal after Mithrix is defeated 
 
 ## 1.2.0
 - Add configuration option to change void tier pickup rule from `ConfirmFirst` to `ConfirmAll`

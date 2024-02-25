@@ -108,6 +108,9 @@ namespace PressureDrop
             if (this.enabled && Config.VoidFieldFogAltStart) VoidFieldTweak.Hook();
 
             VoidPickupTweak.SetActive(this.enabled && Config.VoidPickupConfirmAll);
+
+            PostMithrixPortal.Unhook();
+            if (this.enabled && Config.PostMithrixPortal) PostMithrixPortal.Hook();
         }
     }
 }
