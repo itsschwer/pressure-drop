@@ -13,9 +13,6 @@ namespace PressureDrop.Commands
             ChatCommander.Register(".p", PickupCommand);
             ChatCommander.Register(".ne", DisableEnemySpawns);
 
-            ChatCommander.Register(".tp", TestPostMithrixPortal);
-            ChatCommander.Register(".esc", ForceEscapeController);
-
             ChatCommander.Register("/?", Help);
             ChatCommander.Register("/h", Help);
             ChatCommander.Register("/help", Help);
@@ -26,9 +23,6 @@ namespace PressureDrop.Commands
             ChatCommander.Unregister(".g", GiveCommand);
             ChatCommander.Unregister(".p", PickupCommand);
             ChatCommander.Unregister(".ne", DisableEnemySpawns);
-
-            ChatCommander.Unregister(".tp", TestPostMithrixPortal);
-            ChatCommander.Unregister(".esc", ForceEscapeController);
 
             ChatCommander.Unregister("/?", Help);
             ChatCommander.Unregister("/h", Help);
@@ -71,22 +65,6 @@ namespace PressureDrop.Commands
 
             ForceStage("goolake");
             Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "<style=cWorldEvent>Sending you to the Origin of Tar <sprite name=\"Skull\" tint=1></style>" });
-        }
-
-        private static void TestPostMithrixPortal(NetworkUser user, string[] args)
-        {
-            CharacterBody body = user.GetCurrentBody();
-            if (body == null) return;
-            InputBankTest inputBank = body.inputBank;
-            if (inputBank == null) return;
-
-            PostMithrixPortal.InstantiatePortal(body.footPosition, Quaternion.LookRotation(-inputBank.aimDirection));
-        }
-
-        private static void ForceEscapeController(NetworkUser user, string[] args)
-        {
-            EscapeSequenceController esc = Object.FindObjectOfType<EscapeSequenceController>();
-            esc?.onEnterMainEscapeSequence?.Invoke();
         }
 
         private static void GiveCommand(NetworkUser user, string[] args)
