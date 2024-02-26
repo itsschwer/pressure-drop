@@ -1,5 +1,6 @@
 - Add configuration option to show chat history when the scoreboard is open
-- Add configuration option to spawn a portal after Mithrix is defeated 
+- Removed configuration option to change *Void Fields*' fog effect to start when a *Cell Vent* is activated, rather than on entry
+    - Use [ServerSider](https://thunderstore.io/package/itsschwer/ServerSider/) <sup>[***src***](https://github.com/itsschwer/ror2-serversider)</sup> instead
 
 ## 1.2.0
 - Add configuration option to change void tier pickup rule from `ConfirmFirst` to `ConfirmAll`
