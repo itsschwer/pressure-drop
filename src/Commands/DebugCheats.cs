@@ -69,7 +69,7 @@ namespace PressureDrop.Commands
 
         private static void GiveCommand(NetworkUser user, string[] args)
         {
-            string invalid = "{ <style=cSub>e</style> | <style=cSub>t</style> | <style=cSub>s</style> | <style=cSub>w</style> | <style=cSub>g</style> } [<style=cSub><count></style>]";
+            const string invalid = "{ <style=cSub>e</style> | <style=cSub>t</style> | <style=cSub>s</style> | <style=cSub>w</style> | <style=cSub>g</style> } [<style=cSub><count></style>]";
 
             const int expectedArgs = 2;
             if (args.Length >= expectedArgs) {
@@ -125,7 +125,7 @@ namespace PressureDrop.Commands
 
         private static void PickupCommand(NetworkUser user, string[] args)
         {
-            string invalid = "{ <style=cSub>t</style> | <style=cSub>v</style> | <style=cSub>s</style> }";
+            const string invalid = "{ <style=cSub>t</style> | <style=cSub>v</style> | <style=cSub>s</style> }";
 
             const int expectedArgs = 2;
             if (args.Length == expectedArgs) {
