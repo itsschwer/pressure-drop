@@ -88,5 +88,5 @@ jobs:
         with:
           artifacts: ${{ needs.create-artifact.outputs.name }}.zip
           tag: ${{ needs.create-artifact.outputs.version }}
-          skipIfReleaseExists: true
+          omitBody: true
           updateOnlyUnreleased: true
