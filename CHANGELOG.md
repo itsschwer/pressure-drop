@@ -1,3 +1,4 @@
+## 1.3.0
 - Add configuration option to show chat history when the scoreboard is open
 - Removed configuration option to change *Void Fields*' fog effect to start when a *Cell Vent* is activated, rather than on entry
     - Use [ServerSider](https://thunderstore.io/package/itsschwer/ServerSider/) <sup>[***src***](https://github.com/itsschwer/ror2-serversider)</sup> instead

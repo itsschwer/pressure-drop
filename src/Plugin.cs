@@ -10,7 +10,7 @@ namespace PressureDrop
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
         public const string Name = "PressureDrop";
-        public const string Version = "1.2.0";
+        public const string Version = "1.3.0";
 
         public static new Config Config { get; private set; }
 
