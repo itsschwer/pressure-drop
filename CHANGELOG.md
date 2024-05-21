@@ -1,3 +1,8 @@
+### 1.3.1
+- Fix `MissingMethodException` when calling ` PickupDropletController.CreatePickupDroplet` *(introduced by the Devotion Update)*
+    - *Fix items being removed from the inventory but not being droppped when trying to use the /drop command*
+    - Not sure how this affects previous versions of the game, please report any issues to the [GitHub repository](https://github.com/itsschwer/pressure-drop/issues)
+
 ## 1.3.0
 - Add configuration option to show chat history when the scoreboard is open
 - Removed configuration option to change *Void Fields*' fog effect to start when a *Cell Vent* is activated, rather than on entry
