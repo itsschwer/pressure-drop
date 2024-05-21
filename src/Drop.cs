@@ -1,6 +1,5 @@
 ﻿using RoR2;
 using System.Collections.Generic;
-using System.Linq; //! TEMP
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -189,11 +188,8 @@ namespace PressureDrop
         private static void TEMP_CreatePickupDroplet(GenericPickupController.CreatePickupInfo info, Vector3 velocity)
         {
             // Workaround using reflection while waiting for RiskOfRain2.GameLibs to be updated for Devotion Update
-            typeof(PickupDropletController).GetMethods().Single(m =>
-                m.Name == nameof(PickupDropletController.CreatePickupDroplet) &&
-                m.GetParameters().Length == 2 &&
-                m.GetParameters()[0].ParameterType == typeof(GenericPickupController.CreatePickupInfo)
-            ).Invoke(null, [info, velocity]);
+            System.Reflection.MethodInfo CreatePickupDroplet = typeof(PickupDropletController).GetMethod(nameof(PickupDropletController.CreatePickupDroplet), [typeof(GenericPickupController.CreatePickupInfo), typeof(Vector3)]);
+            CreatePickupDroplet.Invoke(null, [info, velocity]);
         }
     }
 }
