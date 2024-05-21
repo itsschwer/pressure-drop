@@ -143,15 +143,13 @@ namespace PressureDrop
 
         public static void DropStyleChest(Transform target, PickupIndex dropPickup, int dropCount, float forwardVelocity = 2f, float upVelocity = 20f, Vector3? forwardOverride = null)
         {
-            if (dropPickup != PickupIndex.none && dropCount >= 1)
-            {
+            if (dropPickup != PickupIndex.none && dropCount >= 1) {
                 float angle = 360f / (float)dropCount;
                 Vector3 forward = forwardOverride ?? target.forward;
                 Vector3 velocity = Vector3.up * upVelocity + forward * forwardVelocity;
                 Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
 
-                for (int i = 0; i < dropCount; i++)
-                {
+                for (int i = 0; i < dropCount; i++) {
                     GenericPickupController.CreatePickupInfo info = default;
                     info.rotation = identifier;
                     info.pickupIndex = dropPickup;
@@ -163,15 +161,13 @@ namespace PressureDrop
 
         public static void DropStyleChest(Transform target, PickupIndex[] drops, float forwardVelocity = 2f, float upVelocity = 20f, Vector3? forwardOverride = null)
         {
-            if (drops.Length >= 1)
-            {
+            if (drops.Length >= 1) {
                 float angle = 360f / (float)drops.Length;
                 Vector3 forward = forwardOverride ?? target.forward;
                 Vector3 velocity = Vector3.up * upVelocity + forward * forwardVelocity;
                 Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
 
-                for (int i = 0; i < drops.Length; i++)
-                {
+                for (int i = 0; i < drops.Length; i++) {
                     if (drops[i] == PickupIndex.none) continue;
 
                     GenericPickupController.CreatePickupInfo info = default;
