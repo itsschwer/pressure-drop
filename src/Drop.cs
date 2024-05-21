@@ -146,14 +146,16 @@ namespace PressureDrop
             if (dropPickup != PickupIndex.none && dropCount >= 1) {
                 float angle = 360f / (float)dropCount;
                 Vector3 forward = forwardOverride ?? target.forward;
+                Vector3 position = target.position + Vector3.up * 1.5f;
                 Vector3 velocity = Vector3.up * upVelocity + forward * forwardVelocity;
                 Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
 
                 for (int i = 0; i < dropCount; i++) {
                     GenericPickupController.CreatePickupInfo info = default;
+                    info.position = position;
                     info.rotation = identifier;
                     info.pickupIndex = dropPickup;
-                    PickupDropletController.CreatePickupDroplet(info, target.position + Vector3.up * 1.5f, velocity);
+                    PickupDropletController.CreatePickupDroplet(info, velocity);
                     velocity = quaternion * velocity;
                 }
             }
@@ -164,6 +166,7 @@ namespace PressureDrop
             if (drops.Length >= 1) {
                 float angle = 360f / (float)drops.Length;
                 Vector3 forward = forwardOverride ?? target.forward;
+                Vector3 position = target.position + Vector3.up * 1.5f;
                 Vector3 velocity = Vector3.up * upVelocity + forward * forwardVelocity;
                 Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
 
@@ -171,9 +174,10 @@ namespace PressureDrop
                     if (drops[i] == PickupIndex.none) continue;
 
                     GenericPickupController.CreatePickupInfo info = default;
+                    info.position = position;
                     info.rotation = identifier;
                     info.pickupIndex = drops[i];
-                    PickupDropletController.CreatePickupDroplet(info, target.position + Vector3.up * 1.5f, velocity);
+                    PickupDropletController.CreatePickupDroplet(info, velocity);
                     velocity = quaternion * velocity;
                 }
             }
