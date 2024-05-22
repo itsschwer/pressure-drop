@@ -155,8 +155,7 @@ namespace PressureDrop
                     info.position = position;
                     info.rotation = identifier;
                     info.pickupIndex = dropPickup;
-                    // PickupDropletController.CreatePickupDroplet(info, velocity);
-                    TEMP_CreatePickupDroplet(info, velocity);
+                    PickupDropletController.CreatePickupDroplet(info, velocity);
                     velocity = quaternion * velocity;
                 }
             }
@@ -178,18 +177,10 @@ namespace PressureDrop
                     info.position = position;
                     info.rotation = identifier;
                     info.pickupIndex = drops[i];
-                    // PickupDropletController.CreatePickupDroplet(info, velocity);
-                    TEMP_CreatePickupDroplet(info, velocity);
+                    PickupDropletController.CreatePickupDroplet(info, velocity);
                     velocity = quaternion * velocity;
                 }
             }
-        }
-
-        private static void TEMP_CreatePickupDroplet(GenericPickupController.CreatePickupInfo info, Vector3 velocity)
-        {
-            // Workaround using reflection while waiting for RiskOfRain2.GameLibs to be updated for Devotion Update
-            System.Reflection.MethodInfo CreatePickupDroplet = typeof(PickupDropletController).GetMethod(nameof(PickupDropletController.CreatePickupDroplet), [typeof(GenericPickupController.CreatePickupInfo), typeof(Vector3)]);
-            CreatePickupDroplet.Invoke(null, [info, velocity]);
         }
     }
 }
