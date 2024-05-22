@@ -143,12 +143,12 @@ namespace PressureDrop
 
         public static void DropStyleChest(Transform target, PickupIndex dropPickup, int dropCount, float forwardVelocity = 2f, float upVelocity = 20f, Vector3? forwardOverride = null)
         {
-            if (dropPickup != PickupIndex.none && dropCount >= 1) {
+            if (dropCount > 0) {
                 float angle = 360f / (float)dropCount;
                 Vector3 forward = forwardOverride ?? target.forward;
                 Vector3 position = target.position + Vector3.up * 1.5f;
                 Vector3 velocity = Vector3.up * upVelocity + forward * forwardVelocity;
-                Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
+                Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
 
                 for (int i = 0; i < dropCount; i++) {
                     GenericPickupController.CreatePickupInfo info = default;
@@ -156,29 +156,28 @@ namespace PressureDrop
                     info.rotation = identifier;
                     info.pickupIndex = dropPickup;
                     PickupDropletController.CreatePickupDroplet(info, velocity);
-                    velocity = quaternion * velocity;
+                    velocity = rotation * velocity;
                 }
             }
         }
 
+        // Near-duplicate of above, modified to support dropping different item types (probably should refactor). Only used by debug command.
         public static void DropStyleChest(Transform target, PickupIndex[] drops, float forwardVelocity = 2f, float upVelocity = 20f, Vector3? forwardOverride = null)
         {
-            if (drops.Length >= 1) {
+            if (drops.Length > 0) {
                 float angle = 360f / (float)drops.Length;
                 Vector3 forward = forwardOverride ?? target.forward;
                 Vector3 position = target.position + Vector3.up * 1.5f;
                 Vector3 velocity = Vector3.up * upVelocity + forward * forwardVelocity;
-                Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
+                Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
 
                 for (int i = 0; i < drops.Length; i++) {
-                    if (drops[i] == PickupIndex.none) continue;
-
                     GenericPickupController.CreatePickupInfo info = default;
                     info.position = position;
                     info.rotation = identifier;
                     info.pickupIndex = drops[i];
                     PickupDropletController.CreatePickupDroplet(info, velocity);
-                    velocity = quaternion * velocity;
+                    velocity = rotation * velocity;
                 }
             }
         }
