@@ -155,7 +155,7 @@ namespace PressureDrop
                     info.position = position;
                     info.rotation = identifier;
                     info.pickupIndex = dropPickup;
-                    PickupDropletController.CreatePickupDroplet(info, velocity);
+                    CreatePickupDroplet(info, velocity);
                     velocity = rotation * velocity;
                 }
             }
@@ -176,9 +176,25 @@ namespace PressureDrop
                     info.position = position;
                     info.rotation = identifier;
                     info.pickupIndex = drops[i];
-                    PickupDropletController.CreatePickupDroplet(info, velocity);
+                    CreatePickupDroplet(info, velocity);
                     velocity = rotation * velocity;
                 }
+            }
+        }
+
+        private static void CreatePickupDroplet(GenericPickupController.CreatePickupInfo pickupInfo, Vector3 velocity)
+        {
+            // Use try-catch block to attempt backwards-compatibility
+            try {
+                // Post-Devotion Update
+                PickupDropletController.CreatePickupDroplet(pickupInfo, velocity);
+            }
+            catch (System.MissingMethodException e)
+            {
+                Log.Error(e);
+                // Pre-Devotion Update, haven't tried rolling back to test if this works
+                System.Reflection.MethodInfo CreatePickupDroplet = typeof(PickupDropletController).GetMethod(nameof(PickupDropletController.CreatePickupDroplet), [typeof(GenericPickupController.CreatePickupInfo), typeof(Vector3), typeof(Vector3)]);
+                CreatePickupDroplet.Invoke(null, [pickupInfo, pickupInfo.position, velocity]);
             }
         }
     }
