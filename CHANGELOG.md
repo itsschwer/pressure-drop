@@ -1,3 +1,4 @@
+### 1.3.2
 - \[Dropping items\] Attempt to make compatible with pre-Devotion Update, Devotion Update, and Seekers of the Storm \[SotS\]
     - Haven't tried rolling back to a pre-SotS patch to test if this works, please report any issues to the [GitHub repository](https://github.com/itsschwer/pressure-drop/issues)
 

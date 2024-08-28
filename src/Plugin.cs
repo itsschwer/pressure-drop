@@ -4,13 +4,12 @@ using RoR2;
 namespace PressureDrop
 {
     [BepInPlugin(GUID, Name, Version)]
-
     public sealed class Plugin : BaseUnityPlugin
     {
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
         public const string Name = "PressureDrop";
-        public const string Version = "1.3.1";
+        public const string Version = "1.3.2";
 
         public static new Config Config { get; private set; }
 
