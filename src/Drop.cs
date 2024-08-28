@@ -186,16 +186,21 @@ namespace PressureDrop
         {
             // Use try-catch block to attempt backwards-compatibility
             try {
-                // Post-Devotion Update
-                PickupDropletController.CreatePickupDroplet(pickupInfo, velocity);
+                CreateDevotionPickupDroplet(pickupInfo, velocity);
             }
             catch (System.MissingMethodException e)
             {
-                Log.Error(e);
-                // Pre-Devotion Update, haven't tried rolling back to test if this works
+                Log.Warning($"{nameof(System.MissingMethodException)}: Using non-Devotion Update variant of {nameof(PickupDropletController)}.{nameof(PickupDropletController.CreatePickupDroplet)}");
                 System.Reflection.MethodInfo CreatePickupDroplet = typeof(PickupDropletController).GetMethod(nameof(PickupDropletController.CreatePickupDroplet), [typeof(GenericPickupController.CreatePickupInfo), typeof(Vector3), typeof(Vector3)]);
                 CreatePickupDroplet.Invoke(null, [pickupInfo, pickupInfo.position, velocity]);
             }
+        }
+
+        // https://stackoverflow.com/questions/3546580/why-is-it-not-possible-to-catch-missingmethodexception/3546611#3546611
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        private static void CreateDevotionPickupDroplet(GenericPickupController.CreatePickupInfo pickupInfo, Vector3 velocity)
+        {
+            PickupDropletController.CreatePickupDroplet(pickupInfo, velocity);
         }
     }
 }
