@@ -1,6 +1,5 @@
-- Update `RiskOfRain2.GameLibs` package reference for Devotion Update
-- \[Dropping items\] Attempt to implement backwards-compatibility with pre-Devotion Update
-    - Haven't tried rolling back to a pre-Devotion Update patch to test if this works, please report any issues to the [GitHub repository](https://github.com/itsschwer/pressure-drop/issues)
+- \[Dropping items\] Attempt to make compatible with pre-Devotion Update, Devotion Update, and Seekers of the Storm \[SotS\]
+    - Haven't tried rolling back to a pre-SotS patch to test if this works, please report any issues to the [GitHub repository](https://github.com/itsschwer/pressure-drop/issues)
 
 ### 1.3.1
 - Fix `MissingMethodException` when calling ` PickupDropletController.CreatePickupDroplet` *(introduced by the Devotion Update)*

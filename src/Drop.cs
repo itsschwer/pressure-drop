@@ -186,13 +186,12 @@ namespace PressureDrop
         {
             // Use try-catch block to attempt backwards-compatibility
             try {
-                CreateDevotionPickupDroplet(pickupInfo, velocity);
+                PickupDropletController.CreatePickupDroplet(pickupInfo, pickupInfo.position, velocity);
             }
-            catch (System.MissingMethodException e)
+            catch (System.MissingMethodException)
             {
-                Log.Warning($"{nameof(System.MissingMethodException)}: Using non-Devotion Update variant of {nameof(PickupDropletController)}.{nameof(PickupDropletController.CreatePickupDroplet)}");
-                System.Reflection.MethodInfo CreatePickupDroplet = typeof(PickupDropletController).GetMethod(nameof(PickupDropletController.CreatePickupDroplet), [typeof(GenericPickupController.CreatePickupInfo), typeof(Vector3), typeof(Vector3)]);
-                CreatePickupDroplet.Invoke(null, [pickupInfo, pickupInfo.position, velocity]);
+                Log.Warning($"{nameof(System.MissingMethodException)}: Using Devotion Update version of {nameof(PickupDropletController)}.{nameof(PickupDropletController.CreatePickupDroplet)}");
+                CreateDevotionPickupDroplet(pickupInfo, velocity);
             }
         }
 
@@ -200,7 +199,8 @@ namespace PressureDrop
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         private static void CreateDevotionPickupDroplet(GenericPickupController.CreatePickupInfo pickupInfo, Vector3 velocity)
         {
-            PickupDropletController.CreatePickupDroplet(pickupInfo, velocity);
+            System.Reflection.MethodInfo CreatePickupDroplet = typeof(PickupDropletController).GetMethod(nameof(PickupDropletController.CreatePickupDroplet), [typeof(GenericPickupController.CreatePickupInfo), typeof(Vector3)]);
+            CreatePickupDroplet.Invoke(null, [pickupInfo, velocity]);
         }
     }
 }
