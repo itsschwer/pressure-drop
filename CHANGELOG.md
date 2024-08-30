@@ -1,4 +1,9 @@
 - Change default value of configuration option `voidPickupConfirmAll` to `true`
+- \[`ChatCommander`\] Remove empty arguments when parsing chat commands
+    - *e.g. <span style="white-space:pre;">`/d      kja`</span> is now equivalent to `/d kja`*
+- \[Dropping items\] Fix attempt to make compatible with pre-Devotion Update, Devotion Update, and Seekers of the Storm
+    - Tested on Devotion Update and Seekers of the Storm patch
+    - Untested on pre-Devotion Update
 
 ### 1.3.2
 - \[Dropping items\] Attempt to make compatible with pre-Devotion Update, Devotion Update, and Seekers of the Storm \[SotS\]

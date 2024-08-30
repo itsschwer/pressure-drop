@@ -21,7 +21,7 @@ namespace PressureDrop
         private static void Console_RunCmd(On.RoR2.Console.orig_RunCmd orig, RoR2.Console self, RoR2.Console.CmdSender sender, string concommandName, List<string> userArgs)
         {
             string message = userArgs.FirstOrDefault();
-            string[] args = message?.Split(' ');
+            string[] args = message?.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             // Not server, not a chat command, or not a registered command
             if (!NetworkServer.active || !concommandName.Equals("say", StringComparison.InvariantCultureIgnoreCase)
                 || string.IsNullOrWhiteSpace(message) || args == null || args.Length <= 0
