@@ -95,8 +95,8 @@ namespace PressureDrop
 
             const string Tweaks = "Tweaks";
             scoreboardShowChat = config.Bind<bool>(Tweaks, nameof(scoreboardShowChat), false,
-                "Show chat history when the scoreboard is open.");
-            voidPickupConfirmAll = config.Bind<bool>(Tweaks, nameof(voidPickupConfirmAll), false,
+                "Show chat history when the scoreboard is open. — [ client-side ]");
+            voidPickupConfirmAll = config.Bind<bool>(Tweaks, nameof(voidPickupConfirmAll), true,
                 "Always require confirmation to pick up void items.");
         }
     }
