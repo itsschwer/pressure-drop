@@ -24,6 +24,8 @@ namespace PressureDrop
             BepInEx.Logging.Logger.Sources.Remove(base.Logger);
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
+            Config = new Config(base.Config);
+
             ChatCommander.Hook();
             // Use run start/end events to run check for if plugin should be active
             Run.onRunStartGlobal += SetPluginActiveState;
