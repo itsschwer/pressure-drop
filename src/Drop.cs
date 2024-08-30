@@ -21,7 +21,7 @@ namespace PressureDrop
             if (_hooked) return;
             _hooked = true;
             On.RoR2.GenericPickupController.CreatePickup += GenericPickupController_CreatePickup;
-            Commands.Drop.Enable();
+            DropCommand.Enable();
         }
 
         internal static void Unhook()
@@ -29,7 +29,7 @@ namespace PressureDrop
             if (!_hooked) return;
             _hooked = false;
             On.RoR2.GenericPickupController.CreatePickup -= GenericPickupController_CreatePickup;
-            Commands.Drop.Disable();
+            DropCommand.Disable();
         }
 
         private static GenericPickupController GenericPickupController_CreatePickup(On.RoR2.GenericPickupController.orig_CreatePickup orig, ref GenericPickupController.CreatePickupInfo createPickupInfo)

@@ -1,22 +1,22 @@
 ﻿using RoR2;
 using UnityEngine;
 
-namespace PressureDrop.Commands
+namespace PressureDrop
 {
-    internal static class Drop
+    internal static class DropCommand
     {
         public static void  Enable()
         {
-            ChatCommander.Register("/d", DropCommand);
-            ChatCommander.Register("/drop", DropCommand);
+            ChatCommander.Register("/d", Parse);
+            ChatCommander.Register("/drop", Parse);
         }
         public static void Disable()
         {
-            ChatCommander.Unregister("/d", DropCommand);
-            ChatCommander.Unregister("/drop", DropCommand);
+            ChatCommander.Unregister("/d", Parse);
+            ChatCommander.Unregister("/drop", Parse);
         }
 
-        private static void DropCommand(NetworkUser user, string[] args)
+        private static void Parse(NetworkUser user, string[] args)
         {
             if (Run.instance == null) return;
 
@@ -41,10 +41,10 @@ namespace PressureDrop.Commands
                 return;
             }
 
-            DropExecute(user, itemDef, dropAtTeleporter);
+            Execute(user, itemDef, dropAtTeleporter);
         }
 
-        private static void DropExecute(NetworkUser user, ItemDef itemDef, bool dropAtTeleporter)
+        private static void Execute(NetworkUser user, ItemDef itemDef, bool dropAtTeleporter)
         {
             int count = user.master.inventory.GetItemCount(itemDef.itemIndex);
             if (count > Plugin.Config.MaxItemsToDropAtATime) count = Plugin.Config.MaxItemsToDropAtATime;
