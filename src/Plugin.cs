@@ -9,7 +9,7 @@ namespace PressureDrop
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
         public const string Name = "PressureDrop";
-        public const string Version = "1.3.2";
+        public const string Version = "1.4.0";
 
         internal new static BepInEx.Logging.ManualLogSource Logger;
 

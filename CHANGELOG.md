@@ -1,3 +1,4 @@
+## 1.4.0
 - Change default value of configuration option `voidPickupConfirmAll` to `true`
 - \[`ChatCommander`\] Remove empty arguments when parsing chat commands
     - *e.g. <span style="white-space:pre;">`/d      kja`</span> is now equivalent to `/d kja`*

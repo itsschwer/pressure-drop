@@ -65,7 +65,7 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 
 ## see also
 
-- [DropItem](https://thunderstore.io/package/Thrayonlosa/DropItem/) by [Thrayonlosa](https://thunderstore.io/package/Thrayonlosa/) — similar `/drop` functionality, inspired this implementation
+- [DropItem](https://thunderstore.io/package/Thrayonlosa/DropItem/) <sup>[*v1.3.0*](https://thunderstore.io/package/Thrayonlosa/DropItem/1.3.0/)</sup> by [Thrayonlosa](https://thunderstore.io/package/Thrayonlosa/) — similar `/drop` functionality, inspired this implementation
     - can drop equipment
     - can drop from another player's inventory
     - only drops around the executing player *(must be alive)*
