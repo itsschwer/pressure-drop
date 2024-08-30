@@ -186,7 +186,7 @@ namespace PressureDrop
         {
             // Use try-catch block to attempt backwards-compatibility
             try {
-                PickupDropletController.CreatePickupDroplet(pickupInfo, pickupInfo.position, velocity);
+                _CreatePickupDroplet(pickupInfo, velocity);
             }
             catch (System.MissingMethodException)
             {
@@ -197,6 +197,11 @@ namespace PressureDrop
 
         // https://stackoverflow.com/questions/3546580/why-is-it-not-possible-to-catch-missingmethodexception/3546611#3546611
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        private static void _CreatePickupDroplet(GenericPickupController.CreatePickupInfo pickupInfo, Vector3 velocity)
+        {
+            PickupDropletController.CreatePickupDroplet(pickupInfo, pickupInfo.position, velocity);
+        }
+
         private static void CreateDevotionPickupDroplet(GenericPickupController.CreatePickupInfo pickupInfo, Vector3 velocity)
         {
             System.Reflection.MethodInfo CreatePickupDroplet = typeof(PickupDropletController).GetMethod(nameof(PickupDropletController.CreatePickupDroplet), [typeof(GenericPickupController.CreatePickupInfo), typeof(Vector3)]);
