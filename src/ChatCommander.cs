@@ -53,10 +53,10 @@ namespace PressureDrop
         {
             if (Commands.ContainsKey(token)) {
                 if (replace) {
-                    Log.Warning($"{nameof(ChatCommander)}> '{token}' is replacing a previously registered chat command.");
+                    Plugin.Logger.LogWarning($"{nameof(ChatCommander)}> '{token}' is replacing a previously registered chat command.");
                 }
                 else {
-                    Log.Warning($"{nameof(ChatCommander)}> A chat command is already registered under '{token}'");
+                    Plugin.Logger.LogWarning($"{nameof(ChatCommander)}> A chat command is already registered under '{token}'");
                     return false;
                 }
             }
@@ -64,7 +64,7 @@ namespace PressureDrop
             Commands[token] = action;
             string origin = action.Method.DeclaringType.Assembly.GetName().Name;
             origin = (origin != typeof(ChatCommander).Assembly.GetName().Name) ? $" [from {origin}.dll]" : "";
-            Log.Info($"{nameof(ChatCommander)}> Registering a chat command under '{token}'{origin}");
+            Plugin.Logger.LogInfo($"{nameof(ChatCommander)}> Registering a chat command under '{token}'{origin}");
             return true;
         }
 
@@ -78,13 +78,13 @@ namespace PressureDrop
         {
             if (Commands.TryGetValue(token, out Action<NetworkUser, string[]> command)) {
                 if (command == action) {
-                    Log.Info($"{nameof(ChatCommander)}> Unregistered '{token}' chat command.");
+                    Plugin.Logger.LogInfo($"{nameof(ChatCommander)}> Unregistered '{token}' chat command.");
                     Commands.Remove(token);
                     return true;
                 }
-                else Log.Warning($"{nameof(ChatCommander)}> Could not unregister chat command '{token}' as the action does not match.");
+                else Plugin.Logger.LogWarning($"{nameof(ChatCommander)}> Could not unregister chat command '{token}' as the action does not match.");
             }
-            else Log.Info($"{nameof(ChatCommander)}> Could not unregister chat command '{token}' (not registered).");
+            else Plugin.Logger.LogInfo($"{nameof(ChatCommander)}> Could not unregister chat command '{token}' (not registered).");
 
             return false;
         }

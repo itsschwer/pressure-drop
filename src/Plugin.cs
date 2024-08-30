@@ -11,25 +11,28 @@ namespace PressureDrop
         public const string Name = "PressureDrop";
         public const string Version = "1.3.2";
 
+        internal new static BepInEx.Logging.ManualLogSource Logger;
+
         public static new Config Config { get; private set; }
 
         // MonoBehaviour components
         private PressurePlateTimer pressure;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void Awake()
         {
-            Log.Init(Logger);
-            Config = new Config(base.Config);
+            // Use Plugin.GUID instead of Plugin.Name as source name
+            BepInEx.Logging.Logger.Sources.Remove(base.Logger);
+            Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
+
             ChatCommander.Hook();
             // Use run start/end events to run check for if plugin should be active
             Run.onRunStartGlobal += SetPluginActiveState;
             Run.onRunDestroyGlobal += SetPluginActiveState;
             SetPluginActiveState();
-            Log.Message("~awake.");
+
+            Logger.LogMessage("~awake.");
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnEnable()
         {
             ManageHooks();
@@ -37,10 +40,9 @@ namespace PressureDrop
 #if DEBUG
             Commands.DebugCheats.Enable();
 #endif
-            Log.Message("~enabled.");
+            Logger.LogMessage("~enabled.");
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnDisable()
         {
             ManageHooks();
@@ -48,7 +50,7 @@ namespace PressureDrop
 #if DEBUG
             Commands.DebugCheats.Disable();
 #endif
-            Log.Message("~disabled.");
+            Logger.LogMessage("~disabled.");
         }
 
         /// <summary>
@@ -65,7 +67,7 @@ namespace PressureDrop
         private void SetActive(bool value) {
             this.enabled = value;
             if (this.pressure) this.pressure.enabled = value;
-            Log.Message($"~{(value ? "active" : "inactive")}.");
+            Logger.LogMessage($"~{(value ? "active" : "inactive")}.");
         }
 
         private void ReloadConfig(NetworkUser user, string[] args)

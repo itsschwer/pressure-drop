@@ -40,10 +40,10 @@ namespace PressureDrop
 
                 PickupDef def = PickupCatalog.GetPickupDef(createPickupInfo.pickupIndex);
 #if DEBUG
-                Log.Debug($"itemIndex: {def.itemIndex} | itemTier: {def.itemTier} | equipmentIndex: {def.equipmentIndex} | isLunar: {def.isLunar} | isBoss: {def.isBoss}");
+                Plugin.Logger.LogDebug($"itemIndex: {def.itemIndex} | itemTier: {def.itemTier} | equipmentIndex: {def.equipmentIndex} | isLunar: {def.isLunar} | isBoss: {def.isBoss}");
                 if (def.itemIndex != ItemIndex.None) {
                     ItemDef itemDef = ItemCatalog.GetItemDef(def.itemIndex);
-                    Log.Debug($"    hidden: {itemDef.hidden} | canRemove: {itemDef.canRemove} | {itemDef.nameToken}");
+                    Plugin.Logger.LogDebug($"    hidden: {itemDef.hidden} | canRemove: {itemDef.canRemove} | {itemDef.nameToken}");
                 }
 #endif
                 if (!GetDropRecyclable(def)) drop.Recycled = true;
@@ -186,18 +186,18 @@ namespace PressureDrop
         {
             // Use try-catch block to attempt backwards-compatibility
             try {
-                _CreatePickupDroplet(pickupInfo, velocity);
+                CreatePickupDroplet_Wrapper(pickupInfo, velocity);
             }
             catch (System.MissingMethodException)
             {
-                Log.Warning($"{nameof(System.MissingMethodException)}: Using Devotion Update version of {nameof(PickupDropletController)}.{nameof(PickupDropletController.CreatePickupDroplet)}");
+                Plugin.Logger.LogWarning($"{nameof(System.MissingMethodException)}: Using Devotion Update version of {nameof(PickupDropletController)}.{nameof(PickupDropletController.CreatePickupDroplet)}");
                 CreateDevotionPickupDroplet(pickupInfo, velocity);
             }
         }
 
         // https://stackoverflow.com/questions/3546580/why-is-it-not-possible-to-catch-missingmethodexception/3546611#3546611
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-        private static void _CreatePickupDroplet(GenericPickupController.CreatePickupInfo pickupInfo, Vector3 velocity)
+        private static void CreatePickupDroplet_Wrapper(GenericPickupController.CreatePickupInfo pickupInfo, Vector3 velocity)
         {
             PickupDropletController.CreatePickupDroplet(pickupInfo, pickupInfo.position, velocity);
         }
