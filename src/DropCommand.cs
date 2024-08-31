@@ -36,7 +36,7 @@ namespace PressureDrop
             }
 
             ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
-            if (itemDef == RoR2Content.Items.CaptainDefenseMatrix || (!Plugin.Config.DropVoidAllowed && PressureDrop.Drop.IsVoidTier(itemDef.tier))) {
+            if (itemDef == RoR2Content.Items.CaptainDefenseMatrix || (!Plugin.Config.DropVoidAllowed && Drop.IsVoidTier(itemDef.tier))) {
                 Feedback($"{ChatCommander.GetColoredPickupLanguageString(itemDef.itemIndex)} can not be dropped.");
                 return;
             }
@@ -85,9 +85,9 @@ namespace PressureDrop
             }
 
             user.master.inventory.RemoveItem(itemDef.itemIndex, count);
-            Vector3? direction = PressureDrop.Drop.GetAimDirection(user?.GetCurrentBody());
+            Vector3? direction = Drop.GetAimDirection(user?.GetCurrentBody());
             if (Plugin.Config.DropInvertDirection && direction.HasValue) direction = -direction.Value;
-            PressureDrop.Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(itemDef.itemIndex), count, 3.4f, 14f, direction);
+            Drop.DropStyleChest(target, PickupCatalog.FindPickupIndex(itemDef.itemIndex), count, 3.4f, 14f, direction);
             Feedback(user, itemDef, count, dropAtTeleporter);
         }
 
