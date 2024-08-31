@@ -189,7 +189,7 @@ namespace PressureDrop
                 CreatePickupDroplet_Wrapper(pickupInfo, velocity);
             }
             catch (System.MissingMethodException) {
-                CreatePickupDroplet_Devotion.Invoke(null, [pickupInfo, velocity]);
+                CreatePickupDroplet_Devotion(pickupInfo, velocity);
             }
         }
 
@@ -200,12 +200,13 @@ namespace PressureDrop
             PickupDropletController.CreatePickupDroplet(pickupInfo, pickupInfo.position, velocity);
         }
 
-        private static System.Reflection.MethodInfo _CreatePickupDroplet_Devotion;
-        private static System.Reflection.MethodInfo CreatePickupDroplet_Devotion {
+        private static System.Action<GenericPickupController.CreatePickupInfo, Vector3> _CreatePickupDroplet_Devotion;
+        private static System.Action<GenericPickupController.CreatePickupInfo, Vector3> CreatePickupDroplet_Devotion {
             get {
                 if (_CreatePickupDroplet_Devotion == null) {
                     Plugin.Logger.LogWarning($"{nameof(System.MissingMethodException)}: Using Devotion Update version of {nameof(PickupDropletController)}.{nameof(PickupDropletController.CreatePickupDroplet)}");
-                    _CreatePickupDroplet_Devotion = typeof(PickupDropletController).GetMethod(nameof(PickupDropletController.CreatePickupDroplet), [typeof(GenericPickupController.CreatePickupInfo), typeof(Vector3)]);
+                    System.Reflection.MethodInfo methodInfo = typeof(PickupDropletController).GetMethod(nameof(PickupDropletController.CreatePickupDroplet), [typeof(GenericPickupController.CreatePickupInfo), typeof(Vector3)]);
+                    _CreatePickupDroplet_Devotion = (System.Action<GenericPickupController.CreatePickupInfo, Vector3>)methodInfo.CreateDelegate(typeof(System.Action<GenericPickupController.CreatePickupInfo, Vector3>));
                 }
                 return _CreatePickupDroplet_Devotion;
             }
