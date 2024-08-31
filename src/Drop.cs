@@ -206,13 +206,7 @@ namespace PressureDrop
                 if (_CreatePickupDroplet_Devotion == null) {
                     Plugin.Logger.LogWarning($"{nameof(System.MissingMethodException)}: Using Devotion Update version of {nameof(PickupDropletController)}.{nameof(PickupDropletController.CreatePickupDroplet)}");
                     System.Reflection.MethodInfo methodInfo = typeof(PickupDropletController).GetMethod(nameof(PickupDropletController.CreatePickupDroplet), [typeof(GenericPickupController.CreatePickupInfo), typeof(Vector3)]);
-
-                    System.Linq.Expressions.ParameterExpression[] parameters = [
-                        System.Linq.Expressions.Expression.Parameter(typeof(GenericPickupController.CreatePickupInfo), "pickupInfo"),
-                        System.Linq.Expressions.Expression.Parameter(typeof(Vector3), "velocity"),
-                    ];
-                    System.Linq.Expressions.Expression call = System.Linq.Expressions.Expression.Call(methodInfo, parameters);
-                    _CreatePickupDroplet_Devotion = System.Linq.Expressions.Expression.Lambda<System.Action<GenericPickupController.CreatePickupInfo, Vector3>>(call, parameters).Compile();
+                    _CreatePickupDroplet_Devotion = (System.Action<GenericPickupController.CreatePickupInfo, Vector3>)methodInfo.CreateDelegate(typeof(System.Action<GenericPickupController.CreatePickupInfo, Vector3>));
                 }
                 return _CreatePickupDroplet_Devotion;
             }
