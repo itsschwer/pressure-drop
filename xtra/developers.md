@@ -9,9 +9,9 @@ it might be more helpful to first view an [example](https://github.com/itsschwer
 Add the dependency string for this plugin to your `manifest.json`
 ```diff
 "dependencies": [
--    	"bbepis-BepInExPack-5.4.2113"
-+		"bbepis-BepInExPack-5.4.2113",
-+		"itsschwer-PressureDrop-1.1.1"
+-    "bbepis-BepInExPack-5.4.2113"
++    "bbepis-BepInExPack-5.4.2113",
++    "itsschwer-PressureDrop-1.1.1"
 ]
 ```
 
@@ -42,11 +42,12 @@ using PressureDrop;
 ```
 
 ### Create commands
+
 - Command methods have the parameters `NetworkUser user` and `string[] args`
     - `user` is the `NetworkUser` which called the command
     - `args` are the arguments that have been passed with the command
         - `args[0]` will always be the `string` used to call the command
-        - Use `args.Length` to avoid `IndexOutOfRangeException`
+        - Check `args.Length` to avoid `IndexOutOfRangeException`
 
 ### Register commands
 
@@ -56,3 +57,17 @@ using PressureDrop;
         - `action` is the method that will be called upon activation
     - `Register()` returns a `bool` representing whether the command was successfully registered or not.
 - Use `ChatCommander.Unregister()` to remove a chat command *(same parameters — need to match!)*
+
+### Suggested syntax for displaying command usage
+
+Entry | Meaning
+---   | ---
+`plain text` | Enter this literally, exactly as shown
+`<argument-name>` | Placeholder, replace `<argument-name>` with an appropriate value
+`[optional]` | Optional, `optional` can be omitted
+`[choice-1 \| choice-2]` | Optional choice, can omit or pick either `choice-1` or `choice-2`
+`(choice-1 \| choice-2)` | Required choice, must pick either `choice-1` or `choice-2`
+
+#### Other styles:
+- [Minecraft](https://minecraft.wiki/w/Commands#Syntax)
+- [GitHub](https://github.com/cli/cli/blob/trunk/docs/command-line-syntax.md)
