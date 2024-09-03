@@ -57,7 +57,8 @@ jobs:
           $config = "Release"
           if ( $env:DEBUG -eq $true ) { $config = "Debug" }
           $output = dotnet build --configuration $config
-          "$($output)" -match "Package prepared \s*'([^\n\r\t]+)'"
+          echo $output
+          $output -match "Package prepared \s*'([^\n\r\t]+)'"
           echo "PATH=$($matches[1])" >> $env:GITHUB_OUTPUT
 
       - uses: actions/upload-artifact@v4
