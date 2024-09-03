@@ -31,6 +31,9 @@ jobs:
           echo "VERSION=$($matches[1])" >> $env:GITHUB_OUTPUT
 
       - name: Read src/Plugin.cs
+        env:
+          NAME: ${{ steps.manifest.outputs.NAME }}
+          VERSION: ${{ steps.manifest.outputs.VERSION }}
         shell: pwsh
         run: |
           $plugin = Get-Content -Raw -path src/Plugin.cs
@@ -38,19 +41,21 @@ jobs:
           $name = $matches[1]
           if (!( $plugin -match 'const\s+string\s+Version\s*=\s*"([.\d\w-+]+)"' )) { Write-Error -ErrorAction Stop -Message "Could not find version number." }
           $version = $matches[1]
-          echo "$name--$version | ${{ steps.manifest.outputs.NAME }}--${{ steps.manifest.outputs.VERSION }}"
-          if ( ( $name -ne "${{ steps.manifest.outputs.NAME }}" ) -or ( $version -ne "${{ steps.manifest.outputs.VERSION }}" ) ) { Write-Error -ErrorAction Stop -Message "Inconsistency between manifest.json and Plugin.cs" }
+          echo "$name--$version | $env:NAME--$env:VERSION"
+          if ( ( $name -ne $env:NAME ) -or ( $version -ne $env:VERSION ) ) { Write-Error -ErrorAction Stop -Message "Inconsistency between manifest.json and Plugin.cs" }
 
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
       - name: Build project
         id: build
+        env:
+          DEBUG: ${{ inputs.debug }}
         shell: pwsh
         run: |
           cd src
           $config = "Release"
-          if ( $${{ inputs.debug }} -eq $true ) { $config = "Debug" }
+          if ( $env:DEBUG -eq $true ) { $config = "Debug" }
           $output = dotnet build --configuration $config
           "$($output)" -match "Package prepared \s*'([^\n\r\t]+)'"
           echo "PATH=$($matches[1])" >> $env:GITHUB_OUTPUT
