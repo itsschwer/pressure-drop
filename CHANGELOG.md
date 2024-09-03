@@ -1,3 +1,4 @@
+### 1.4.1
 - Start assembly versioning
 - Add suggested syntax section to `developers.md`
 - \[Dropping items\] Try optimise Devotion Update compatibility
