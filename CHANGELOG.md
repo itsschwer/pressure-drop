@@ -1,3 +1,8 @@
+- Start assembly versioning
+- Add suggested syntax section to `developers.md`
+- \[Dropping items\] Try optimise Devotion Update compatibility
+    - *(Cache the reflection method)*
+
 ## 1.4.0
 - Change default value of configuration option `voidPickupConfirmAll` to `true`
 - \[`ChatCommander`\] Remove empty arguments when parsing chat commands
@@ -26,7 +31,7 @@
 
 ### 1.1.1
 - Add demo gifs to readme
-- Create developers.md
+- Create `developers.md`
 - \[`ChatCommander`\] Log source assembly when registering command
 - Mark `Drop` as public
 
