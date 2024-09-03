@@ -39,7 +39,7 @@ jobs:
           if (!( $plugin -match 'const\s+string\s+Version\s*=\s*"([.\d\w-+]+)"' )) { Write-Error -ErrorAction Stop -Message "Could not find version number." }
           $version = $matches[1]
           echo "$name--$version | ${{ steps.manifest.outputs.NAME }}--${{ steps.manifest.outputs.VERSION }}"
-          if ( ( $name -ne ${{ steps.manifest.outputs.NAME }} ) -or ( $version -ne ${{ steps.manifest.outputs.VERSION }} ) ) { Write-Error -ErrorAction Stop -Message "Inconsistency between manifest.json and Plugin.cs" }
+          if ( ( $name -ne "${{ steps.manifest.outputs.NAME }}" ) -or ( $version -ne "${{ steps.manifest.outputs.VERSION }}" ) ) { Write-Error -ErrorAction Stop -Message "Inconsistency between manifest.json and Plugin.cs" }
 
       - uses: actions/setup-dotnet@v3
         with:
