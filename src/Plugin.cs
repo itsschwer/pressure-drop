@@ -11,7 +11,7 @@ namespace PressureDrop
         public const string Name = "PressureDrop";
         public const string Version = "1.4.0";
 
-        internal new static BepInEx.Logging.ManualLogSource Logger { get; private set; }
+        internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
 
         public static new Config Config { get; private set; }
 
