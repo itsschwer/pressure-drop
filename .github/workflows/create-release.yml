@@ -50,7 +50,7 @@ jobs:
         run: |
           cd src
           $config = "Release"
-          if ( ${{ inputs.debug }} -eq $true ) { $config = "Debug" }
+          if ( $${{ inputs.debug }} -eq $true ) { $config = "Debug" }
           $output = dotnet build --configuration $config
           "$($output)" -match "Package prepared \s*'([^\n\r\t]+)'"
           echo "PATH=$($matches[1])" >> $env:GITHUB_OUTPUT
