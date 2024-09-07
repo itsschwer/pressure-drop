@@ -22,15 +22,18 @@ namespace PressureDrop
             On.RoR2.UI.ChatBox.UpdateFade -= ChatBox_UpdateFade;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Member Access", "Publicizer001:Accessing a member that was not originally public")]
         private static void ChatBox_UpdateFade(On.RoR2.UI.ChatBox.orig_UpdateFade orig, RoR2.UI.ChatBox self, float deltaTime)
         {
-            // Scoreboard visibility logic from RoR2.UI.HUD.Update()
-            Rewired.Player inputPlayer = LocalUserManager.GetFirstLocalUser()?.inputPlayer;
-            if (inputPlayer != null && inputPlayer.GetButton("info")) {
-                self.ResetFadeTimer();
-            }
+            // Let game calculate fade normally
             orig(self, deltaTime);
+            // But override fade if scoreboard is open
+            if (self.fadeGroup != null) {
+                Rewired.Player inputPlayer = LocalUserManager.GetFirstLocalUser()?.inputPlayer;
+                // Scoreboard visibility logic from RoR2.UI.HUD.Update()
+                if (inputPlayer != null && inputPlayer.GetButton("info")) {
+                    self.fadeGroup.alpha = 1;
+                }
+            }
         }
     }
 }
