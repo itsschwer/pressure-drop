@@ -67,6 +67,9 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 - the option to send a chat notification listing the items that are consumed when a Scrapper, 3D Printer, Cleansing Pool, or Cauldron is used can be enabled *(enabled by default)*
     - the option to include Item Scrap (and Regenerating Scrap) in this list can be enabled
 
+> send consumed item in chat
+![screenshot of reforging, printing, cleansing, and scrapping](https://github.com/itsschwer/pressure-drop/blob/main//xtra/demo-item-cost-in-chat.png?raw=true)
+
 ## see also
 
 - [DropItem](https://thunderstore.io/package/Thrayonlosa/DropItem/) <sup>[*v1.3.0*](https://thunderstore.io/package/Thrayonlosa/DropItem/1.3.0/)</sup> by [Thrayonlosa](https://thunderstore.io/package/Thrayonlosa/) — similar `/drop` functionality, inspired this implementation
