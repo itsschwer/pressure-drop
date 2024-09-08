@@ -68,7 +68,7 @@ sometimes I \[ take the wrong item / want to help others catch up \].
     - the option to include Item Scrap (and Regenerating Scrap) in this list can be enabled
 
 > send consumed item in chat
-![screenshot of reforging, printing, cleansing, and scrapping](https://github.com/itsschwer/pressure-drop/blob/main//xtra/demo-item-cost-in-chat.png?raw=true)
+![screenshot of reforging, printing, cleansing, and scrapping](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-item-cost-in-chat.png?raw=true)
 
 ## see also
 
