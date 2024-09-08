@@ -76,9 +76,9 @@ namespace PressureDrop
         {
             if (user != LocalUserManager.GetFirstLocalUser().currentNetworkUser) return; // Only allow host to reload
 
-            base.Config.Reload();
+            Config.Reload();
             ManageHooks();
-            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"Reloaded configuration for <style=cWorldEvent>{Plugin.GUID}</style>" });
+            ChatCommander.Output($"Reloaded configuration for <style=cWorldEvent>{Plugin.GUID}</style>");
         }
 
         private void ManageHooks()

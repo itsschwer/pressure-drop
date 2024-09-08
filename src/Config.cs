@@ -4,6 +4,11 @@ namespace PressureDrop
 {
     public sealed class Config
     {
+        private readonly ConfigFile file;
+        internal void Reload() { Plugin.Logger.LogDebug($"Reloading {file.ConfigFilePath.Substring(file.ConfigFilePath.LastIndexOf(System.IO.Path.DirectorySeparatorChar) + 1)}"); file.Reload(); }
+
+
+        // Pressure Plates
         private readonly ConfigEntry<float> pressurePlateTimer;
         public float PressurePlateTimer => pressurePlateTimer.Value;
 
@@ -58,8 +63,10 @@ namespace PressureDrop
 
         public Config(ConfigFile config)
         {
+            file = config;
+
             // Prefix section to sort to top in config editor
-            pressurePlateTimer = config.Bind<float>("> Timed Pressure Plates", nameof(pressurePlateTimer), 30f,
+            pressurePlateTimer = config.Bind<float>("~Pressure Plates", nameof(pressurePlateTimer), 30f,
                 "The length of time (seconds) a pressure plate will remain pressed after being activated.\nZero disables time functionality (reverts to vanilla behaviour). Negative values prevent pressure plates from releasing once activated.");
 
 
