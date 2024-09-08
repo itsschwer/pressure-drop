@@ -31,7 +31,7 @@ namespace PressureDrop
 
             ItemIndex itemIndex = user.master.inventory.FindItemInInventory(args[1]);
             if (itemIndex == ItemIndex.None) {
-                Feedback($"Could not match '<color=#e5eefc>{args[1]}</color>' to an item in {user.masterController.GetDisplayName()}'s inventory.");
+                Feedback($"Could not match '<color=#e5eefc>{args[1]}</color>' to an item in {user.userName}'s inventory.");
                 return;
             }
 
@@ -100,11 +100,10 @@ namespace PressureDrop
         /// <param name="dropAtTeleporter"></param>
         private static void Feedback(NetworkUser user, ItemDef item, int count, bool dropAtTeleporter)
         {
-            string subject = user.masterController.GetDisplayName();
             string itemDisplay = ChatCommander.GetColoredPickupLanguageString(item.itemIndex);
             string countDisplay = (count != 1) ? $"({count})" : "";
             string location = dropAtTeleporter ? " at the Teleporter" : "";
-            Feedback($"{subject} dropped {itemDisplay}{countDisplay}{location}");
+            Feedback($"{user.userName} dropped {itemDisplay}{countDisplay}{location}");
         }
 
         /// <summary>
