@@ -61,7 +61,7 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 
 ## extra
 
-- the option to show chat history when the scoreboard is open can be enabled *(client-side)*
+- \[ client-side \] the option to show chat history when the scoreboard is open can be enabled *(enabled by default)*
 - the option to change void items to always require confirmation before being picked up can be enabled *(enabled by default)*
     - *intended to encourage sharing void items in multiplayer when the ability to drop void items is disabled*
 - the option to send a chat notification listing the items that are consumed when a Scrapper, 3D Printer, Cleansing Pool, or Cauldron is used can be enabled *(enabled by default)*

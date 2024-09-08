@@ -2,6 +2,7 @@
     - Add a configuration to include Item Scrap in the printed list
 - Rework tweak to show chat history when the scoreboard is open
     - Now doesn't reset the fade out progress
+    - Change default value of configuration option `scoreboardShowChat` to `true`
 
 ### 1.4.1
 - Start assembly versioning
