@@ -110,9 +110,8 @@ namespace PressureDrop
         public static string GetColoredPickupLanguageString(EquipmentIndex equipmentIndex)
             => GetColoredPickupLanguageString(PickupCatalog.FindPickupIndex(equipmentIndex));
         public static string GetColoredPickupLanguageString(PickupIndex pickupIndex)
-        {
-            PickupDef def = PickupCatalog.GetPickupDef(pickupIndex);
-            return Util.GenerateColoredString(Language.GetString(def.nameToken), def.baseColor);
-        }
+            => GetColoredPickupLanguageString(PickupCatalog.GetPickupDef(pickupIndex));
+        public static string GetColoredPickupLanguageString(PickupDef pickupDef)
+            => Util.GenerateColoredString(Language.GetString(pickupDef.nameToken), pickupDef.baseColor);
     }
 }
