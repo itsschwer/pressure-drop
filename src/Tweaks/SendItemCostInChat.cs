@@ -52,16 +52,14 @@ namespace PressureDrop.Tweaks
 
             Dictionary<PickupDef, int> exchanged = [];
             // RoR2.PurchaseInteraction.OnInteractionBegin()
-            foreach (ItemIndex item in __result.itemsTaken)
-            {
+            foreach (ItemIndex item in __result.itemsTaken) {
                 if (!Plugin.Config.IncludeScrapInItemCost && IsScrap(item)) continue;
 
                 PickupDef def = PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(item));
                 if (!exchanged.ContainsKey(def)) exchanged[def] = 0;
                 exchanged[def]++;
             }
-            foreach (EquipmentIndex item in __result.equipmentTaken)
-            {
+            foreach (EquipmentIndex item in __result.equipmentTaken) {
                 PickupDef def = PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(item));
                 if (!exchanged.ContainsKey(def)) exchanged[def] = 0;
                 exchanged[def]++;

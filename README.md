@@ -55,13 +55,17 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 - the ability to send items to the Teleporter can be disabled
 - the ability for dead players to drop items can be disabled
 - the ability to drop void items can be enabled
+- the drop direction can be inverted *(i.e. drop behind instead of drop in front)*
+- the maximum amount of items to drop to at a time can be configured as you see fit *(default: 10, to match Scrappers)*
 - which item tiers should be recyclable when dropped can be configured as you see fit *(default: only white and green)*
 
 ## extra
 
 - the option to show chat history when the scoreboard is open can be enabled *(client-side)*
 - the option to change void items to always require confirmation before being picked up can be enabled *(enabled by default)*
-    - intended to encourage sharing void items in multiplayer when the ability to drop void items is disabled
+    - *intended to encourage sharing void items in multiplayer when the ability to drop void items is disabled*
+- the option to send a chat notification listing the items that are consumed when a Scrapper, 3D Printer, Cleansing Pool, or Cauldron is used can be enabled *(enabled by default)*
+    - the option to include Item Scrap (and Regenerating Scrap) in this list can be enabled
 
 ## see also
 

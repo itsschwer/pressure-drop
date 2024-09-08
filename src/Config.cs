@@ -70,10 +70,10 @@ namespace PressureDrop
                 "Whether players should be able to send their drops to the Teleporter or not.");
             dropDeadEnabled = config.Bind<bool>(DropCommand, nameof(dropDeadEnabled), true,
                 "Whether dead players should be able to drop items or not.\nRequires dropTeleporterEnabled to be true.");
-            dropInvertDirection = config.Bind<bool>(DropCommand, nameof(dropInvertDirection), false,
-                "Whether items should be dropped opposite the aim direction or not.");
             dropVoidAllowed = config.Bind<bool>(DropCommand, nameof(dropVoidAllowed), false,
                 "Whether void items are allowed to be dropped or not.");
+            dropInvertDirection = config.Bind<bool>(DropCommand, nameof(dropInvertDirection), false,
+                "Whether items should be dropped opposite the aim direction or not.");
             maxItemsToDropAtATime = config.Bind<int>(DropCommand, nameof(maxItemsToDropAtATime), 10,
                 "The maximum amount of items to drop from the player at a time (similar to Scrappers).\nMinimum value is 1.");
 
@@ -102,10 +102,10 @@ namespace PressureDrop
                 "Show chat history when the scoreboard is open. — [ client-side ]");
             voidPickupConfirmAll = config.Bind<bool>(Tweaks, nameof(voidPickupConfirmAll), true,
                 "Always require confirmation to pick up void items.");
-            sendItemCostInChat = config.Bind<bool>(Tweaks, nameof(sendItemCostInChat), true, 
-                "Print a list of items used when scrapping, printing, cleansing, or reforging.");
+            sendItemCostInChat = config.Bind<bool>(Tweaks, nameof(sendItemCostInChat), true,
+                "Send a chat notification listing the items that are consumed when using Scrapper, 3D Printer, Cleansing Pool, or Cauldron is used.");
             includeScrapInItemCost = config.Bind<bool>(Tweaks, nameof(includeScrapInItemCost), false,
-                $"Include scrap in the list printed by {nameof(sendItemCostInChat)}.");
+                $"Include Item Scrap in the list printed by {nameof(sendItemCostInChat)}.");
         }
     }
 }
