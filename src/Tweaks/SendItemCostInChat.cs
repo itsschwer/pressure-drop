@@ -101,7 +101,7 @@ namespace PressureDrop.Tweaks
             switch (purchaseInteraction.displayNameToken) {
                 default: return "";
                 case "BAZAAR_CAULDRON_NAME":
-                    return "melded";
+                    return "reforged";
                 case "SCRAPPER_NAME":
                     return "scrapped";
                 case "SHRINE_CLEANSE_NAME":
