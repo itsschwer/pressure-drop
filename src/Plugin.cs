@@ -105,12 +105,12 @@ namespace PressureDrop
         private void ManageTweaks()
         {
             Tweaks.ScoreboardShowChat.Unhook();
-            if (Config.ScoreboardShowChat) Tweaks.ScoreboardShowChat.Hook();
+            if (this.enabled && Config.ScoreboardShowChat) Tweaks.ScoreboardShowChat.Hook();
 
             Tweaks.VoidPickupConfirmAll.SetActive(this.enabled && Config.VoidPickupConfirmAll);
 
             Tweaks.SendItemCostInChat.Unhook();
-            if (Config.SendItemCostInChat) Tweaks.SendItemCostInChat.Hook();
+            if (this.enabled && Config.SendItemCostInChat) Tweaks.SendItemCostInChat.Hook();
         }
     }
 }
