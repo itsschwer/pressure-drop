@@ -48,10 +48,12 @@ namespace PressureDrop
         private readonly ConfigEntry<bool> scoreboardShowChat;
         private readonly ConfigEntry<bool> voidPickupConfirmAll;
         private readonly ConfigEntry<bool> sendItemCostInChat;
+        private readonly ConfigEntry<bool> includeScrapInItemCost;
         // Accessors
         public bool ScoreboardShowChat => scoreboardShowChat.Value;
         public bool VoidPickupConfirmAll => voidPickupConfirmAll.Value;
         public bool SendItemCostInChat => sendItemCostInChat.Value;
+        public bool IncludeScrapInItemCost => includeScrapInItemCost.Value;
 
 
         public Config(ConfigFile config)
@@ -101,7 +103,9 @@ namespace PressureDrop
             voidPickupConfirmAll = config.Bind<bool>(Tweaks, nameof(voidPickupConfirmAll), true,
                 "Always require confirmation to pick up void items.");
             sendItemCostInChat = config.Bind<bool>(Tweaks, nameof(sendItemCostInChat), true, 
-                "Print a list of (non-scrap) items used when scrapping, printing, cleansing, or reforging.");
+                "Print a list of items used when scrapping, printing, cleansing, or reforging.");
+            includeScrapInItemCost = config.Bind<bool>(Tweaks, nameof(includeScrapInItemCost), false,
+                $"Include scrap in the list printed by {nameof(sendItemCostInChat)}.");
         }
     }
 }

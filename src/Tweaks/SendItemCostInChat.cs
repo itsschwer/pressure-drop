@@ -54,7 +54,7 @@ namespace PressureDrop.Tweaks
             // RoR2.PurchaseInteraction.OnInteractionBegin()
             foreach (ItemIndex item in __result.itemsTaken)
             {
-                if (IsScrap(item)) continue;
+                if (!Plugin.Config.IncludeScrapInItemCost && IsScrap(item)) continue;
 
                 PickupDef def = PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(item));
                 if (!exchanged.ContainsKey(def)) exchanged[def] = 0;
