@@ -14,6 +14,7 @@ namespace PressureDrop.Tweaks
             _hooked = true;
 
             On.RoR2.CostTypeDef.PayCost += CostTypeDef_PayCost;
+            On.RoR2.ScrapperController.BeginScrapping += ScrapperController_BeginScrapping;
         }
 
         internal static void Unhook()
@@ -22,6 +23,7 @@ namespace PressureDrop.Tweaks
             _hooked = false;
 
             On.RoR2.CostTypeDef.PayCost -= CostTypeDef_PayCost;
+            On.RoR2.ScrapperController.BeginScrapping -= ScrapperController_BeginScrapping;
         }
 
         private static CostTypeDef.PayCostResults CostTypeDef_PayCost(On.RoR2.CostTypeDef.orig_PayCost orig, CostTypeDef self, int cost, Interactor activator, UnityEngine.GameObject purchasedObject, Xoroshiro128Plus rng, ItemIndex avoidedItemIndex)
@@ -68,6 +70,31 @@ namespace PressureDrop.Tweaks
             AnnounceExchangedItems(exchanged, user, action);
         }
 
+        private static void ScrapperController_BeginScrapping(On.RoR2.ScrapperController.orig_BeginScrapping orig, ScrapperController self, int intPickupIndex)
+        {
+            int before;
+            PickupDef pickupDef;
+            CharacterBody body;
+            try {
+                pickupDef = PickupCatalog.GetPickupDef(new PickupIndex(intPickupIndex));
+                body = self.interactor.GetComponent<CharacterBody>();
+                before = body.inventory.GetItemCount(pickupDef.itemIndex);
+            }
+            catch (System.Exception e) {
+                Plugin.Logger.LogError(e);
+                return;
+            }
+            finally {
+                orig(self, intPickupIndex);
+            }
+
+            NetworkUser user = body?.master?.playerCharacterMasterController?.networkUser;
+            if (user == null) return;
+
+            int after = body.inventory.GetItemCount(pickupDef.itemIndex);
+            AnnounceExchangedItems(new Dictionary<PickupDef, int>() { { pickupDef, before - after } }, user, "scrapped");
+        }
+
         private static void AnnounceExchangedItems(Dictionary<PickupDef, int> exchanged, NetworkUser user, string action)
         {
             if (exchanged.Count <= 0) return;
@@ -102,8 +129,6 @@ namespace PressureDrop.Tweaks
                 default: return "";
                 case "BAZAAR_CAULDRON_NAME":
                     return "reforged";
-                case "SCRAPPER_NAME":
-                    return "scrapped";
                 case "SHRINE_CLEANSE_NAME":
                     return "cleansed themself of"; // based on SHRINE_CLEANSE_USE_MESSAGE
                 case "DUPLICATOR_NAME":
