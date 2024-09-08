@@ -1,6 +1,6 @@
 ﻿using RoR2;
 
-namespace PressureDrop
+namespace PressureDrop.Tweaks
 {
     internal static class ScoreboardShowChat
     {

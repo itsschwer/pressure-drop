@@ -104,10 +104,10 @@ namespace PressureDrop
 
         private void ManageTweaks()
         {
-            ScoreboardShowChat.Unhook();
-            if (Config.ScoreboardShowChat) ScoreboardShowChat.Hook();
+            Tweaks.ScoreboardShowChat.Unhook();
+            if (Config.ScoreboardShowChat) Tweaks.ScoreboardShowChat.Hook();
 
-            VoidPickupTweak.SetActive(this.enabled && Config.VoidPickupConfirmAll);
+            Tweaks.VoidPickupConfirmAll.SetActive(this.enabled && Config.VoidPickupConfirmAll);
 
             Tweaks.SendItemCostInChat.Unhook();
             if (Config.SendItemCostInChat) Tweaks.SendItemCostInChat.Hook();

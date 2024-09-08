@@ -1,9 +1,9 @@
 ﻿using RoR2;
 using System.Collections.Generic;
 
-namespace PressureDrop
+namespace PressureDrop.Tweaks
 {
-    internal static class VoidPickupTweak
+    internal static class VoidPickupConfirmAll
     {
         private static readonly Dictionary<ItemTier, ItemTierDef.PickupRules> originalRules = [];
 
@@ -24,7 +24,7 @@ namespace PressureDrop
                     def.pickupRules = ItemTierDef.PickupRules.ConfirmAll;
                 }
             }
-            Plugin.Logger.LogMessage($"Void Pickup Rule> applied.");
+            Plugin.Logger.LogMessage($"{nameof(VoidPickupConfirmAll)}> pickup rule applied.");
         }
 
         private static void Revert()
@@ -34,7 +34,7 @@ namespace PressureDrop
                     def.pickupRules = original;
                 }
             }
-            Plugin.Logger.LogMessage($"Void Pickup Rule> reverted.");
+            Plugin.Logger.LogMessage($"{nameof(VoidPickupConfirmAll)}> pickup rule reverted.");
         }
     }
 }
