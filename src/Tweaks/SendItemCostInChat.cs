@@ -41,7 +41,7 @@ namespace PressureDrop.Tweaks
         private static void CostTypeDef_PayCost(CostTypeDef.PayCostResults __result, Interactor activator, UnityEngine.GameObject purchasedObject)
         {
             PurchaseInteraction purchase = purchasedObject?.GetComponent<PurchaseInteraction>();
-            if (purchase != null) return;
+            if (purchase == null) return;
             string action = GetPurchaseInteractionVerb(purchase);
             if (string.IsNullOrEmpty(action)) return;
 
