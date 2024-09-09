@@ -1,8 +1,10 @@
+## 1.5.0
 - Add configuration option to send a chat notification listing the items that are consumed when a Scrapper, 3D Printer, Cleansing Pool, or Cauldron is used
     - Add a configuration to include Item Scrap in the printed list
 - Rework tweak to show chat history when the scoreboard is open
     - Now doesn't reset the fade out progress
     - Change default value of configuration option `scoreboardShowChat` to `true`
+- Code refactoring
 
 ### 1.4.1
 - Start assembly versioning
