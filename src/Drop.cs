@@ -40,11 +40,12 @@ namespace PressureDrop
 
                 PickupDef def = PickupCatalog.GetPickupDef(createPickupInfo.pickupIndex);
 #if DEBUG
-                Plugin.Logger.LogDebug($"itemIndex: {def.itemIndex} | itemTier: {def.itemTier} | equipmentIndex: {def.equipmentIndex} | isLunar: {def.isLunar} | isBoss: {def.isBoss}");
+                System.Text.StringBuilder sb = new($"itemIndex: {def.itemIndex} | itemTier: {def.itemTier} | equipmentIndex: {def.equipmentIndex} | isLunar: {def.isLunar} | isBoss: {def.isBoss}\n");
                 if (def.itemIndex != ItemIndex.None) {
                     ItemDef itemDef = ItemCatalog.GetItemDef(def.itemIndex);
-                    Plugin.Logger.LogDebug($"    hidden: {itemDef.hidden} | canRemove: {itemDef.canRemove} | {itemDef.nameToken}");
+                    sb.Append($"\t\thidden: {itemDef.hidden} | canRemove: {itemDef.canRemove} | {itemDef.nameToken} | {Language.GetString(itemDef.nameToken)}");
                 }
+                Plugin.Logger.LogDebug(sb.ToString());
 #endif
                 if (!GetDropRecyclable(def)) drop.Recycled = true;
 
