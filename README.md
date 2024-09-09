@@ -18,7 +18,7 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 
 - how long a pressure plate stays pressed can be configured as you see fit *(default: 30s)*
 
-> timed pressure plate *(config: 3s)*
+> timed pressure plate *(config: 3s)*\
 ![gif demonstration of timed pressure plate](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-pressure-plate-timed.gif?raw=true)
 
 ---
@@ -33,7 +33,7 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 - can remove items you are not having fun with
 - can spread void items between players
 
-> `/drop` item command
+> `/drop` item command\
 ![gif demonstration of /drop item command](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-drop-item.gif?raw=true)
 
 ## configurable
@@ -67,7 +67,7 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 - the option to send a chat notification listing the items that are consumed when a Scrapper, 3D Printer, Cleansing Pool, or Cauldron is used can be enabled *(enabled by default)*
     - the option to include Item Scrap (and Regenerating Scrap) in this list can be enabled
 
-> send consumed item in chat
+> send consumed item in chat\
 ![screenshot of reforging, printing, cleansing, and scrapping](https://github.com/itsschwer/pressure-drop/blob/main/xtra/demo-item-cost-in-chat.png?raw=true)
 
 ## see also
