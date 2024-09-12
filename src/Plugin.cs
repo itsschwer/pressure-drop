@@ -39,9 +39,6 @@ namespace PressureDrop
         {
             ManageHooks();
             ChatCommander.Register("/reload", ReloadConfig, true);
-#if DEBUG
-            Commands.DebugCheats.Enable();
-#endif
             Logger.LogMessage("~enabled.");
         }
 
@@ -49,9 +46,6 @@ namespace PressureDrop
         {
             ManageHooks();
             ChatCommander.Unregister("/reload", ReloadConfig);
-#if DEBUG
-            Commands.DebugCheats.Disable();
-#endif
             Logger.LogMessage("~disabled.");
         }
 
