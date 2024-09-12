@@ -33,7 +33,7 @@ namespace PressureDrop
         }
 
 #if DEBUG
-        public static string DumpPickupInfo(PickupDef def)
+        public static string DumpPickupItemInfo(PickupDef def)
         {
             System.Text.StringBuilder sb = new($"itemIndex: {def.itemIndex} | itemTier: {def.itemTier} | equipmentIndex: {def.equipmentIndex} | isLunar: {def.isLunar} | isBoss: {def.isBoss}\n");
             if (def.itemIndex != ItemIndex.None)
@@ -52,9 +52,6 @@ namespace PressureDrop
                 GenericPickupController drop = orig(ref createPickupInfo);
 
                 PickupDef def = PickupCatalog.GetPickupDef(createPickupInfo.pickupIndex);
-#if DEBUG
-                Plugin.Logger.LogDebug(DumpPickupInfo(def));
-#endif
                 if (!GetDropRecyclable(def)) drop.Recycled = true;
 
                 return drop;
@@ -119,10 +116,12 @@ namespace PressureDrop
             // Iterate in reverse to match most recent
             for (int i = (items.Count - 1); i >= 0; i--) {
                 ItemDef check = ItemCatalog.GetItemDef(items[i]);
-                // Do not match hidden (internal) items
-                if (check.hidden) continue;
-                // Do not match non-removable (consumed) items
-                if (!check.canRemove) continue;
+                if (!InManualWhitelist(check)) {
+                    // Do not match hidden (internal) items
+                    if (check.hidden) continue;
+                    // Do not match non-removable (consumed) items
+                    if (!check.canRemove) continue;
+                }
 
                 if (FormatStringForQuerying(Language.GetString(check.nameToken)).Contains(query)) return check.itemIndex;
             }
@@ -136,6 +135,20 @@ namespace PressureDrop
         /// <param name="input"></param>
         /// <returns>The formatted string.</returns>
         public static string FormatStringForQuerying(string input) => Regex.Replace(input, "[ '_.,-]", string.Empty).ToLowerInvariant();
+
+        private static bool InManualWhitelist(ItemDef def)
+        {
+            const string LongstandingSolitude = "ITEM_ONLEVELUPFREEUNLOCK_NAME";
+
+            switch (def.nameToken) {
+                default: return false;
+                case LongstandingSolitude:
+                    if (!def.hidden && !def.canRemove) {
+                        Plugin.Logger.LogWarning($"Item does not need to be manually whitelisted: {LongstandingSolitude} | {Language.GetString(LongstandingSolitude)}");
+                    }
+                    return true;
+            }
+        }
 
 
         // Drop ============================================
