@@ -130,7 +130,7 @@ namespace PressureDrop
             switch (def.nameToken) {
                 default: return false;
                 case LongstandingSolitude:
-                    if (!def.hidden && !def.canRemove) {
+                    if (!def.hidden && def.canRemove) {
                         Plugin.Logger.LogWarning($"Item does not need to be manually whitelisted: {LongstandingSolitude} | {Language.GetString(LongstandingSolitude)}");
                     }
                     return true;
