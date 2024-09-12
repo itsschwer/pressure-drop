@@ -1,3 +1,7 @@
+### 1.5.1
+- Fix Longstanding Solitude not being matched by the /drop command
+    - *Allows Longstanding Solitude to be dropped*
+
 ## 1.5.0
 - Add configuration option to send a chat notification listing the items that are consumed when a Scrapper, 3D Printer, Cleansing Pool, or Cauldron is used
     - Add a configuration to include Item Scrap in the printed list

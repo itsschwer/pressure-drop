@@ -1,7 +1,7 @@
 ﻿{
 	"author": "itsschwer",
 	"name": "PressureDrop",
-	"version_number": "1.5.0",
+	"version_number": "1.5.1",
 	"website_url": "https://github.com/itsschwer/pressure-drop",
 	"description": "Configure pressure plates to stay pressed down for a duration; share items using a /drop chat command; and show items exchanged at printers, cauldrons, and the like in the chat — [ server-side ] — compatible with SotS and earlier patches",
 	"dependencies": [
