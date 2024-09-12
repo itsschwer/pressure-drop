@@ -103,12 +103,10 @@ namespace PressureDrop
             // Iterate in reverse to match most recent
             for (int i = (items.Count - 1); i >= 0; i--) {
                 ItemDef check = ItemCatalog.GetItemDef(items[i]);
-                if (!InManualWhitelist(check)) {
-                    // Do not match hidden (internal) items
-                    if (check.hidden) continue;
-                    // Do not match non-removable (consumed) items
-                    if (!check.canRemove) continue;
-                }
+                // Do not match hidden (internal) items
+                if (check.hidden) continue;
+                // Do not match non-removable (consumed) items
+                if (!check.canRemove && !InManualWhitelist(check)) continue;
 
                 if (FormatStringForQuerying(Language.GetString(check.nameToken)).Contains(query)) return check.itemIndex;
             }
@@ -130,7 +128,7 @@ namespace PressureDrop
             switch (def.nameToken) {
                 default: return false;
                 case LongstandingSolitude:
-                    if (!def.hidden && def.canRemove) {
+                    if (def.canRemove) {
                         Plugin.Logger.LogWarning($"Item does not need to be manually whitelisted: {LongstandingSolitude} | {Language.GetString(LongstandingSolitude)}");
                     }
                     return true;
