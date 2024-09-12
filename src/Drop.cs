@@ -32,19 +32,6 @@ namespace PressureDrop
             DropCommand.Disable();
         }
 
-#if DEBUG
-        public static string DumpPickupItemInfo(PickupDef def)
-        {
-            System.Text.StringBuilder sb = new($"itemIndex: {def.itemIndex} | itemTier: {def.itemTier} | equipmentIndex: {def.equipmentIndex} | isLunar: {def.isLunar} | isBoss: {def.isBoss}\n");
-            if (def.itemIndex != ItemIndex.None)
-            {
-                ItemDef itemDef = ItemCatalog.GetItemDef(def.itemIndex);
-                sb.Append($"\t\thidden: {itemDef.hidden} | canRemove: {itemDef.canRemove} | {itemDef.nameToken} | {Language.GetString(itemDef.nameToken)}");
-            }
-            return sb.ToString();
-        }
-#endif
-
         private static GenericPickupController GenericPickupController_CreatePickup(On.RoR2.GenericPickupController.orig_CreatePickup orig, ref GenericPickupController.CreatePickupInfo createPickupInfo)
         {
             if (createPickupInfo.rotation == identifier) {
