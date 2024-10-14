@@ -50,12 +50,10 @@ namespace PressureDrop
 
 
         // Tweaks
-        private readonly ConfigEntry<bool> scoreboardShowChat;
         private readonly ConfigEntry<bool> voidPickupConfirmAll;
         private readonly ConfigEntry<bool> sendItemCostInChat;
         private readonly ConfigEntry<bool> includeScrapInItemCost;
         // Accessors
-        public bool ScoreboardShowChat => scoreboardShowChat.Value;
         public bool VoidPickupConfirmAll => voidPickupConfirmAll.Value;
         public bool SendItemCostInChat => sendItemCostInChat.Value;
         public bool IncludeScrapInItemCost => includeScrapInItemCost.Value;
@@ -105,8 +103,6 @@ namespace PressureDrop
 
 
             const string Tweaks = "Tweaks";
-            scoreboardShowChat = config.Bind<bool>(Tweaks, nameof(scoreboardShowChat), true,
-                "Show chat history when the scoreboard is open. — [ client-side ]");
             voidPickupConfirmAll = config.Bind<bool>(Tweaks, nameof(voidPickupConfirmAll), true,
                 "Always require confirmation to pick up void items.");
             sendItemCostInChat = config.Bind<bool>(Tweaks, nameof(sendItemCostInChat), true,

@@ -1,3 +1,6 @@
+- Remove configuration option to show chat history when the scoreboard is open
+    - Use [HUDdleUP](https://thunderstore.io/package/itsschwer/HUDdleUP/) <sup>[***src***](https://github.com/itsschwer/ror2-huddle-up)</sup> instead
+
 ### 1.5.1
 - Fix Longstanding Solitude not being matched by the /drop command
     - *Allows Longstanding Solitude to be dropped*
