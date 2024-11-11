@@ -8,11 +8,6 @@ namespace PressureDrop
         internal void Reload() { Plugin.Logger.LogDebug($"Reloading {file.ConfigFilePath.Substring(file.ConfigFilePath.LastIndexOf(System.IO.Path.DirectorySeparatorChar) + 1)}"); file.Reload(); }
 
 
-        // Pressure Plates
-        private readonly ConfigEntry<float> pressurePlateTimer;
-        public float PressurePlateTimer => pressurePlateTimer.Value;
-
-
         // Drop Command
         private readonly ConfigEntry<bool> dropEnabled;
         private readonly ConfigEntry<bool> dropTeleporterEnabled;
@@ -51,22 +46,13 @@ namespace PressureDrop
 
         // Tweaks
         private readonly ConfigEntry<bool> voidPickupConfirmAll;
-        private readonly ConfigEntry<bool> sendItemCostInChat;
-        private readonly ConfigEntry<bool> includeScrapInItemCost;
         // Accessors
         public bool VoidPickupConfirmAll => voidPickupConfirmAll.Value;
-        public bool SendItemCostInChat => sendItemCostInChat.Value;
-        public bool IncludeScrapInItemCost => includeScrapInItemCost.Value;
 
 
         public Config(ConfigFile config)
         {
             file = config;
-
-            // Prefix section to sort to top in config editor
-            pressurePlateTimer = config.Bind<float>("~Pressure Plates", nameof(pressurePlateTimer), 30f,
-                "The length of time (seconds) a pressure plate will remain pressed after being activated.\nZero disables time functionality (reverts to vanilla behaviour). Negative values prevent pressure plates from releasing once activated.");
-
 
             const string DropCommand = "Drop Command";
             dropEnabled = config.Bind<bool>(DropCommand, nameof(dropEnabled), true,
@@ -105,10 +91,6 @@ namespace PressureDrop
             const string Tweaks = "Tweaks";
             voidPickupConfirmAll = config.Bind<bool>(Tweaks, nameof(voidPickupConfirmAll), true,
                 "Always require confirmation to pick up void items.");
-            sendItemCostInChat = config.Bind<bool>(Tweaks, nameof(sendItemCostInChat), true,
-                "Send a chat notification listing the items that are consumed when using Scrapper, 3D Printer, Cleansing Pool, or Cauldron is used.");
-            includeScrapInItemCost = config.Bind<bool>(Tweaks, nameof(includeScrapInItemCost), false,
-                $"Include Item Scrap in the list printed by {nameof(sendItemCostInChat)}.");
         }
     }
 }

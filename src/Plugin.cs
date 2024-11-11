@@ -15,9 +15,6 @@ namespace PressureDrop
 
         public static new Config Config { get; private set; }
 
-        // MonoBehaviour components
-        private PressurePlateTimer pressure;
-
         private void Awake()
         {
             // Use Plugin.GUID instead of Plugin.Name as source name
@@ -62,7 +59,6 @@ namespace PressureDrop
         /// </summary>
         private void SetActive(bool value) {
             this.enabled = value;
-            if (this.pressure) this.pressure.enabled = value;
             Logger.LogMessage($"~{(value ? "active" : "inactive")}.");
         }
 
@@ -77,31 +73,10 @@ namespace PressureDrop
 
         private void ManageHooks()
         {
-            ManagePressurePlateTimer();
-            ManageDropCommand();
-            ManageTweaks();
-        }
-
-        private void ManagePressurePlateTimer()
-        {
-            if (this.enabled && Config.PressurePlateTimer != 0) {
-                if (!this.pressure) this.pressure = this.gameObject.AddComponent<PressurePlateTimer>();
-            }
-            else Destroy(this.pressure);
-        }
-
-        private void ManageDropCommand()
-        {
             Drop.Unhook();
             if (this.enabled && Config.DropEnabled) Drop.Hook();
-        }
 
-        private void ManageTweaks()
-        {
             Tweaks.VoidPickupConfirmAll.SetActive(this.enabled && Config.VoidPickupConfirmAll);
-
-            Tweaks.SendItemCostInChat.Unhook();
-            if (this.enabled && Config.SendItemCostInChat) Tweaks.SendItemCostInChat.Hook();
         }
     }
 }
