@@ -1,7 +1,9 @@
+### 2.0.0
 - Remove configuration option to send a chat notification listing the items that are consumed when a Scrapper, 3D Printer, Cleansing Pool, or Cauldron is used
     - Remove configuration option to include Item Scrap in the printed list
     <!-- -->
     - Use [ServerSider](https://thunderstore.io/package/itsschwer/ServerSider/) <sup>[***src***](https://github.com/itsschwer/ror2-serversider)</sup> instead
+        - *Note: **PressureDrop** may eventually be completely merged into **ServerSider** one day*
 - Remove configuration option to show chat history when the scoreboard is open
     - Use [HUDdleUP](https://thunderstore.io/package/itsschwer/HUDdleUP/) <sup>[***src***](https://github.com/itsschwer/ror2-huddle-up)</sup> instead
 
