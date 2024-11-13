@@ -90,3 +90,4 @@ jobs:
           artifacts: ${{ needs.create-artifact.outputs.name }}.zip
           tag: ${{ needs.create-artifact.outputs.version }}
           updateOnlyUnreleased: true
+          generateReleaseNotes: true
