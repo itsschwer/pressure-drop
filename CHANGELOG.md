@@ -1,11 +1,18 @@
-### 2.0.0
-- Remove configuration option to send a chat notification listing the items that are consumed when a Scrapper, 3D Printer, Cleansing Pool, or Cauldron is used
-    - Remove configuration option to include Item Scrap in the printed list
-    <!-- -->
-    - Use [ServerSider](https://thunderstore.io/package/itsschwer/ServerSider/) <sup>[***src***](https://github.com/itsschwer/ror2-serversider)</sup> instead
-        - *Note: **PressureDrop** may eventually be completely merged into **ServerSider** one day*
-- Remove configuration option to show chat history when the scoreboard is open
-    - Use [HUDdleUP](https://thunderstore.io/package/itsschwer/HUDdleUP/) <sup>[***src***](https://github.com/itsschwer/ror2-huddle-up)</sup> instead
+### 2.0.1
+- Fix changelog for version 2.0.0
+    - Document missing removal of pressure plate component
+    - Restructure for readability
+
+# 2.0.0
+- Move features to [ServerSider](https://thunderstore.io/package/itsschwer/ServerSider/) <sup>[***src***](https://github.com/itsschwer/ror2-serversider)</sup>
+    - Configuration option to adjust pressure plates *(Abandoned Aqueduct)* to stay pressed down for a duration
+    - Configuration option to send a chat notification listing the items that are consumed when a Scrapper, 3D Printer, Cleansing Pool, or Cauldron is used
+        - Configuration option to include Item Scrap in the printed list
+    <!--  -->
+    - *Note: **PressureDrop** may eventually be completely merged into **ServerSider** one day*
+        - *This mod now only implements the chat command for dropping items (and the "void pick up confirm all rule")*
+- Move features to [HUDdleUP](https://thunderstore.io/package/itsschwer/HUDdleUP/) <sup>[***src***](https://github.com/itsschwer/ror2-huddle-up)</sup>
+    - Configuration option to show chat history when the scoreboard is open
 
 ### 1.5.1
 - Fix Longstanding Solitude not being matched by the /drop command
