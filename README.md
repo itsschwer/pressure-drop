@@ -33,11 +33,6 @@ sometimes I \[ take the wrong item / want to help others catch up \].
 - the maximum amount of items to drop to at a time can be configured as you see fit *(default: 10, to match Scrappers)*
 - which item tiers should be recyclable when dropped can be configured as you see fit *(default: only white and green)*
 
-### extra
-
-- the option to change void items to always require confirmation before being picked up can be enabled *(enabled by default)*
-    - *intended to encourage sharing void items in multiplayer when the ability to drop void items is disabled*
-
 ## see also
 
 - [DropItem](https://thunderstore.io/package/Thrayonlosa/DropItem/) <sup>[*v1.3.0*](https://thunderstore.io/package/Thrayonlosa/DropItem/1.3.0/)</sup> by [Thrayonlosa](https://thunderstore.io/package/Thrayonlosa/) — similar `/drop` functionality, inspired this implementation

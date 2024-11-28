@@ -75,8 +75,6 @@ namespace PressureDrop
         {
             Drop.Unhook();
             if (this.enabled && Config.DropEnabled) Drop.Hook();
-
-            Tweaks.VoidPickupConfirmAll.SetActive(this.enabled && Config.VoidPickupConfirmAll);
         }
     }
 }

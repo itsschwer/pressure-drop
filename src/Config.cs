@@ -44,12 +44,6 @@ namespace PressureDrop
         public bool DropRecyclableEquipmentLunar => dropRecyclableEquipmentLunar.Value;
 
 
-        // Tweaks
-        private readonly ConfigEntry<bool> voidPickupConfirmAll;
-        // Accessors
-        public bool VoidPickupConfirmAll => voidPickupConfirmAll.Value;
-
-
         internal Config(ConfigFile config)
         {
             file = config;
@@ -86,11 +80,6 @@ namespace PressureDrop
                 "Whether dropped equipment should be recyclable.");
             dropRecyclableEquipmentLunar = config.Bind<bool>(DropRecyclable, nameof(dropRecyclableEquipmentLunar), false,
                 "Whether dropped lunar equipment should be recyclable.");
-
-
-            const string Tweaks = "Tweaks";
-            voidPickupConfirmAll = config.Bind<bool>(Tweaks, nameof(voidPickupConfirmAll), true,
-                "Always require confirmation to pick up void items.");
         }
     }
 }

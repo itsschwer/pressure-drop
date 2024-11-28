@@ -3,7 +3,7 @@
 	"name": "PressureDrop",
 	"version_number": "2.0.1",
 	"website_url": "https://github.com/itsschwer/pressure-drop",
-	"description": "Share items using a /drop chat command — [ server-side ] — compatible with SotS and earlier patches",
+	"description": "Drop items for sharing or removing using a /drop chat command — [ server-side ] — compatible with SotS and earlier patches",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2113",
 		"RiskofThunder-HookGenPatcher-1.2.3",

@@ -1,3 +1,9 @@
+## 2.1.0
+- Move features to [ServerSider](https://thunderstore.io/package/itsschwer/ServerSider/) <sup>[***src***](https://github.com/itsschwer/ror2-serversider)</sup>
+    - Configuration option to change void tier pickup rule from `ConfirmFirst` to `ConfirmAll`
+- Change visibility of various members from `public` to `internal`
+- Code refactoring
+
 ### 2.0.1
 - Fix changelog for version 2.0.0
     - Document missing removal of pressure plate component
