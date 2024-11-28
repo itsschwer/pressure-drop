@@ -19,7 +19,7 @@ namespace PressureDrop.Tweaks
         private static void Apply()
         {
             foreach (ItemTierDef def in ItemTierCatalog.allItemTierDefs) {
-                if (Drop.IsVoidTier(def.tier)) {
+                if (def.tier.IsVoidTier()) {
                     originalRules[def.tier] = def.pickupRules;
                     def.pickupRules = ItemTierDef.PickupRules.ConfirmAll;
                 }

@@ -50,7 +50,7 @@ namespace PressureDrop
         public bool VoidPickupConfirmAll => voidPickupConfirmAll.Value;
 
 
-        public Config(ConfigFile config)
+        internal Config(ConfigFile config)
         {
             file = config;
 

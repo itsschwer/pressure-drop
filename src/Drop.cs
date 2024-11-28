@@ -1,6 +1,4 @@
 ﻿using RoR2;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace PressureDrop
@@ -39,32 +37,14 @@ namespace PressureDrop
                 GenericPickupController drop = orig(ref createPickupInfo);
 
                 PickupDef def = PickupCatalog.GetPickupDef(createPickupInfo.pickupIndex);
-                if (!GetDropRecyclable(def)) drop.Recycled = true;
+                if (!IsRecyclable(def)) drop.Recycled = true;
 
                 return drop;
             }
             else return orig(ref createPickupInfo);
         }
 
-        /// <summary>
-        /// Checks if an <see cref="ItemTier"/> belongs to a void tier.
-        /// </summary>
-        /// <param name="tier"></param>
-        /// <returns>Whether the <paramref name="tier"/> is a void tier or not.</returns>
-        public static bool IsVoidTier(ItemTier tier)
-        {
-            return tier == ItemTier.VoidTier1 ||
-                   tier == ItemTier.VoidTier2 ||
-                   tier == ItemTier.VoidTier3 ||
-                   tier == ItemTier.VoidBoss;
-        }
-
-        /// <summary>
-        /// Checks a <see cref="PickupDef"/> against the config settings to determine whether the item or equipment should be recyclable.
-        /// </summary>
-        /// <param name="def"></param>
-        /// <returns>Whether the item or equipment should be recyclable or not.</returns>
-        public static bool GetDropRecyclable(PickupDef def)
+        private static bool IsRecyclable(PickupDef def)
         {
             bool result = true;
 
@@ -74,7 +54,7 @@ namespace PressureDrop
                     (def.itemTier == ItemTier.Tier3 && !Plugin.Config.DropRecyclableRed)   ||
                     (def.itemTier == ItemTier.Boss && !Plugin.Config.DropRecyclableYellow) ||
                     (def.itemTier == ItemTier.Lunar && !Plugin.Config.DropRecyclableLunar) ||
-                    (!Plugin.Config.DropRecyclableVoid && IsVoidTier(def.itemTier)))
+                    (!Plugin.Config.DropRecyclableVoid && def.itemTier.IsVoidTier()))
                     result = false;
             }
             else if (def.equipmentIndex != EquipmentIndex.None) {
@@ -85,54 +65,6 @@ namespace PressureDrop
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Searches the <paramref name="inventory"/> for an item with a name that matches the search <paramref name="query"/>.
-        /// <br/>Items are checked in reverse acquisition order (most recent match first).
-        /// </summary>
-        /// <param name="inventory"></param>
-        /// <param name="query"></param>
-        /// <returns>The <see cref="ItemIndex"/> of the matched item. If there is no match, returns <see cref="ItemIndex.None"/> instead.</returns>
-        public static ItemIndex FindItemInInventory(this Inventory inventory, string query)
-        {
-            List<ItemIndex> items = inventory.itemAcquisitionOrder;
-            if (items == null || items.Count <= 0) return ItemIndex.None;
-
-            query = FormatStringForQuerying(query);
-            // Iterate in reverse to match most recent
-            for (int i = (items.Count - 1); i >= 0; i--) {
-                ItemDef check = ItemCatalog.GetItemDef(items[i]);
-                // Do not match hidden (internal) items
-                if (check.hidden) continue;
-                // Do not match non-removable (consumed) items
-                if (!check.canRemove && !InManualWhitelist(check)) continue;
-
-                if (FormatStringForQuerying(Language.GetString(check.nameToken)).Contains(query)) return check.itemIndex;
-            }
-
-            return ItemIndex.None;
-        }
-
-        /// <summary>
-        /// Formats the input string to be ready for comparison (removes some common punctuation marks and converts to lowercase).
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns>The formatted string.</returns>
-        public static string FormatStringForQuerying(string input) => Regex.Replace(input, "[ '_.,-]", string.Empty).ToLowerInvariant();
-
-        private static bool InManualWhitelist(ItemDef def)
-        {
-            const string LongstandingSolitude = "ITEM_ONLEVELUPFREEUNLOCK_NAME";
-
-            switch (def.nameToken) {
-                default: return false;
-                case LongstandingSolitude:
-                    if (def.canRemove) {
-                        Plugin.Logger.LogWarning($"Item does not need to be manually whitelisted: {LongstandingSolitude} | {Language.GetString(LongstandingSolitude)}");
-                    }
-                    return true;
-            }
         }
 
 

@@ -35,7 +35,7 @@ namespace PressureDrop
         private void OnEnable()
         {
             ManageHooks();
-            ChatCommander.Register("/reload", ReloadConfig, true);
+            ChatCommander.Register("/reload", ReloadConfig);
             Logger.LogMessage("~enabled.");
         }
 
@@ -68,7 +68,7 @@ namespace PressureDrop
 
             Config.Reload();
             ManageHooks();
-            ChatCommander.Output($"Reloaded configuration for <style=cWorldEvent>{Plugin.GUID}</style>");
+            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cIsUtility>Reloaded configuration for <style=cWorldEvent>{Plugin.GUID}</style></style>" });
         }
 
         private void ManageHooks()
